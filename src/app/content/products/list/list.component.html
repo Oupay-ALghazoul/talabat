@@ -1,0 +1,327 @@
+
+<div class="app-content content ">
+  <div class="content-wrapper">
+    <div class="content-header row mb-1"  [ngStyle]="{'direction': arabic ?  'rtl': 'ltr' }">
+      <app-breadcrumb class="col-6" style="text-align: right;" [breadcrumb]="breadcrumbAr" *ngIf="arabic"></app-breadcrumb>
+      <app-breadcrumb class="col-6" style="text-align: left;" [breadcrumb]="breadcrumb" *ngIf="!arabic"></app-breadcrumb>
+      <div class="col-6"  [ngStyle]="{'text-align': arabic ?  'left': 'right' }">
+        <button type="submit" class="btn btn-primary" (click)="addProduct()"   *ngIf= "showAdd">
+          {{'table.addBtn' | translate}} {{'addOptions.product' | translate}}
+        </button>      
+      </div>
+    </div>
+    <div class="content-body"  [ngStyle]="{'direction': arabic ?  'rtl': 'ltr' ,
+    'text-align': arabic ?  'right': 'left' }">    
+      <section class="row">
+          <div class="col-12">
+              <div class="card">
+                <div class="card-content">
+                  <div class="card-body">
+                    <div class="card box-border" style=" margin: 0px 0px 20px 0px;">
+                      <div class="card-header">
+                        <i class="la la-filter"  ></i>
+                        <a class="card-title info lead" (click)="basicCollapse2 = !basicCollapse2"
+                          [attr.aria-expanded]="basicCollapse2" aria-controls="basicCollapse2">
+                          {{'form.filter' | translate}}</a>
+                      </div>
+                      <div id="basicCollapse2" [ngbCollapse]="!basicCollapse2">
+                        <div class="card-content">
+                          <div class="card-body">
+                            <form [formGroup]="search"  [ngStyle]="{'text-align': arabic ?  'right': 'left' }">
+                              <div class="row" style="margin-bottom: 10px;" >
+                                <div class="col-lg-6 col-12" >
+                                  <label class="label-control" for="projectinput4" >{{ 'filterOptions.chooseCategory' | translate }}</label>
+                                  <select class="custom-select " *ngIf="arabic"   formControlName ="catId">                       
+                                    <option value="0" selected disabled ></option>
+                                    <option value="">{{ 'filterOptions.all' | translate }}</option>
+                                    <option  *ngFor="let row of categories; index as i" value="{{row.id}}"
+                                    >{{row.name_ar}}</option>
+                                  
+                                  </select>
+                                  <select class="custom-select " *ngIf="!arabic"  formControlName ="catId">                       
+                                    <option value="0" selected disabled ></option>
+                                    <option value="">{{ 'filterOptions.all' | translate }}</option>
+                                    <option  *ngFor="let row of categories; index as i" value="{{row.id}}"
+                                    >{{row.name_en}}</option>
+                                  
+                                  </select>
+                    
+                                </div>  
+                                <div class="col-lg-6 col-12" >
+                                 
+                                </div> 
+                               
+                              </div>
+                              <div class="row" style="margin-bottom: 10px;" >
+                                <div class="col-lg-6 col-12" >
+                                  <label class="label-control" for="projectinput4" >{{ 'filterOptions.chooseBrand' | translate }}</label>
+                                  <select class="custom-select " *ngIf="arabic" formControlName ="brandId">                       
+                                    <option value="0" selected disabled ></option>
+                                    <option value="">{{ 'filterOptions.all' | translate }}</option>
+                                    <option  *ngFor="let row of brands; index as i" value="{{row.id}}"
+                                    >{{row.name_ar}}</option>
+                                  
+                                  </select>
+                                  <select class="custom-select " *ngIf="!arabic" formControlName ="brandId">                       
+                                    <option value="0" selected disabled ></option>
+                                    <option value="">{{ 'filterOptions.all' | translate }}</option>
+                                    <option  *ngFor="let row of brands; index as i" value="{{row.id}}"
+                                    >{{row.name_en}}</option>
+                                  
+                                  </select>
+                    
+                                </div> 
+                                <div class="col-lg-6 col-12">
+                                  <label class="label-control" for="projectinput4" >{{ 'category.activateState' | translate }}</label>
+                                  <select class="custom-select "   formControlName="activated">                       
+                                    <option value="0" selected disabled></option>
+                                    <option value="">{{ 'filterOptions.all' | translate }}</option>
+                                    <option value="1">{{ 'filterOptions.activated' | translate }}</option>
+                                    <option value="0">{{ 'filterOptions.notActivated' | translate }}</option>
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="row" style="margin-bottom: 10px;" >
+                                <div class="col-lg-6 col-12">
+                                  <label class="label-control" for="projectinput4" >{{ 'product.newly_added' | translate }}</label>
+                                  <select class="custom-select "   formControlName="newly_added">                       
+                                    <option value="0" selected disabled></option>
+                                    <option value="">{{ 'filterOptions.all' | translate }}</option>
+                                    <option value="1">{{ 'form.confirmBtnYes' | translate }}</option>
+                                    <option value="0">{{ 'form.confirmBtnNo' | translate }}</option>
+                                  </select>
+                                </div>
+                                <div class="col-lg-6 col-12">
+                                  <label class="label-control" for="projectinput4" >{{ 'product.best_collection' | translate }}</label>
+                                  <select class="custom-select "   formControlName="best_collection">                       
+                                    <option value="0" selected disabled></option>
+                                    <option value="">{{ 'filterOptions.all' | translate }}</option>
+                                    <option value="1">{{ 'form.confirmBtnYes' | translate }}</option>
+                                    <option value="0">{{ 'form.confirmBtnNo' | translate }}</option>
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="row" style="margin-bottom: 10px;" >
+                              
+                                <div class="col-lg-6 col-12">
+                                  <label class="label-control" for="projectinput4" >{{ 'product.flash_deal' | translate }}</label>
+                                  <select class="custom-select "   formControlName="flash_deal">                       
+                                    <option value="0" selected disabled></option>
+                                    <option value="">{{ 'filterOptions.all' | translate }}</option>
+                                    <option value="1">{{ 'form.confirmBtnYes' | translate }}</option>
+                                    <option value="0">{{ 'form.confirmBtnNo' | translate }}</option>
+                                  </select>
+                                </div>
+                                <div class="col-lg-6 col-12">
+                                  <label class="label-control" for="projectinput4" >{{ 'product.selected' | translate }}</label>
+                                  <select class="custom-select "   formControlName="selected">                       
+                                    <option value="0" selected disabled></option>
+                                    <option value="">{{ 'filterOptions.all' | translate }}</option>
+                                    <option value="1">{{ 'form.confirmBtnYes' | translate }}</option>
+                                    <option value="0">{{ 'form.confirmBtnNo' | translate }}</option>
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="row"  style="margin-bottom: 10px;" >
+                                <div class="col-lg-6 col-12">
+                                    <label class="label-control" for="projectinput4" >{{ 'seachOptions.word' | translate }}</label>
+                                    <input type="text" id="word" class="form-control" 
+                                    placeholder ="{{ 'seachOptions.word' | translate }}"
+                                    formControlName="word">
+                                    <div class="form-control-position" [ngStyle]="{'left': arabic ?  '10px': '91%' ,
+                                    'right': arabic ?  '91%': '10px' }">
+                                      <i class="feather ft-search"></i>
+                                    </div>                       
+                                </div> 
+                                <div class="col-lg-6 col-12">
+                                  <label class="label-control" for="projectinput4" >{{'product.code' | translate}}</label>
+                                  <input type="text" id="code" class="form-control" 
+                                  placeholder ="{{'product.code' | translate}}"
+                                  formControlName="code">
+                                  <div class="form-control-position" [ngStyle]="{'left': arabic ?  '10px': '91%' ,
+                                  'right': arabic ?  '91%': '10px' }">
+                                    <i class="feather ft-search"></i>
+                                  </div>                       
+                              </div> 
+                             
+                             
+                              </div>
+                              <div class="row"  style="margin-bottom: 10px;" >
+                                <div class="col-lg-6 col-12">
+                                  <button type="submit" class="btn btn-primary" [disabled] = "loaderBtn" (click) = "searchBtn()">
+                                    <i  *ngIf="!loaderBtn"class="la la-check"></i>  
+                                    <i  *ngIf="loaderBtn" class="la la-spinner spinner"></i>
+                                    {{'table.search' | translate}}
+                                  </button>
+                                  <button type="submit" class="btn" style="background: #e0e1e2 none;    margin: 0px 12px;" (click) = "reset()">
+                                    <i class="la la-close"></i>  
+                                    
+                                    {{'table.clear' | translate}}
+                                  </button>
+                                </div>
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                    
+                     
+                     <!-- <div class=" justify-content row" style="margin-bottom: 10px;" [ngStyle]="{'text-align': arabic ?  'right': 'left' }">
+                        <div class="col-md-12">
+                          <button class="btn btn-secondary buttons-excel buttons-html5" (click)= "exportToExcel()"
+                          [disabled]="loaderExport">
+                         <i *ngIf="loaderExport" class="la la-spinner spinner"> </i>
+                         {{'table.exportToExcel' | translate}}</button>
+                          
+                        </div>
+                   
+                      </div> -->
+                      <div class="loader-wrapper" *ngIf="loader">
+                        <div class="loader-container">
+                          <div class="ball-spin-fade-loader loader-blue">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                          </div>
+                        </div>
+                      </div>
+                   
+                      <div class="table-responsive" *ngIf="!loader">
+                        <table class="table mb-0">
+                          <thead class="bg-success white" style="background-color: #383838 !important;">
+                            <tr [ngStyle]="{'text-align': arabic ?  'right': 'left' }">
+                              <th scope="col">{{'product.name' | translate}}</th>
+                              <th scope="col">{{'product.image' | translate }}</th>
+                           
+                              <th scope="col">{{'product.activate' | translate }}</th>
+                              <th scope="col">{{'product.best_collection' | translate }}</th>
+                              <th scope="col">{{'product.newly_added' | translate }}</th>
+                              <th scope="col">{{'product.flash_deal' | translate }}</th>
+                              <th scope="col">{{'product.selected' | translate }}</th>
+                              <!-- <th scope="col" *ngIf ="showExtraPermission">{{'product.showExtra' | translate }}</th> -->
+                              <th scope="col">{{'table.actions' | translate }}</th>
+                            </tr>
+                          </thead>
+                          <tbody [ngStyle]="{'text-align': arabic ?  'right': 'left' }">
+                            <label *ngIf="!isItems">{{'table.noData' | translate}}</label>
+                            <tr *ngFor="let row of result; index as i">
+                              <td *ngIf="!arabic">
+                                {{row.name_en}}
+                              </td> 
+                              <td *ngIf="arabic">
+                                {{row.name_ar}}
+                              </td>     
+                              <td>
+                                <img *ngIf="row.image"src="{{row.image.low_quality}}" style="height: 20px;width: 20px;">  
+                                <img *ngIf="!row.image"  src="assets/images/defualtMeal.png" style="height: 20px;width: 20px;">  
+                              </td>
+                         
+                              <td>
+                                <span class="badge badge-success" *ngIf="row.activated == true" style="padding: 5px;">{{ 'filterOptions.activated' | translate }}</span>
+                                <span class="badge badge-danger" *ngIf="row.activated == false" style="padding: 5px;">{{ 'filterOptions.notActivated' | translate }}</span>
+                               
+                              </td>  
+                              <td>
+                                
+                                <ui-switch [checked]="row.best_collection == 1"   id="best_collection_id{{row.id}}"
+                                (change)="change_best_collection( row , $event)"  size="small">
+
+                                </ui-switch>
+                                <i  id="loader_best_collection{{row.id}}" class="la la-spinner spinner" hidden></i>
+                              </td>
+                              <td>
+                                
+                                <ui-switch [checked]="row.newly_added == 1"   id="newly_added_id{{row.id}}"
+                                (change)="change_newly_added( row , $event)"  size="small">
+
+                                </ui-switch>
+                                <i  id="loader_newly_added{{row.id}}" class="la la-spinner spinner" hidden></i>
+                              </td>
+                              <td>
+                                
+                                <ui-switch [checked]="row.flash_deal == 1"   id="flash_deal_id{{row.id}}"
+                                (change)="change_flash_deal( row , $event)"  size="small">
+
+                                </ui-switch>
+                                <i  id="loader_flash_deal{{row.id}}" class="la la-spinner spinner" hidden></i>
+                              </td>
+                               <td>
+                                
+                                <ui-switch [checked]="row.selected == 1"   id="selected_id{{row.id}}"
+                                (change)="change_selected( row , $event)"  size="small">
+
+                                </ui-switch>
+                                <i  id="loader_selected{{row.id}}" class="la la-spinner spinner" hidden></i>
+                              </td>
+                              <!-- <td *ngIf ="showExtraPermission"> 
+                                <a class="primary edit mr-1 mrless">
+                                  <i class="la la-eyela la-eye" (click)="showExtra(row.id)"></i></a>
+                              </td> -->
+                              <td>
+                                <div class="btn-group" role="group" aria-label="Basic example">
+                                  <button type="button" class="btn btn-action"  (click)="edit(row.id)" *ngIf= "showEdit"> 
+                                   
+                                    {{'product.edit' | translate}} <i class="la la-edit"></i></button>
+                                  <!-- <button type="button" class="btn btn-action"> 
+                                   
+                                    {{'product.show' | translate}} <i class="la la-eye"></i></button> -->
+                                  <button type="button" class="btn btn-action"  *ngIf="showDelete"
+                                   (click)="ConfirmDataModal(confirmDataModalContent,row.id)"> 
+                                  
+                                    {{'product.delete' | translate}} <i class="la la-trash"></i></button>
+                                </div>
+                              
+                              </td>
+
+                              
+                            </tr>
+                          </tbody>
+                        </table>
+                        <nav aria-label="Page navigation" *ngIf="isItems">
+                          <ul class="pagination justify-content-center pagination-separate pagination-flat">
+                            <div class="first">
+                              <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [rotate]="true"   [maxSize]="10"
+                                [boundaryLinks]="true" (pageChange)="onPageChange($event)"></ngb-pagination>
+                            </div> 
+                          </ul>
+                        </nav>
+                      </div>
+                    </div>
+                </div>   
+            </div>
+          </div>
+      </section>
+    </div> 
+        
+    </div>    
+</div>
+
+<ng-template #confirmDataModalContent let-c="close" let-d="dismiss" class="modal-dialog" >
+  <form (ngSubmit)="delete(addReplay)" #addReplay="ngForm" >
+    <div class="modal-content">
+    <div class="modal-header" [ngStyle]="{'direction': arabic ?  'rtl': 'ltr' }">
+      <h5 class="modal-title" id="exampleModalLabel1">{{'form.confirmDelete' | translate}}</h5>
+   
+    </div>
+    <div class="modal-body" [ngStyle]="{'text-align': arabic ?  'right': 'left' }" >
+      {{'form.confirmText' | translate}}
+    </div>
+    <div class="modal-footer">
+      <div class="form-group position-relative has-icon-left mb-0">
+        <button type="button" class="btn btn-secondary" style="background-color: red!important;"  (click) = "close(addReplay)">{{'form.confirmBtnNo' | translate}}</button>
+        <button type="submit" id="add-contact-item"  class="btn" style="background-color: green!important;color: #fff;"  [disabled]="deleteLoader"><i
+            class="la la-paper-plane-o d-lg-none"></i> <span class="d-none d-lg-block">
+              <i *ngIf="deleteLoader" class="la la-spinner spinner"></i>{{'form.confirmBtnYes' | translate}}</span>
+            </button>
+      </div>
+    </div>
+    </div>
+  </form>
+</ng-template>

@@ -1,0 +1,235 @@
+<div class="app-content content " [ngStyle]="{'direction': arabic ?  'rtl': 'ltr' ,
+'text-align': arabic ?  'right': 'left' }">
+  <div class="content-wrapper">
+    <div class="content-header row mb-1">
+      <app-breadcrumb class="col-6" style="text-align: right;" [breadcrumb]="breadcrumbAr" *ngIf="arabic">
+      </app-breadcrumb>
+      <app-breadcrumb class="col-6" style="text-align: left;" [breadcrumb]="breadcrumb" *ngIf="!arabic">
+      </app-breadcrumb>
+    </div>
+
+    <div class="content-body">
+      <section class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="loader-wrapper" *ngIf="loader">
+              <div class="loader-container">
+                <div class="ball-spin-fade-loader loader-blue">
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                </div>
+              </div>
+            </div>
+            <div class="card-content" *ngIf="!loader">
+              <div class="card-body">
+
+                <form class="form" [formGroup]="editForm" (ngSubmit)="submit()">
+                  <div class="row" style="margin-bottom: 20px;">
+                    <div class="col-6 ">
+                      <div class="form form-horizontal part">
+                        <h4 class="form-section"><i class="la la-user"></i>{{ 'usersTable.userProfile' | translate }}
+                        </h4>
+                        <div class="form-body">
+                          <div class="form-group row mx-auto">
+                            <label class="col-md-3 label-control" for="category">
+                              {{'usersTable.fname' | translate}}</label>
+                            <div class="col-md-9">
+                              <input type="text" id="first_name" class="form-control" formControlName="first_name"
+                                [ngClass]="{ 'is-invalid': submitted && f.first_name.errors }">
+                              <div *ngIf="submitted && f.first_name.errors" class="invalid-feedback">
+                                <div *ngIf="f.first_name.errors.required"> {{'form.required' | translate}} </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-body">
+                          <div class="form-group row mx-auto">
+                            <label class="col-md-3 label-control" for="category">
+                              {{'usersTable.lname' | translate}}</label>
+                            <div class="col-md-9">
+                              <input type="text" id="last_name" class="form-control" formControlName="last_name"
+                                [ngClass]="{ 'is-invalid': submitted && f.last_name.errors }">
+                              <div *ngIf="submitted && f.last_name.errors" class="invalid-feedback">
+                                <div *ngIf="f.last_name.errors.required"> {{'form.required' | translate}} </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-body">
+                          <div class="form-group row mx-auto">
+                            <label class="col-md-3 label-control" for="text_ar">
+                              {{'usersTable.email' | translate}}</label>
+                            <div class="col-md-9">
+                              <input type="text" id="email" class="form-control" formControlName="email"
+                                [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
+                              <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                                <div *ngIf="f.email.errors.required">{{'form.required' | translate}} </div>
+                              </div>
+                              <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                                <div *ngIf="f.email.errors">{{'form.emailValid' | translate}}</div>
+                              </div>
+                            </div>
+
+                          </div>
+                        </div>
+                        <div class="form-body">
+                          <div class="form-group row mx-auto">
+                            <label class="col-md-3 label-control" for="text_ar">
+                              {{'usersTable.phone' | translate}}</label>
+                            <div class="col-md-9">
+
+                              <input type="text" id="phone" class="form-control" formControlName="phone"
+                                [ngClass]="{ 'is-invalid': submitted && f.phone.errors }">
+                              <div *ngIf="submitted && f.phone.errors" class="invalid-feedback">
+                                <div *ngIf="f.phone.errors.required">{{'form.required' | translate}}</div>
+                              </div>
+                              <div *ngIf="submitted && f.phone.errors?.pattern" class="invalid-feedback">
+                                <div *ngIf="f.phone.errors?.pattern && arabic"> رقم التلفون غير صالح</div>
+                                <div *ngIf="f.phone.errors?.pattern && !arabic">Phone Not Valid</div>
+                              </div>
+                            </div>
+
+                          </div>
+                        </div>
+                        <div class="form-body">
+                          <div class="form-group row mx-auto">
+                            <label class="col-md-3 label-control" for="text_ar">
+                              {{'usersTable.country' | translate}}</label>
+                            <div class="col-md-9">
+
+                              <ng-select [items]="countries" [addTag]="true" bindLabel="full_name" bindValue="id"
+                                formControlName="countryName"
+                                [ngClass]="{'is-invalid': submitted && f.countryName.errors }" [(ngModel)]="countryName"
+                                (change)="chooseCity(countryName)">
+                              </ng-select>
+                              <div *ngIf="submitted && f.countryName.errors" class="invalid-feedback d-block">
+                                <div *ngIf="f.countryName.errors.required">{{'form.required' | translate}}</div>
+                              </div>
+                            </div>
+
+                          </div>
+                        </div>
+                        <div class="form-body">
+                          <div class="form-group row mx-auto">
+                            <label class="col-md-3 label-control" for="text_ar">
+                              {{'usersTable.city' | translate}}</label>
+                            <div class="col-md-9">
+
+                              <ng-select [items]="cities" [addTag]="true" bindLabel="name" bindValue="id"
+                                formControlName="city_id" [ngClass]="{'is-invalid': submitted && f.city_id.errors }"
+                                [(ngModel)]="selected_city">
+                              </ng-select>
+                              <div *ngIf="submitted && f.city_id.errors" class="invalid-feedback d-block">
+                                <div *ngIf="f.city_id.errors.required">{{'form.required' | translate}}</div>
+                              </div>
+                            </div>
+
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                    <div class="col-6">
+                      <div class="form form-horizontal part">
+                        <h4 class="form-section"><i class="la la-key"></i>{{ 'usersTable.account' | translate }}</h4>
+
+
+                        <div class="form-body">
+                          <div class="form-group row mx-auto">
+                            <label class="col-md-3 label-control" for="category">
+                              {{'category.activateState' | translate}}</label>
+                            <div class="col-md-9">
+                              <select class="custom-select " formControlName="activated"
+                                (change)="selectActive($event.target.value)">
+                                <option value="1">{{ 'filterOptions.activated' | translate }}</option>
+                                <option value="0">{{ 'filterOptions.notActivated' | translate }}</option>
+
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-6 ">
+                      <div class="form form-horizontal part">
+                        <h4 class="form-section"><i class="la la-info"></i>{{ 'usersTable.extra' | translate }}</h4>
+                        <div class="form-body">
+                          <div class="form-group row mx-auto">
+                            <label class="col-md-3 label-control" for="category">
+                              {{'usersTable.gender' | translate}}</label>
+                            <div class="col-md-9">
+                              <select class="custom-select " formControlName="gender">
+                                <option value="male">{{ 'usersTable.male' | translate }}</option>
+                                <option value="female">{{ 'usersTable.female' | translate }}</option>
+
+                              </select>
+
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-body">
+                          <div class="form-group row mx-auto">
+                            <label class="col-md-3 label-control" for="category">
+                              {{'usersTable.birthday' | translate}}</label>
+                            <div class="col-md-9">
+                              <input type="date" id="birth_date" class="form-control" formControlName="birth_date">
+
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-body">
+                          <div class="form-group row mx-auto">
+                            <label class="col-md-3 label-control">
+                              {{'usersTable.image' | translate }}</label>
+                            <div class="col-md-9">
+                              <input type="file" id="file" name="file" class="inputfile"
+                                (change)="upload($event.target.files)" />
+                              <label class="btn btn-primary" style="cursor: pointer;" for="file"><svg style="    margin: 0px 8px;
+                                            " xmlns="http://www.w3.org/2000/svg" width="20" height="17"
+                                  viewBox="0 0 20 17">
+                                  <path
+                                    d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z" />
+                                </svg>
+                                <span style="color: white;">{{ 'table.chooseImage' | translate }}</span></label>
+
+                              <!-- <img id="imageReview"  width="300px" *ngIf = "info.photo ! null" height="300px" src="{{info.photo.high}}"> -->
+                              <img id="imageReview" *ngIf="info.image " style="display: block;margin-top: 10px;" width="300px"
+                                height="300px" src="{{info.image.high_quality}}">
+                              <img id="imageReview" *ngIf="!info.image " style="display: none;margin-top: 10px" width="300px"
+                                height="300px">
+
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                  <div class="form-actions">
+                    <button type="button" class="btn btn-warning mr-1 ml-1" (click)="cancel()">
+                      <i class="feather ft-x"></i> {{'form.cancelBtn' | translate}}
+                    </button>
+                    <button type="submit" class="btn btn-primary" [disabled]="loaderBtn">
+                      <i *ngIf="loaderBtn" class="la la-spinner spinner">
+
+                      </i><i *ngIf="!loaderBtn" class="la la-check"></i> {{'form.saveBtn' | translate}}
+                    </button>
+                  
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>

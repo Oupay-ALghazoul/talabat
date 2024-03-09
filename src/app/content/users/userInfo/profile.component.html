@@ -1,0 +1,278 @@
+<div class="app-content content ">     <div class="content-wrapper">
+      
+      <div class="content-header row mb-1" [ngStyle]="{'direction': arabic ?  'rtl': 'ltr' }">
+        <app-breadcrumb class="col-12"  style="text-align: right;" [breadcrumb]="breadcrumbAr" *ngIf="arabic"></app-breadcrumb>
+        <app-breadcrumb class="col-12"  style="text-align: left;" [breadcrumb]="breadcrumb" *ngIf="!arabic"></app-breadcrumb>
+      </div>
+      <div class="content-body">
+        <div id="user-profile">
+            <section id="horizontal-form-layouts">
+              <div class="row" [ngStyle]="{'direction': arabic ?  'rtl': 'ltr' }">
+                <div class="col-md-12" >
+                  
+                    <ng-container mCardBody>
+                      <div class="loader-wrapper" *ngIf="loader">
+                        <div class="loader-container">
+                          <div class="ball-spin-fade-loader loader-blue">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                          </div>
+                        </div>
+                      </div>
+                      <form class="form form-horizontal striped-rows striped-rows form-bordered" 
+                      [ngStyle]="{'text-align': arabic ?  'right': 'left' }"
+                       *ngIf="!loader">
+                        <div class="form-body">
+                          <h4 class="form-section"><i class="feather ft-user"></i>{{ 'usersTable.userInfo' | translate }}</h4>
+                         
+                        </div>
+                        <div class="form-group row mx-auto">
+                            <div class="col-2">
+                              <img src="{{photo}}" class="rounded-circle img-border height-100 " *ngIf="photo ! null"
+                              style="width: 100px; display: block"
+                              >
+                              <label class=" label-control" 
+                              for="projectinput1" style="margin-top: -16px;">{{name}} </label>
+                            </div>
+                           
+                            <!-- <div class="col-10">
+                              <div class="row" style="margin-bottom: 10px;">
+                                <label class=" label-control col-4" 
+                                for="projectinput1" style="margin-top: -16px;">{{ 'usersTable.currentUserState' | translate }} : </label>
+                              
+                                <label  *ngIf="activated != null" class=" label-control col-4" 
+                                for="projectinput1" style="margin-top: -16px;">
+                                  <span class="badge badge-success" style="padding: 10px;" *ngIf="activated == true" >
+                                    {{ 'filterOptions.activated' | translate }}
+                                  </span>
+                                  <span class="badge badge-danger" style="padding: 10px;"  *ngIf="activated == false" >
+                                    {{ 'filterOptions.notActivated' | translate }}
+                                  </span>
+                                </label>
+                                
+                                <label class=" label-control col-4" 
+                                for="projectinput1" style="margin-top: -16px;" *ngIf="activated == null">
+                                <span class="badge badge-warning"> {{ 'filterOptions.pending' | translate }}</span></label> 
+                                <div class="col-4"></div>
+                              </div>
+                              <div class="row" style="margin-bottom: 10px;" *ngIf="showEdit">
+                                <label class=" label-control col-4" 
+                                for="projectinput1" style="margin-top: -16px;">{{ 'usersTable.userState' | translate }} : </label>
+                                
+                                <div class="col-4">
+                                  <select class="custom-select "  (change)="selectState($event.target.value)">    
+                                    <option value="0" selected disabled></option>                   
+                                    <option value="1">{{ 'filterOptions.activated' | translate }}</option>
+                                    <option value="0">{{ 'filterOptions.notActivated' | translate }}</option>  
+                                  </select>
+                                </div>
+                                <div class="col-4">
+                                  <button type="submit" class="btn btn-primary" [disabled] = "loaderBtn"
+                                  (click) = "changeState()">
+                                   <i  *ngIf="!loaderBtn"class="la la-check"></i>  
+                                   <i  *ngIf="loaderBtn" class="la la-spinner spinner"></i>
+                                   {{'form.saveBtn' | translate}}
+                                 </button>
+                                </div>
+                              </div>
+                              <div class="row" style="margin-bottom: 10px;" >
+                                <label class=" label-control col-4" 
+                                for="projectinput1" style="margin-top: -16px;">{{ 'usersTable.way' | translate }} : </label>
+                        
+                                <label  *ngIf="can_only_pay == 'Cash'" class=" label-control col-4" 
+                                for="projectinput1" style="margin-top: -16px;">{{ 'usersTable.cash' | translate }}</label>
+                                <label  *ngIf="can_only_pay == 'All'" class=" label-control col-4" 
+                                for="projectinput1" style="margin-top: -16px;">{{ 'usersTable.all' | translate }}</label>
+                                <label  *ngIf="can_only_pay == 'Online'" class=" label-control col-4" 
+                                for="projectinput1" style="margin-top: -16px;">{{ 'usersTable.online' | translate }}</label>
+                                <div class="col-4"></div>
+                              </div>
+                              <div class="row" style="margin-bottom: 10px;" *ngIf="showEdit">
+                                <label class=" label-control col-4" 
+                                for="projectinput1" style="margin-top: -16px;">{{ 'usersTable.way' | translate }} : </label>
+                                
+                                <div class="col-4">
+                                  <select class="custom-select "  (change)="selectWay($event.target.value)">    
+                                    <option value="0" disabled selected></option>                   
+                                    <option value="All">{{ 'usersTable.all' | translate }}</option>
+                                    <option value="Cash">{{ 'usersTable.cash' | translate }}</option> 
+                                    <option value="Online">{{ 'usersTable.online' | translate }}</option>   
+                                  </select>
+                                </div>
+                                <div class="col-4">
+                                  <button type="submit" class="btn btn-primary" [disabled] = "loaderBtn2"
+                                  (click) = "changeWay()">
+                                   <i  *ngIf="!loaderBtn2"class="la la-check"></i>  
+                                   <i  *ngIf="loaderBtn2" class="la la-spinner spinner"></i>
+                                   {{'form.saveBtn' | translate}}
+                                 </button>
+                                </div>
+                              </div>
+                              <div class="row" style="margin-bottom: 10px;">
+                                <label class="col-md-4 label-control" for="category" [ngStyle]="{'text-align': arabic ?  'right': 'left' }"> 
+                                  {{ 'usersTable.notes' | translate }}</label>
+                                <div class="col-md-4">
+                                    <textarea id="notes" class="form-control" value ="{{info.notes}}" [disabled] = "!showEdit"
+                                   ></textarea>
+                                </div> 
+                                <div class="col-4"  *ngIf="showEdit">
+                                  <button type="submit" class="btn btn-primary" [disabled] = "loaderBtn3"
+                                  (click) = "changeNotes()">
+                                   <i  *ngIf="!loaderBtn3"class="la la-check"></i>  
+                                   <i  *ngIf="loaderBtn3" class="la la-spinner spinner"></i>
+                                   {{'form.saveBtn' | translate}}
+                                 </button>
+                                </div>
+                              </div>
+                            </div> -->
+                           
+                         
+                        </div>
+                        <form class="form form-horizontal striped-rows form-bordered" 
+                        [formGroup]="userInfo" (ngSubmit)="onSubmit()" >
+                          <div class="form-body">
+                            <h4 class="form-section"><i class="la la-pencil"></i>{{ 'usersTable.editInfo' | translate }}</h4>
+                            <div class="form-group row mx-auto">
+                              <label class="col-md-3 label-control" for="username">{{'usersTable.email' | translate}}</label>
+                              <div class="col-md-9">
+                                <input type="text" id="email" class="form-control" formControlName="email" 
+                                [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
+                                <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                                    <div *ngIf="f.email.errors.required">{{'form.required' | translate}} </div>
+                                </div>
+                                <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                                  <div *ngIf="f.email.errors">{{'form.emailValid' | translate}}</div>
+                              </div>
+                              </div>
+                            </div>
+                            <div class="form-group row mx-auto">
+                              <label class="col-md-3 label-control" for="username">{{ 'usersTable.currentUserState' | translate }}</label>
+                              <div class="col-md-9">
+                                <select class="custom-select " formControlName="activated"> 
+                                  <option  selected disabled *ngIf="activated == null">{{ 'filterOptions.pending' | translate }}</option>                        
+                                  <option value="1">{{ 'filterOptions.activated' | translate }}</option>
+                                  <option value="0">{{ 'filterOptions.notActivated' | translate }}</option>
+      
+                                </select>
+                              </div>
+  
+                            </div>
+                          </div>
+                          <div class="form-body">                            
+                            <div class="form-group row mx-auto">
+                              <label class="col-md-3 label-control" for="username"> {{ 'usersTable.notes' | translate }}</label>
+                              <div class="col-md-9">
+                                <textarea id="notes" class="form-control"  formControlName="notes"
+                                ></textarea>
+                             
+                              </div>
+  
+                            </div>
+                          </div>
+                          <div class="form-body" >
+                            <div class="form-group row mx-auto">                                            
+                                <label class="col-md-3 label-control" for="category" [ngStyle]="{'text-align': arabic ?  'right': 'left' }"> 
+                                  {{ 'usersTable.way' | translate }}</label>
+                                <div class="col-md-9">
+                                    <select class="custom-select "   formControlName="can_only_pay" 
+                                    [ngClass]="{ 'is-invalid': submitted && f.can_only_pay.errors }">
+                                                     
+                                      <option value="All">{{ 'usersTable.all' | translate }}</option>
+                                      <option value="Cash">{{ 'usersTable.cash' | translate }}</option> 
+                                      <option value="Online">{{ 'usersTable.online' | translate }}</option>   
+                                    </select>
+                                    <div *ngIf="submitted && f.can_only_pay.errors" class="invalid-feedback">
+                                      <div *ngIf="f.can_only_pay.errors.required">{{'form.required' | translate}}</div>
+                                  </div>
+                              </div>                            
+                          </div>                                   
+                          </div>
+                          <div class="form-actions">
+                         
+                            <button type="submit" class="btn btn-primary"  [disabled]="loaderBtn"  *ngIf="showEdit">
+                            <i *ngIf="loaderBtn" class="la la-spinner spinner">
+
+                            </i><i *ngIf="!loaderBtn" class="la la-check"></i>   {{'form.saveBtn' | translate}}
+                            </button>
+                          </div>
+                        </form>
+        
+                        <h4 class="form-section"><i class="feather ft-mail"></i>{{ 'usersTable.contactInfo' | translate }}</h4>
+                        <!-- <div class="form-group row mx-auto">
+                          <label class="col-md-3 label-control" for="projectinput5">{{'usersTable.email' | translate}}</label>
+                          <div class="col-md-9">
+                            <label class="label-control" for="projectinput1" style="margin-top: -16px;">{{email}} </label>
+                          </div>
+                        </div> -->
+                        <div class="form-group row mx-auto last">
+                            <label class="col-md-3 label-control" for="projectinput4">{{'usersTable.phone' | translate}}</label>
+                            <div class="col-md-9">
+                                <label class=" label-control" for="projectinput1" style="margin-top: -16px;">{{mobile}} </label>
+                          
+                            </div>
+                        </div>
+                        <div class="form-group row mx-auto last">
+                          <label class="col-md-3 label-control" for="projectinput4">{{'usersTable.role' | translate}}</label>
+                          <div class="col-md-9">
+                              <label class=" label-control" for="projectinput1" style="margin-top: -16px;"  *ngIf ="role == 'restaurant_manager'">{{ 'filterOptions.restaurant_manager' | translate }} </label>
+                              <label class=" label-control" for="projectinput1" style="margin-top: -16px;"  *ngIf ="role != 'restaurant_manager'">{{role}} </label>
+                          </div>
+                      </div>
+                        
+                        <h4 class="form-section"><i class="la la-map-marker"></i>{{ 'usersTable.userAddress' | translate }}</h4>
+
+                        <!-- <div class="form-group row mx-auto">
+                          <label class="col-md-3 label-control" for="projectinput2">{{ 'usersTable.country' | translate }}</label>
+                          <div class="col-md-9">
+                            <label class=" label-control" for="projectinput1" style="margin-top: -16px;" *ngIf="arabic">{{country.name_ar}}</label> 
+                            <label class=" label-control" for="projectinput1" style="margin-top: -16px;" *ngIf="!arabic">{{country.name_en}}</label> 
+                        </div>  
+                        </div> -->
+                        <!-- <div class="form-group row mx-auto">
+                          <label class="col-md-3 label-control" for="projectinput2">{{ 'usersTable.city' | translate }}</label>
+                          <div class="col-md-9">
+                              <label class=" label-control" for="projectinput1" style="margin-top: -16px;" *ngIf="arabic">{{city.name_ar}}</label> 
+                              <label class=" label-control" for="projectinput1" style="margin-top: -16px;" *ngIf="!arabic">{{city.name_en}}</label> 
+
+                          </div>  
+                        </div> -->
+                        <div class="form-group row mx-auto" *ngIf= "town ! null">
+                          <label class="col-md-3 label-control" for="projectinput2">{{ 'usersTable.town' | translate }}</label>
+                          <div class="col-md-9">
+                              <label class=" label-control" for="projectinput1" style="margin-top: -16px;">{{town}}</label> 
+                          </div>  
+                        </div>
+                        <div class="form-group row mx-auto" *ngIf= "timezone ! null">
+                          <label class="col-md-3 label-control" for="projectinput2">  {{ 'addResutrant.timezone' | translate }} </label>
+                          <div class="col-md-9">
+                              <label class=" label-control" for="projectinput1" style="margin-top: -16px;">{{timezone}}</label> 
+                          </div>  
+                        </div>
+                        <div class="form-group row mx-auto">
+                          <label class="col-md-3 label-control" for="projectinput2">  {{ 'usersTable.locale' | translate }}</label>
+                          <div class="col-md-9">
+                              <label class=" label-control" for="projectinput1" style="margin-top: -16px;">{{locale}}</label>
+                          </div>  
+                        </div>
+                      </form>
+                    </ng-container>
+                </div>
+              </div>
+    
+            </section>
+        </div>
+       
+
+      </div>
+    </div>
+  </div>
+ 
+  
+
+   

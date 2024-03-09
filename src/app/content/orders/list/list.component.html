@@ -1,0 +1,278 @@
+<div class="app-content content " [ngStyle]="{'direction': arabic ?  'rtl': 'ltr' ,
+'text-align': arabic ?  'right': 'left' }">
+  <div class="content-wrapper">
+    <div class="content-header row mb-1">
+      <app-breadcrumb class="col-6" style="text-align: right;" [breadcrumb]="breadcrumbAr" *ngIf="arabic">
+      </app-breadcrumb>
+      <app-breadcrumb class="col-6" style="text-align: left;" [breadcrumb]="breadcrumb" *ngIf="!arabic">
+      </app-breadcrumb>
+    </div>
+
+    <div class="content-body">
+      <section class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-content">
+              <div class="card-body">
+                <div class="container">
+                  <div class="row">
+                    <div class="card box-border col-10" style=" margin: 0px 0px 20px 0px;">
+                      <div class="card-header">
+                        <i class="la la-filter"></i>
+                        <a class="card-title info lead" (click)="basicCollapse2 = !basicCollapse2"
+                          [attr.aria-expanded]="basicCollapse2" aria-controls="basicCollapse2">
+                          {{'table.filter' | translate}}</a>
+                      </div>
+                      <div id="basicCollapse2" [ngbCollapse]="!basicCollapse2">
+                        <div class="card-content">
+                          <div class="card-body">
+                            <form [formGroup]="search">
+                              <div class="row" style="margin-bottom : 10px;">
+                                <div class="col-md-6 col-12">
+                                  <label class="label-control" for="projectinput4">{{ 'table.dateFrom' | translate
+                                    }}</label>
+                                  <!-- <input type="date" class="form-control" formControlName="from"> -->
+                                  <input type="text" class="form-control" formControlName="from" #dp="bsDatepicker"
+                                    bsDatepicker [(bsValue)]="myDateValue">
+                                </div>
+                                <div class="col-md-6 col-12">
+                                  <label class="label-control" for="projectinput4">{{ 'table.dateTo' | translate
+                                    }}</label>
+                                  <!-- <input type="date" class="form-control" formControlName="to"> -->
+                                  <input type="text" class="form-control" formControlName="to" #dp="bsDatepicker"
+                                    bsDatepicker [(bsValue)]="myDateValue2">
+                                </div>
+                              </div>
+                              <div class="row" style="margin-bottom : 10px;">
+                                <div class="col-md-6 col-12">
+                                  <label class="label-control" for="projectinput4">{{ 'table.fromTime' | translate
+                                    }}</label>
+                                  <input type="time" class="form-control" formControlName="fromTime">
+
+                                </div>
+                                <div class="col-md-6 col-12">
+                                  <label class="label-control" for="projectinput4">{{ 'table.toTime' | translate
+                                    }}</label>
+                                  <input type="time" class="form-control" formControlName="toTime">
+
+                                </div>
+
+                              </div>
+                              <div class="row" style="margin-bottom :10px;">
+                                <div class="col-md-6 col-12">
+                                  <label class="label-control" for="projectinput4">{{ 'orderDetails.state' |
+                                    translate
+                                    }}</label>
+                                  <select class="custom-select " formControlName="state_filter">
+                                    <option value="new">{{'orderState.new' | translate}}</option>
+                                    <option value="approved">{{ 'orderState.approved' | translate }}</option>
+                                    <option value="cancelled">{{ 'orderState.cancelled' | translate }}</option>
+                                    <option value="assigned_to_delivery">{{ 'orderState.assigned_to_delivery' |
+                                      translate
+                                      }}</option>
+                                    <option value="ongoing">{{ 'orderState.ongoing' | translate }}</option>
+                                    <option value="delivered">{{ 'orderState.delivered' | translate }}</option>
+                                  </select>
+                                </div>
+
+                                <div class="col-md-6 col-12">
+                                  <label class="label-control" for="projectinput4">{{ 'orderDetails.payment_state' |
+                                    translate
+                                    }}</label>
+                                  <select class="custom-select " formControlName="payment_state_filter">
+                                    <option value="awaiting">{{'orderState.awaiting' | translate}}</option>
+                                    <option value="paid">{{ 'orderState.paid' | translate }}</option>
+                                    <option value="refunded">{{ 'orderState.refunded' | translate }}</option>
+                                    <option value="cancelled">{{ 'orderState.cancel' |
+                                      translate
+                                      }}</option>
+                                  </select>
+                                </div>
+
+                              </div>
+                              <div class="row" style="margin-bottom: 10px;">
+                                <div class="col-md-6 col-12">
+                                  <label class="label-control" for="projectinput4">{{'orderDetails.number' |
+                                    translate}}</label>
+                                  <input type="text" id="word" class="form-control"
+                                    placeholder="{{'orderDetails.number' | translate}}" formControlName="number_filter">
+                                  <div class="form-control-position" [ngStyle]="{'left': arabic ?  '10px': '88%' ,
+                                    'right': arabic ?  '88%': '10px' }">
+                                    <i class="feather ft-search"></i>
+                                  </div>
+
+                                </div>
+                                <div class="col-md-6 col-12" style="margin-top: 27px;">
+                                  <button type="submit" class="btn btn-primary" [disabled]="loaderBtn"
+                                    (click)="searchBtn()">
+                                    <i *ngIf="!loaderBtn" class="la la-check"></i>
+                                    <i *ngIf="loaderBtn" class="la la-spinner spinner"></i>
+                                    {{'table.search' | translate}}
+                                  </button>
+                                  <button type="submit" class="btn" style="background: #e0e1e2 none;    margin: 0px 12px;"
+                                    (click)="reset()">
+                                    <i class="la la-close"></i>
+
+                                    {{'table.clear' | translate}}
+                                  </button>
+
+
+                                </div>
+                              </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-2">
+                    <button class="btn btn-primary" style="background-color: #0062cc!important;
+                    border-color: #005cbf!important;" [disabled]="loader_refresh" (click)="refresh()">
+                      <i *ngIf="!loader_refresh" class="la la-refresh"></i>
+                      <i *ngIf="loader_refresh" class="la la-spinner spinner"></i>
+                      {{'orderDetails.refresh' | translate}}
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="loader-wrapper" *ngIf="loader">
+                <div class="loader-container">
+                  <div class="ball-spin-fade-loader loader-blue">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                  </div>
+                </div>
+              </div>
+              <div class="table-responsive" *ngIf="!loader">
+                <!-- <ngx-barcode style="display: none;" [bc-value]="this.order.id" [bc-format] = "'CODE128'" [bc-element-type] ="'img'" [bc-display-value]="false"></ngx-barcode>            -->
+
+                <table class="table mb-0">
+                  <thead class="bg-success white" style="background-color: #383838 !important;">
+                    <tr>
+                      <th scope="col">{{'orderDetails.orderDate' | translate}}</th>
+                      <th scope="col">{{'orderDetails.number' | translate}}</th>
+                      <th scope="col">{{'orderDetails.delivery_method' | translate}}</th>
+                      <th scope="col">{{'orderDetails.state' | translate}}</th>
+                      <th scope="col">{{'orderDetails.payment_state' | translate}}</th>
+                      <!-- <th scope="col">{{'orderDetails.shipping_state' | translate}}</th> -->
+                      <th scope="col">{{'orderDetails.total' | translate}}</th>
+                      <th scope="col">{{'table.actions' | translate }}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <label *ngIf="!isItems">{{'table.noData' | translate}}</label>
+                    <tr *ngFor="let row of result; index as i">
+                      <td>
+                        {{row.date}}
+                      </td>
+                      <td>
+                        {{row.number}}
+                      </td>
+                      <td>
+                        <a *ngIf="row.delivery_method == 'pickup'">{{ 'deliveryOption.pickup' | translate }} </a>
+                        <a *ngIf="row.delivery_method == 'delivery'">{{ 'deliveryOption.delivery' | translate }} </a>
+                      </td>
+
+                      <td>
+                        <a *ngIf="row.state == 'new'">{{ 'orderState.new' | translate }} </a>
+                        <a *ngIf="row.state == 'approved'">{{ 'orderState.approved' | translate }} </a>
+                        <a *ngIf="row.state == 'cancelled'">{{ 'orderState.cancelled' | translate }} </a>
+                        <a *ngIf="row.state == 'assigned_to_delivery'">{{ 'orderState.assigned_to_delivery' |
+                          translate }} </a>
+                        <a *ngIf="row.state == 'ongoing'">{{ 'orderState.ongoing' | translate }} </a>
+                        <a *ngIf="row.state == 'delivered'">{{ 'orderState.delivered' | translate }} </a>
+                      </td>
+                      <td>
+                        <a *ngIf="row.payment_state == 'awaiting'">{{ 'orderState.awaiting' | translate }} </a>
+                        <a *ngIf="row.payment_state == 'paid'">{{ 'orderState.paid' | translate }} </a>
+                        <a *ngIf="row.payment_state == 'refunded'">{{ 'orderState.refunded' | translate }} </a>
+                        <a *ngIf="row.payment_state == 'cancelled'">{{ 'orderState.cancel' | translate }} </a>
+                      </td>
+
+
+                      <!-- <td >
+                                <a *ngIf= "row.shipping_state == 'ready'">{{ 'orderState.ready' | translate }} </a>
+                                <a *ngIf= "row.shipping_state == 'failed'">{{ 'orderState.failed' | translate }} </a>
+                                <a *ngIf= "row.shipping_state == 'shipped'">{{ 'orderState.shipped' | translate }} </a>
+                                <a *ngIf= "row.shipping_state == 'cancelled'">{{ 'orderState.cancel' | translate }} </a>
+                              </td> -->
+                      <td>
+                        {{row.total}}
+                      </td>
+                      <!-- <td>
+                                <a class="primary edit mr-1 mrless">
+           
+                                   <i class="la la-print" (click)="print(row.id)"></i>
+                                </a>
+                              </td> -->
+                      <td>
+                        <a class="primary edit mr-1 mrless">
+                          <i class="la la-eye" (click)="showDetails(row.id)"></i></a>
+
+                        <!-- <div class="btn-group" role="group" aria-label="Basic example">
+                                <button type="button" class="btn btn-action" aria-hidden="true"
+                                (click)="ConfirmDataModal(confirmDataModalContent,row.id)">
+    
+                                  {{'table.delete' | translate}} <i class="la la-trash"></i></button>
+                                <button type="button" class="btn btn-action" (click)= "showDetails(row.id)">
+    
+                                  {{'usersTable.showOrders' | translate}} <i class="la la-eye"></i></button>
+                              </div> -->
+
+                      </td>
+
+                      <!-- <td>
+                                <a class="primary edit mr-1 mrless">
+                                  <i class="la la-eye" (click)="showDetails(row.id)"></i></a>
+                              </td> -->
+                    </tr>
+                  </tbody>
+                </table>
+                <nav aria-label="Page navigation" *ngIf="isItems">
+                  <ul class="pagination justify-content-center pagination-separate pagination-flat">
+                    <div class="first">
+                      <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [maxSize]="10"
+                        [boundaryLinks]="true" (pageChange)="onPageChange($event)"></ngb-pagination>
+                    </div>
+                  </ul>
+                </nav>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+    </section>
+  </div>
+</div>
+</div>
+
+
+
+<ng-template #confirmDataModalContent let-c="close" let-d="dismiss" class="modal-dialog">
+  <form (ngSubmit)="delete(addReplay)" #addReplay="ngForm">
+    <div class="modal-content">
+      <div class="modal-header" [ngStyle]="{'direction': arabic ?  'rtl': 'ltr' }">
+        <h5 class="modal-title" id="exampleModalLabel1">{{'form.confirmDelete' | translate}}</h5>
+
+      </div>
+      <div class="modal-body" [ngStyle]="{'text-align': arabic ?  'right': 'left' }">
+        {{'form.confirmText' | translate}}
+      </div>
+      <div class="modal-footer">
+        <div class="form-group position-relative has-icon-left mb-0">
+          <button type="button" class="btn btn-secondary" style="background-color: red!important;"
+            (click)="close(addReplay)">{{'form.confirmBtnNo' | translate}}</button>
+          <button type="submit" id="add-contact-item" class="btn" style="background-color: green!important;color: #fff;"
+            [disabled]="deleteLoader"><i class="la la-paper-plane-o d-lg-none"></i> <span class="d-none d-lg-block">
+              <i *ngIf="deleteLoader" class="la la-spinner spinner"></i>{{'form.confirmBtnYes' | translate}}</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</ng-template>

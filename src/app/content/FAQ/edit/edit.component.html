@@ -1,0 +1,108 @@
+<div class="app-content content ">
+  <div class="content-wrapper">
+    <div class="content-header row mb-1"  [ngStyle]="{'direction': arabic ?  'rtl': 'ltr' }">
+      <app-breadcrumb class="col-6" style="text-align: right;" [breadcrumb]="breadcrumbAr" *ngIf="arabic"></app-breadcrumb>
+      <app-breadcrumb class="col-6" style="text-align: left;" [breadcrumb]="breadcrumb" *ngIf="!arabic"></app-breadcrumb>
+    </div>
+
+       
+      <div class="content-body" [ngStyle]="{'direction': arabic ?  'rtl': 'ltr' }">
+          <section class="row">
+              <div class="col-12">
+                  <div class="card">
+                    <div class="loader-wrapper" *ngIf="loader">
+                      <div class="loader-container">
+                        <div class="ball-spin-fade-loader loader-blue">
+                          <div></div>
+                          <div></div>
+                          <div></div>
+                          <div></div>
+                          <div></div>
+                          <div></div>
+                          <div></div>
+                          <div></div>
+                        </div>
+                      </div>
+                    </div>  
+
+                    <div class="card-content" *ngIf="!loader">
+                        <div class="card-body">
+                          <form class="form form-horizontal" [formGroup]="editForm"  [ngStyle]="{'direction': arabic ?  'rtl': 'ltr' }"
+                          (ngSubmit)="submit()" >
+                          <div class="form-body" >
+                            <div class="form-group row mx-auto">                                            
+                                <label class="col-md-3 label-control" for="category" [ngStyle]="{'text-align': arabic ?  'right': 'left' }"> 
+                                  {{'FAQTable.question' | translate}} ({{'table.en' | translate}})</label>
+                                <div class="col-md-9">
+                                    <textarea id="question_en" class="form-control" formControlName="question_en"
+                                    [ngClass]="{ 'is-invalid': submitted && f.question_en.errors }"></textarea>
+                                    <div *ngIf="submitted && f.question_en.errors" class="invalid-feedback">
+                                        <div *ngIf="f.question_en.errors.required">{{'form.required' | translate}}</div>
+                                        <div *ngIf="f.question_en.errors?.pattern">{{'form.english' | translate}}</div>
+
+                                    </div>
+                                </div>                            
+                            </div>                                   
+                          </div>
+                          <div class="form-body" >
+                            <div class="form-group row mx-auto">                                            
+                                <label class="col-md-3 label-control" for="category" [ngStyle]="{'text-align': arabic ?  'right': 'left' }"> 
+                                  {{'FAQTable.question' | translate}} ({{'table.ar' | translate}})</label>
+                                <div class="col-md-9">
+                                    <textarea id="question_ar" class="form-control" formControlName="question_ar"
+                                    [ngClass]="{ 'is-invalid': submitted && f.question_ar.errors }"></textarea>
+                                    <div *ngIf="submitted && f.question_ar.errors" class="invalid-feedback">
+                                        <div *ngIf="f.question_ar.errors.required">{{'form.required' | translate}}</div>
+                                        <div *ngIf="f.question_ar.errors?.pattern">{{'form.arabic' | translate}}</div>
+                                    </div>
+                                </div>                            
+                            </div>                                   
+                          </div>
+                          <div class="form-body" >
+                            <div class="form-group row mx-auto">                                            
+                                <label class="col-md-3 label-control" for="category" [ngStyle]="{'text-align': arabic ?  'right': 'left' }"> 
+                                  {{'FAQTable.answer' | translate}} ({{'table.en' | translate}})</label>
+                                <div class="col-md-9">
+                                    <textarea id="answer_en" class="form-control" formControlName="answer_en"
+                                    [ngClass]="{ 'is-invalid': submitted && f.answer_en.errors }"></textarea>
+                                    <div *ngIf="submitted && f.answer_en.errors" class="invalid-feedback">
+                                        <div *ngIf="f.answer_en.errors.required">{{'form.required' | translate}}</div>
+                                        <div *ngIf="f.answer_en.errors?.pattern">{{'form.english' | translate}}</div>
+                                    </div>
+                                </div>                            
+                            </div>                                   
+                          </div>
+                          <div class="form-body" >
+                            <div class="form-group row mx-auto">                                            
+                                <label class="col-md-3 label-control" for="category" [ngStyle]="{'text-align': arabic ?  'right': 'left' }"> 
+                                  {{'FAQTable.answer' | translate}} ({{'table.ar' | translate}})</label>
+                                <div class="col-md-9">
+                                    <textarea id="answer_ar" class="form-control" formControlName="answer_ar"
+                                    [ngClass]="{ 'is-invalid': submitted && f.answer_ar.errors }"></textarea>
+                                    <div *ngIf="submitted && f.answer_ar.errors" class="invalid-feedback">
+                                        <div *ngIf="f.answer_ar.errors.required">{{'form.required' | translate}}</div>
+                                        <div *ngIf="f.answer_ar.errors?.pattern">{{'form.arabic' | translate}}</div>
+                                    </div>
+                                </div>                            
+                            </div>                                   
+                          </div>
+                      
+                            <div class="form-actions">
+                              <button type="button" class="btn btn-warning mr-1 ml-1" (click)="cancel()">
+                                <i class="feather ft-x"></i>   {{'form.cancelBtn' | translate}}
+                              </button>
+                              <button type="submit" class="btn btn-primary"  [disabled]="loaderBtn">
+                              <i *ngIf="loaderBtn" class="la la-spinner spinner">
+
+                              </i><i *ngIf="!loaderBtn" class="la la-check"></i>   {{'form.saveBtn' | translate}}
+                              </button>
+                            </div>
+                          </form>  
+                        </div>
+                    </div>  
+                  </div>
+              </div>
+          </section>
+      </div>
+    </div>    
+</div>

@@ -1,0 +1,11 @@
+
+ :host ::ng-deep .datatable-body-cell-label,
+ :host ::ng-deep .datatable-header-cell {
+   padding: 0.6rem;
+   text-align: center;
+ }
+ .btn-secondary{
+  background-color: #ff6500!important;
+  border-color: #ff6500!important;
+  margin: 0px 3px;
+}

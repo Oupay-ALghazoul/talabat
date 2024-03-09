@@ -1,0 +1,387 @@
+
+<div class="app-content content "   [ngStyle]="{'direction': arabic ?  'rtl': 'ltr' ,
+'text-align': arabic ?  'right': 'left' }">
+ <div class="content-wrapper">
+  <div class="content-header row mb-1" >
+    <app-breadcrumb class="col-6"  style="text-align: right;"  [breadcrumb]="breadcrumbAr" *ngIf="langCode == 'ar'"></app-breadcrumb>
+    <app-breadcrumb class="col-6"  style="text-align: left;"  [breadcrumb]="breadcrumb" *ngIf="langCode == 'en'"></app-breadcrumb>
+
+  </div>
+  <div class="content-header row mb-1"  *ngIf="showAdd">
+    <div class="col-4"  >
+      <button type="button" class="btn btn-primary mr-1 ml-1" (click)="addCode(addDiscountModalContent)">
+        <i class="la la-plus-circle" aria-hidden="true"  style="font-size:18px;cursor: pointer;"></i>   {{ 'discountCode.addDiscountCode' | translate }}
+      </button>
+      
+    </div>
+    <div class="col-4" >
+    <button type="button" class="btn btn-primary mr-1 ml-1" (click)="addCodeMarketing(addDiscountModalContent)">
+      <i class="la la-plus-circle" aria-hidden="true"  style="font-size:18px;cursor: pointer;"></i>   {{ 'discountCode.addDiscountCodeMarketing' | translate }}
+    </button>
+   
+    </div>
+    <div class="col-4" >
+      <button type="button" class="btn btn-primary mr-1 ml-1" (click)="addCodeDelivery(addDiscountModalContent2)">
+        <i class="la la-plus-circle" aria-hidden="true"  style="font-size:18px;cursor: pointer;"></i>   {{ 'discountCode.addDiscountCodeDelivery' | translate }}
+      </button>
+      
+    </div>
+  </div>
+
+    <div class="content-body" >    
+      <section class="row">
+          <div class="col-12">
+              <div class="card">
+                <div class="card-content">
+                  <div class="card-body">
+                 
+                      <div class="loader-wrapper" *ngIf="loader">
+                      <div class="loader-container">
+                      <div class="ball-spin-fade-loader loader-blue">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                      </div>
+                      </div>
+                      </div>
+                 
+                      <div class="table-responsive" *ngIf="!loader">
+                        <table class="table mb-0">
+                          <thead class="bg-success white" style="background-color: #383838 !important;">
+                            <tr >
+                          
+                              <th scope="col"> {{'discountCode.code' | translate}}</th>
+                              <th scope="col"> {{'discountCode.value' | translate}}</th>
+                              <th scope="col"> {{'discountCode.expiration' | translate}}</th>
+                              <th scope="col">{{'discountCode.title' | translate }}</th>
+                              <th scope="col">{{'discountCode.state' | translate }}</th>
+                              <th scope="col"> {{'discountCode.type' | translate}}</th>
+                               <th scope="col">{{'usersTable.activate' | translate }}</th>
+                               <th scope="col">{{'product.delete' | translate }}</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <label *ngIf="!isItems">{{'table.noData' | translate}}</label>
+                            <tr *ngFor="let row of result; index as i">
+                          
+                              <td>
+                                {{row.code}}
+                              </td> 
+                              <td>
+                                {{row.value}}
+                              </td> 
+                              <td>
+                                {{row.expiration}}
+                              </td> 
+                              <td>
+                                {{row.title}}
+                              </td>
+                                <td>
+                                <span class="badge badge-success" *ngIf="row.active" style="padding : 7px">
+                                  {{ 'filterOptions.activated' | translate }}
+                                </span>
+                                <span class="badge badge-danger" *ngIf="!row.active" style="padding : 7px">
+                                  {{ 'filterOptions.notActivated' | translate }}
+                                </span>
+                                
+                              </td> 
+                              <td  *ngIf="row.for_marketing && !row.on_delivery_cost">                 
+                                  {{'discountCode.for_marketing' | translate}}
+                              </td>
+                              <td *ngIf="!row.for_marketing && row.on_delivery_cost">                 
+                                {{'discountCode.on_delivery_cost' | translate}}
+                              </td>
+                              <td  *ngIf="!row.for_marketing && !row.on_delivery_cost">                 
+                                {{'discountCode.public' | translate}}
+                              </td>
+                              <td>
+                                <ui-switch [checked]="row.active"   id="change{{i}}"
+                                (change)="onChange( row , i , $event)"  size="small">
+
+                                </ui-switch>
+                             
+                                <i  id="loaderHome{{i}}" class="la la-spinner spinner" hidden></i>
+                               
+                              </td>
+                              <!-- <td>
+                                <a class="primary edit mr-1 mrless"  *ngIf="row.for_marketing && !row.on_delivery_cost">
+                                  <i class="la la-pencil"   (click)="editCodeMarketing(addDiscountModalContent , row)" ></i
+                                ></a>
+                                <a class="primary edit mr-1 mrless"  *ngIf="!row.for_marketing && row.on_delivery_cost">
+                                  <i class="la la-pencil"  (click)="editCodeDelivery(addDiscountModalContent2 , row)" ></i
+                                ></a>
+                                 <a class="primary edit mr-1 mrless"  *ngIf="!row.for_marketing && !row.on_delivery_cost">
+                                  <i class="la la-pencil"   (click)="editCode(addDiscountModalContent , row)" ></i
+                                ></a>
+                              </td> -->
+                               
+                             
+                                     
+                              <td>
+                                  <a class="danger delete mr-1 mrless" >
+                                    <i class="la la-trash" aria-hidden="true" (click)="ConfirmDataModal(confirmDataModalContent,row.code_group)"></i>
+                                  </a>   
+                              </td>  
+                              
+                            </tr>
+                          </tbody>
+                         
+                        </table>
+                        <!-- <nav aria-label="Page navigation" *ngIf="isItems">
+                          <ul class="pagination justify-content-center pagination-separate pagination-flat">
+                            <div class="first">
+                              <ngb-pagination [collectionSize]="collectionSize" [(page)]="page"  [boundaryLinks]="true" (pageChange)="onPageChange($event)"></ngb-pagination>
+                            </div> 
+                          </ul>
+                        </nav> -->
+                      </div>
+                    </div>
+                </div>   
+            </div>
+          </div>
+      </section>
+    </div>   
+        
+    </div>    
+</div>
+
+<ng-template #confirmDataModalContent let-c="close" let-d="dismiss" class="modal-dialog" >
+  <form (ngSubmit)="delete(addReplay)" #addReplay="ngForm" [ngStyle]="{'direction': arabic ?  'rtl': 'ltr' ,
+  'text-align': arabic ?  'right': 'left' }">
+    <div class="modal-content">
+    <div class="modal-header" >
+      <h5 class="modal-title" id="exampleModalLabel1">{{'form.confirmDelete' | translate}}</h5>
+   
+    </div>
+    <div class="modal-body" >
+      {{'form.confirmText' | translate}}
+    </div>
+    <div class="modal-footer">
+      <div class="form-group position-relative has-icon-left mb-0">
+        <button type="button" class="btn btn-secondary" style="background-color: red!important;"  (click) = "close(addReplay)">{{'form.confirmBtnNo' | translate}}</button>
+        <button type="submit" id="add-contact-item"  class="btn" style="background-color: green!important;color: #fff;" [disabled]="deleteLoader"><i
+            class="la la-paper-plane-o d-lg-none"></i> <span class="d-none d-lg-block">
+              <i *ngIf="deleteLoader" class="la la-spinner spinner"></i>{{'form.confirmBtnYes' | translate}}</span>
+            </button>
+      </div>
+    </div>
+    </div>
+  </form>
+</ng-template>
+
+<ng-template #addDiscountModalContent let-c="close" let-d="dismiss" class="modal-dialog" >
+  <form (ngSubmit)="submit(addForm)" [formGroup]="addForm" [ngStyle]="{'direction': arabic ?  'rtl': 'ltr' ,
+  'text-align': arabic ?  'right': 'left' }" >
+    <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel1">{{title}}</h5>
+   
+    </div>
+    <div class="modal-body">
+      <div class="form-body" >
+        <div class="form-group row mx-auto">                                            
+            <label class="col-md-3 label-control" for="category" > 
+              {{'discountCode.title' | translate}}</label>
+            <div class="col-md-9">
+              <input type="text" id="title" class="form-control" formControlName="title" >
+             
+            </div>     
+            </div>                            
+        </div>   
+      <div class="form-body" >
+        <div class="form-group row mx-auto">                                            
+            <label class="col-md-3 label-control" for="category" > 
+              {{'discountCode.body' | translate}}</label>
+            <div class="col-md-9">
+                <textarea type="text" id="body" class="form-control" formControlName="body"
+               ></textarea>
+            </div>                            
+        </div>                                   
+      </div>
+     
+      <div class="form-body" >
+        <div class="form-group row mx-auto">      
+          <label class="col-12 label-control" >
+            {{'discountCode.note' | translate }} : </label>     
+            <div class="col-12">
+                <div class="row" style="margin-bottom : 10px">
+                  <div class="col-4">
+                    <input type="radio" name="way" value="percentage"   (change)="changeWay($event.target.defaultValue)">
+                    <label for="percentage" class="label-control"> {{'discountCode.percentage' | translate}} </label>
+                  </div>
+                  <div class="col-8">
+                    <input type="number" id="percentage" class="form-control" formControlName="percentage"
+                     [ngClass]="{ 'is-invalid': submitted && g.percentage.errors }">
+                    <div *ngIf="submitted && g.percentage.errors" class="invalid-feedback">
+                        <div *ngIf="g.percentage.errors.min">{{'discountCode.percentageMin' | translate}} </div>
+                    </div>
+                    <div *ngIf="submitted && g.percentage.errors" class="invalid-feedback">
+                      <div *ngIf="g.percentage.errors.max">{{'discountCode.percentageMax' | translate}} </div>
+                  </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-4">
+                    <input type="radio" name="way" value="amount"   (change)="changeWay($event.target.defaultValue)">
+                    <label for="amount" class="label-control"> {{'discountCode.amount' | translate}} </label>
+                  </div>
+                  <div class="col-8">
+                    <input type="number" id="amount" class="form-control" formControlName="amount">
+                  </div>
+                </div>
+            </div>                            
+        </div>                                   
+      </div>
+      <div class="form-body" >
+        <div class="form-group row mx-auto">                                            
+            <label class="col-md-3 label-control" for="category" > 
+              {{'discountCode.active' | translate}}</label>
+            <div class="col-md-9">
+              <ui-switch [checked]="true"  formControlName="active"  size="small"> </ui-switch>
+         
+            </div>                            
+        </div>                                   
+      </div>
+      <div class="form-body" >
+        <div class="form-group row mx-auto">                                            
+            <label class="col-md-3 label-control" for="category" > 
+              {{'discountCode.expiration' | translate}}</label>
+            <div class="col-md-9">
+                <!-- <input type="date" id="expiration" class="form-control" formControlName="expiration"
+                [ngClass]="{ 'is-invalid': submitted && g.expiration.errors }">
+                <div *ngIf="submitted && g.expiration.errors" class="invalid-feedback">
+                    <div *ngIf="g.expiration.errors.required">{{'form.required' | translate}}</div>
+                </div> -->
+                <input [owlDateTime]="dt1"  class="form-control datepicker" formControlName="expiration"
+                [ngClass]="{ 'is-invalid': submitted && g.expiration.errors }">
+                <span class="pass-icon" [owlDateTimeTrigger]="dt1">
+                    <i class="fas fa-calendar-alt"></i>
+                </span>
+                <owl-date-time #dt1></owl-date-time>
+                <div *ngIf="submitted && g.expiration.errors" class="invalid-feedback">
+                  <div *ngIf="g.expiration.errors.required">{{'form.required' | translate}}</div>
+                </div> 
+            </div>                            
+        </div>                                   
+      </div>
+      <div class="form-body" >
+        <div class="form-group row mx-auto">                                            
+            <label class="col-md-3 label-control" for="category"> 
+              {{'discountCode.code' | translate}}</label>
+            <div class="col-md-9">
+              <input type="text" id="code" class="form-control" formControlName="code" 
+              [ngClass]="{ 'is-invalid': submitted && g.code.errors }">
+                <div *ngIf="submitted && g.code.errors" class="invalid-feedback">
+                    <div *ngIf="g.code.errors.required">{{'form.required' | translate}}</div>
+                </div>
+            </div>     
+            </div>                            
+        </div>                                   
+      </div>
+   
+    <div class="modal-footer">
+      <div class="form-group position-relative has-icon-left mb-0">
+        <button type="button"  class="btn btn-secondary" style="background-color: red!important;"  (click) = "closeAddOption(addForm)">{{'extra.close' | translate}}</button>
+        <button type="submit"paper id="add-contact-item" class="btn" style="background-color: green!important;color: #fff;"  [disabled]="addLoader"><i
+            class="la la--plane-o d-lg-none"></i> <span class="d-none d-lg-block">
+              <i *ngIf="addLoader" class="la la-spinner spinner"></i>{{'form.saveBtn' | translate}}</span>
+        </button>
+      </div>
+    </div>
+    </div>
+  </form>
+</ng-template>
+
+<ng-template #addDiscountModalContent2 let-c="close" let-d="dismiss" class="modal-dialog" >
+  <form (ngSubmit)="submitDelivery(addFormDelivery)" [formGroup]="addFormDelivery" [ngStyle]="{'direction': arabic ?  'rtl': 'ltr' ,
+  'text-align': arabic ?  'right': 'left' }" >
+    <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel1"> {{ 'discountCode.addDiscountCodeDelivery' | translate }}</h5>
+   
+    </div>
+    <div class="modal-body" >
+      <div class="form-body" >
+        <div class="form-group row mx-auto">                                            
+            <label class="col-md-3 label-control" for="category" > 
+              {{'discountCode.title' | translate}}</label>
+            <div class="col-md-9">
+              <input type="text" id="title" class="form-control" formControlName="title" >
+             
+            </div>     
+            </div>                            
+        </div> 
+      <div class="form-body" >
+        <div class="form-group row mx-auto">                                            
+            <label class="col-md-3 label-control" for="category"> 
+              {{'discountCode.body' | translate}}</label>
+            <div class="col-md-9">
+                <textarea type="text" id="body" class="form-control" formControlName="body"
+               ></textarea>
+            </div>                            
+        </div>                                   
+      </div>
+      <div class="form-body" >
+        <div class="form-group row mx-auto">                                            
+            <label class="col-md-3 label-control" for="category" > 
+              {{'discountCode.active' | translate}}</label>
+            <div class="col-md-9">
+              <ui-switch [checked]="true"  formControlName="active"  size="small"> </ui-switch>
+         
+            </div>                            
+        </div>                                   
+      </div>
+      <div class="form-body" >
+        <div class="form-group row mx-auto">                                            
+            <label class="col-md-3 label-control" for="category" > 
+              {{'discountCode.expiration' | translate}}</label>
+            <div class="col-md-9">
+                <!-- <input type="date" id="expiration" class="form-control" formControlName="expiration"
+                [ngClass]="{ 'is-invalid': submitted && h.expiration.errors }">
+                <div *ngIf="submitted && h.expiration.errors" class="invalid-feedback">
+                    <div *ngIf="h.expiration.errors.required">{{'form.required' | translate}}</div>
+                </div> -->
+                <input [owlDateTime]="dt2"  class="form-control datepicker" formControlName="expiration" 
+                [ngClass]="{ 'is-invalid': submitted && h.expiration.errors }">
+                <span class="pass-icon" [owlDateTimeTrigger]="dt2">
+                    <i class="fas fa-calendar-alt"></i>
+                </span>
+                <owl-date-time #dt2 ></owl-date-time>
+                <div *ngIf="submitted && h.expiration.errors" class="invalid-feedback">
+                  <div *ngIf="h.expiration.errors.required">{{'form.required' | translate}}</div>
+                </div> 
+            </div>                            
+        </div>                                   
+      </div>
+      <div class="form-body" >
+        <div class="form-group row mx-auto">                                            
+            <label class="col-md-3 label-control" for="category" > 
+              {{'discountCode.code' | translate}}</label>
+            <div class="col-md-9">
+              <input type="text" id="code" class="form-control" formControlName="code"
+              [ngClass]="{ 'is-invalid': submitted && h.code.errors }">
+                <div *ngIf="submitted && h.code.errors" class="invalid-feedback">
+                    <div *ngIf="h.code.errors.required">{{'form.required' | translate}}</div>
+                </div>
+            </div>     
+            </div>                            
+        </div>                                   
+      </div>
+   
+    <div class="modal-footer">
+      <div class="form-group position-relative has-icon-left mb-0">
+        <button type="button"  class="btn btn-secondary" style="background-color: red!important;"  (click) = "closeAddDelivery(addFormDelivery)">{{'extra.close' | translate}}</button>
+        <button type="submit"paper id="add-contact-item" class="btn" style="background-color: green!important;color: #fff;"   [disabled]="addLoader2"><i
+            class="la la--plane-o d-lg-none"></i> <span class="d-none d-lg-block">
+              <i *ngIf="addLoader2" class="la la-spinner spinner"></i>{{'form.saveBtn' | translate}}</span>
+        </button>
+      </div>
+    </div>
+    </div>
+  </form>
+</ng-template>

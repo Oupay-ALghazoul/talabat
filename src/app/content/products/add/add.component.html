@@ -1,0 +1,1730 @@
+<div class="app-content content ">
+  <div class="content-wrapper">
+    <div class="content-header row mb-1" [ngStyle]="{'direction': arabic ?  'rtl': 'ltr' }">
+      <app-breadcrumb class="col-6" style="text-align: right;" [breadcrumb]="breadcrumbAr" *ngIf="arabic">
+      </app-breadcrumb>
+      <app-breadcrumb class="col-6" style="text-align: left;" [breadcrumb]="breadcrumb" *ngIf="!arabic">
+      </app-breadcrumb>
+    </div>
+
+
+    <div class="content-body" [ngStyle]="{'direction': arabic ?  'rtl': 'ltr' }">
+      <section class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-content">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-2">
+                    <div class="card">
+                      <ul class="list-group  shadow-sm box-border" style="padding: 0px;"
+                        [ngStyle]="{'text-align': arabic ?  'right': 'left' }">
+                        <!-- <div class="btn-group-vertical mr-2 shadow-sm  mb-5 bg-white rounded" role="group" aria-label="First group"> -->
+                        <li class="list-group-item list-group-item-action active" id="tap-detials"
+                          (click)="showDetails($event)">
+                          {{'product.details' | translate}} </li>
+                        <li class="list-group-item list-group-item-action" id="tap-category"
+                          (click)="showCategory($event)">
+                          {{'product.category' | translate}} </li>
+                        <li class="list-group-item list-group-item-action" (click)="showMedia($event)">
+                          {{'product.media' | translate}} </li>
+                        <li class="list-group-item list-group-item-action" id="tap-discount"
+                          (click)="showDiscount($event)"> {{'product.discount' | translate}} </li>
+                        <li class="list-group-item list-group-item-action" id="tap-offer" (click)="showOffers($event)">
+                          {{'product.offers' | translate}} </li>
+                        <li class="list-group-item list-group-item-action" (click)="showAttributes($event)">
+                          {{'product.attributes' | translate}} </li>
+                        <li class="list-group-item list-group-item-action" (click)="showColors($event)">
+                          {{'product.colors_sizes' | translate}} </li>
+                        <li class="list-group-item list-group-item-action" (click)="showAssociations($event)">
+                          {{'product.associations' | translate}} </li>
+                        <li class="list-group-item list-group-item-action" id="tap-inventory"
+                          (click)="showInventory($event)"> {{'product.inventory' | translate}} </li>
+                        <!-- </div> -->
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="col-10">
+                    <div class="loader-wrapper" *ngIf="loader">
+                      <div class="loader-container">
+                        <div class="ball-spin-fade-loader loader-blue">
+                          <div></div>
+                          <div></div>
+                          <div></div>
+                          <div></div>
+                          <div></div>
+                          <div></div>
+                          <div></div>
+                          <div></div>
+                        </div>
+                      </div>
+                    </div>
+                    <form [formGroup]="detailsForm" id="details" *ngIf="!loader" [ngStyle]="{'direction': arabic ?  'rtl': 'ltr' ,
+                                    'text-align': arabic ?  'right': 'left' }">
+
+                      <div class="card box-border  mb-3">
+                        <div class="card-header">{{'product.details' | translate}} </div>
+                        <div class="row">
+                          <div class=" col-6">
+                            <div class="card box-border" style="margin : 20px">
+                              <div class="card-content ">
+                                <div class="card-body">
+                                  <div class="form-body">
+                                    <div class="form-group row mx-auto">
+                                      <label class="col-md-3 label-control" for="category">
+                                        {{'product.code' | translate}}</label>
+                                      <div class="col-md-9">
+                                        <input type="text" id="code" class="form-control" formControlName="code"
+                                          [ngClass]="{ 'is-invalid': submitted && f1.code.errors }">
+                                        <div *ngIf="submitted && f1.code.errors" class="invalid-feedback">
+                                          <div *ngIf="f1.code.errors.required">{{'form.required' | translate}}</div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="form-body">
+                                    <div class="form-group row mx-auto">
+                                      <label class="col-md-3 label-control" for="category">
+                                        {{'product.barcode' | translate}}</label>
+                                      <div class="col-md-9">
+                                        <input type="text" id="barcode" class="form-control" formControlName="barcode"
+                                          [ngClass]="{ 'is-invalid': submitted && f1.barcode.errors }">
+                                        <div *ngIf="submitted && f1.barcode.errors" class="invalid-feedback">
+                                          <div *ngIf="f1.barcode.errors.required">{{'form.required' | translate}}</div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+
+                            </div>
+                          </div>
+                          <div class="col-6">
+                            <div class="card " style="margin : 20px">
+                              <div class="card-content ">
+                                <div class="card-body">
+                                  <div class="form-body">
+                                    <div class="form-group row mx-auto">
+                                      <label class="col-md-6 label-control" for="category">
+                                        {{'category.activateState' | translate}}</label>
+                                      <div class="col-md-6">
+                                        <ui-switch [checked]="activated" formControlName="activated" size="small">
+
+                                        </ui-switch>
+
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="form-body">
+                                    <div class="form-group row mx-auto">
+                                      <label class="col-md-6 label-control" for="category">
+                                        {{'product.shipping_required' | translate}}</label>
+                                      <div class="col-md-6">
+                                        <ui-switch [checked]="requires_shipping" formControlName="requires_shipping"
+                                          size="small">
+
+                                        </ui-switch>
+
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="card box-border" style="margin : 20px">
+                          <div class="card-header">
+                            <i class="flag-icon flag-icon-gb"></i>
+                            <a class="card-title info lead" (click)="basicCollapse1 = !basicCollapse1"
+                              [attr.aria-expanded]="!basicCollapse1" aria-controls="basicCollapse1">
+                              {{'header.english' | translate}}</a>
+                          </div>
+                          <div id="basicCollapse1" [ngbCollapse]="basicCollapse1">
+                            <div class="card-content">
+                              <div class="card-body">
+                                <div class="form-body">
+                                  <div class="form-group row mx-auto">
+                                    <label class="col-md-3 label-control" for="category">
+                                      {{'product.name' | translate}}</label>
+                                    <div class="col-md-9">
+                                      <input type="text" id="name_en" class="form-control" formControlName="name_en"
+                                        [ngClass]="{ 'is-invalid': submitted && f1.name_en.errors }">
+                                      <div *ngIf="submitted && f1.name_en.errors" class="invalid-feedback">
+                                        <div *ngIf="f1.name_en.errors.required">{{'form.required' | translate}}</div>
+                                        <div *ngIf="f1.name_en.errors?.pattern">{{'form.english' | translate}}</div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="form-body">
+                                  <div class="form-group row mx-auto">
+                                    <label class="col-md-3 label-control" for="category">
+                                      {{'product.short_description' | translate}}</label>
+                                    <div class="col-md-9">
+                                      <!--- <textarea id="short_description_en" class="form-control" formControlName="short_description_en"
+                                                            [ngClass]="{ 'is-invalid': submitted && f1.short_description_en.errors }"></textarea> -->
+
+                                      <quill-editor id="short_description_en" formControlName="short_description_en"
+                                        [styles]="{height: '200px'}"></quill-editor>
+
+                                    </div>
+                                    <div *ngIf="submitted && f1.short_description_en.errors" class="invalid-feedback">
+                                      <div *ngIf="f1.short_description_en.errors.required">{{'form.required' |
+                                        translate}}</div>
+                                      <div *ngIf="f1.short_description_en.errors?.pattern">{{'form.english' |
+                                        translate}}</div>
+                                    </div>
+
+                                  </div>
+                                </div>
+                                <div class="form-body">
+                                  <div class="form-group row mx-auto">
+                                    <label class="col-md-3 label-control" for="category">
+                                      {{'product.description' | translate}}</label>
+                                    <div class="col-md-9">
+                                      <quill-editor id="description_en" formControlName="description_en"
+                                        [styles]="{height: '200px'}"></quill-editor>
+                                      <!-- <textarea id="description_en" class="form-control" formControlName="description_en"
+                                                            [ngClass]="{ 'is-invalid': submitted && f1.description_en.errors }"></textarea> -->
+                                      <div *ngIf="submitted && f1.description_en.errors" class="invalid-feedback">
+                                        <div *ngIf="f1.description_en.errors.required">{{'form.required' | translate}}
+                                        </div>
+                                        <div *ngIf="f1.description_en.errors?.pattern">{{'form.english' | translate}}
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="form-body">
+                                  <div class="form-group row mx-auto">
+                                    <label class="col-md-3 label-control" for="category">
+                                      {{'product.meta_tag_title' | translate}}</label>
+                                    <div class="col-md-9">
+                                      <input type="text" id="meta_tag_title_en" class="form-control"
+                                        formControlName="meta_tag_title_en"
+                                        [ngClass]="{ 'is-invalid': submitted && f1.meta_tag_title_en.errors }">
+                                      <div *ngIf="submitted && f1.meta_tag_title_en.errors" class="invalid-feedback">
+                                        <div *ngIf="f1.meta_tag_title_en.errors.required">{{'form.required' |
+                                          translate}}</div>
+                                        <div *ngIf="f1.meta_tag_title_en.errors?.pattern">{{'form.english' | translate}}
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="form-body">
+                                  <div class="form-group row mx-auto">
+                                    <label class="col-md-3 label-control" for="category">
+                                      {{'product.meta_tag_keywords' | translate }}</label>
+                                    <div class="col-md-9">
+                                      <div class="row" style="margin-bottom: 10px;"
+                                        *ngFor="let string of array; let i = index">
+                                        <div class="col-10">
+                                          <input type="text" id="keywords_en{{i}}" class="form-control"
+                                            (change)="change_keywords_en(i)">
+                                        </div>
+                                        <div class="col-1">
+                                          <button class=" plus " id="plus{{i}}" (click)="add('new' , i )">+</button>
+                                        </div>
+                                        <div class="col-1">
+                                          <button class=" plus " id="minus{{i}}" (click)="remove(i )" hidden>-</button>
+                                        </div>
+
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="card-header">
+                            <i class="flag-icon flag-icon-kw"></i>
+                            <a class="card-title info lead" (click)="basicCollapse2 = !basicCollapse2"
+                              [attr.aria-expanded]="basicCollapse2" aria-controls="basicCollapse2">
+                              {{'header.arabic' | translate}}</a>
+                          </div>
+                          <div id="basicCollapse2" [ngbCollapse]="!basicCollapse2">
+                            <div class="card-content">
+                              <div class="card-body">
+                                <div class="form-body">
+                                  <div class="form-group row mx-auto">
+                                    <label class="col-md-3 label-control" for="category">
+                                      {{'product.name' | translate}}</label>
+                                    <div class="col-md-9">
+                                      <input type="text" id="name_ar" class="form-control" formControlName="name_ar"
+                                        [ngClass]="{ 'is-invalid': submitted && f1.name_ar.errors }">
+                                      <div *ngIf="submitted && f1.name_ar.errors" class="invalid-feedback">
+                                        <div *ngIf="f1.name_ar.errors.required">{{'form.required' | translate}}</div>
+                                        <div *ngIf="f1.name_ar.errors?.pattern">{{'form.arabic' | translate}}</div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="form-body">
+                                  <div class="form-group row mx-auto">
+                                    <label class="col-md-3 label-control" for="category">
+                                      {{'product.short_description' | translate}}</label>
+                                    <div class="col-md-9">
+                                      <quill-editor id="short_description_ar" formControlName="short_description_ar"
+                                        [styles]="{height: '200px'}"></quill-editor>
+                                      <!-- <textarea id="short_description_ar" class="form-control" formControlName="short_description_ar"
+                                                            [ngClass]="{ 'is-invalid': submitted && f1.short_description_ar.errors }"></textarea> -->
+                                      <div *ngIf="submitted && f1.short_description_ar.errors" class="invalid-feedback">
+                                        <div *ngIf="f1.short_description_ar.errors.required">{{'form.required' |
+                                          translate}}</div>
+                                        <div *ngIf="f1.short_description_ar.errors?.pattern">{{'form.arabic' |
+                                          translate}}</div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="form-body">
+                                  <div class="form-group row mx-auto">
+                                    <label class="col-md-3 label-control" for="category">
+                                      {{'product.description' | translate}}</label>
+                                    <div class="col-md-9">
+                                      <quill-editor id="description_ar" formControlName="description_ar"
+                                        [styles]="{height: '200px'}"></quill-editor>
+                                      <!-- <textarea id="description_ar" class="form-control" formControlName="description_ar"
+                                                            [ngClass]="{ 'is-invalid': submitted && f1.description_ar.errors }"></textarea> -->
+                                      <div *ngIf="submitted && f1.description_ar.errors" class="invalid-feedback">
+                                        <div *ngIf="f1.description_ar.errors.required">{{'form.required' | translate}}
+                                        </div>
+                                        <div *ngIf="f1.description_ar.errors?.pattern">{{'form.arabic' | translate}}
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="form-body">
+                                  <div class="form-group row mx-auto">
+                                    <label class="col-md-3 label-control" for="category">
+                                      {{'product.meta_tag_title' | translate}}</label>
+                                    <div class="col-md-9">
+                                      <input type="text" id="meta_tag_title_ar" class="form-control"
+                                        formControlName="meta_tag_title_ar"
+                                        [ngClass]="{ 'is-invalid': submitted && f1.meta_tag_title_ar.errors }">
+                                      <div *ngIf="submitted && f1.meta_tag_title_ar.errors" class="invalid-feedback">
+                                        <div *ngIf="f1.meta_tag_title_ar.errors.required">{{'form.required' |
+                                          translate}}</div>
+                                        <div *ngIf="f1.meta_tag_title_ar.errors?.pattern">{{'form.arabic' | translate}}
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="form-body">
+                                  <div class="form-group row mx-auto">
+                                    <label class="col-md-3 label-control" for="category">
+                                      {{'product.meta_tag_keywords' | translate }}</label>
+                                    <div class="col-md-9">
+                                      <div class="row" style="margin-bottom: 10px;"
+                                        *ngFor="let string of array_ar ; let i = index">
+                                        <div class="col-10">
+                                          <input type="text" id="keywords_ar{{i}}" class="form-control"
+                                            (change)="change_keywords_ar(i)">
+                                        </div>
+                                        <div class="col-1">
+                                          <button class=" plus " id="plus_ar{{i}}"
+                                            (click)="add_ar('new' , i )">+</button>
+                                        </div>
+                                        <div class="col-1">
+                                          <button class=" plus " id="minus_ar{{i}}" (click)="remove_ar( i )"
+                                            hidden>-</button>
+                                        </div>
+
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                        </div>
+                        <div class="card box-border" style="margin : 20px">
+                          <div class="card-content ">
+                            <div class="card-body">
+                              <div class="form-body">
+                                <div class="form-group row mx-auto">
+                                  <label class="col-md-3 label-control" for="category">
+                                    {{'product.tags' | translate }}</label>
+
+
+                                  <div class="col-md-9">
+                                    <div class="row" style="margin-bottom: 10px;"
+                                      *ngFor="let string of array_tags; let i = index">
+                                      <div class="col-10">
+                                        <input type="text" id="tag{{i}}" class="form-control" (change)="change_tags(i)">
+                                      </div>
+                                      <div class="col-1">
+                                        <button class=" plus " id="plus_tag{{i}}"
+                                          (click)="add_tag('new' , i )">+</button>
+                                      </div>
+                                      <div class="col-1">
+                                        <button class=" plus " id="minus_tag{{i}}" (click)="remove_tag( i )"
+                                          hidden>-</button>
+                                      </div>
+
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="form-body">
+                                <div class="form-group row mx-auto">
+                                  <label class="col-md-3 label-control" for="category">
+                                    {{'product.seo' | translate }}</label>
+                                  <div class="col-md-9">
+                                    <div class="row" style="margin-bottom: 10px;"
+                                      *ngFor="let string of array_seo ; let i = index">
+                                      <div class="col-10">
+                                        <input type="text" id="seo{{i}}" class="form-control" (change)="change_seo(i)">
+                                      </div>
+                                      <div class="col-1">
+                                        <button class=" plus " id="plus_seo{{i}}"
+                                          (click)="add_seo('new' , i )">+</button>
+                                      </div>
+                                      <div class="col-1">
+                                        <button class=" plus " id="minus_seo{{i}}" (click)="remove_seo( i )"
+                                          hidden>-</button>
+                                      </div>
+
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="form-body">
+                                <div class="form-group row mx-auto">
+                                  <label class="col-md-3 label-control" for="category">
+                                    {{'product.sku' | translate}}</label>
+                                  <div class="col-md-9">
+                                    <input type="text" id="sku" class="form-control" formControlName="sku"
+                                      [ngClass]="{ 'is-invalid': submitted && f1.sku.errors }">
+                                    <div *ngIf="submitted && f1.sku.errors" class="invalid-feedback">
+                                      <div *ngIf="f1.sku.errors.required">{{'form.required' | translate}}</div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="form-body">
+                                <div class="form-group row mx-auto">
+                                  <label class="col-md-3 label-control" for="category">
+                                    {{'product.price' | translate}}</label>
+                                  <div class="col-md-9">
+                                    <div class="input-group " style="direction: ltr;">
+                                      <div class="input-group-prepend">
+                                        <span class="input-group-text">$</span>
+                                      </div>
+                                      <input type="text" id="price" class="form-control" formControlName="price"
+                                        [ngClass]="{ 'is-invalid': submitted && f1.price.errors }">
+                                      <div *ngIf="submitted && f1.price.errors" class="invalid-feedback">
+                                        <div *ngIf="f1.price.errors.required">{{'form.required' | translate}}</div>
+                                      </div>
+                                    </div>
+
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="form-body">
+                                <div class="form-group row mx-auto ">
+                                  <label class="col-md-3 label-control" for="projectinput4">{{ 'product.brand' |
+                                    translate }}</label>
+                                  <div class="col-md-9">
+                                    <select class="custom-select " *ngIf="arabic"
+                                      [ngClass]="{ 'is-invalid': submitted && f1.brand_id.errors }"
+                                      formControlName="brand_id">
+                                      <option value="0" selected disabled></option>
+                                      <option *ngFor="let row of brands; index as i" value="{{row.id}}">{{row.name_ar}}
+                                      </option>
+
+                                    </select>
+                                    <select class="custom-select " *ngIf="!arabic"
+                                      [ngClass]="{ 'is-invalid': submitted && f1.brand_id.errors }"
+                                      formControlName="brand_id">
+                                      <option value="0" selected disabled></option>
+                                      <option *ngFor="let row of brands; index as i" value="{{row.id}}">{{row.name_en}}
+                                      </option>
+
+                                    </select>
+                                    <div *ngIf="submitted && f1.brand_id.errors" class="invalid-feedback">
+                                      <div *ngIf="f1.brand_id.errors.required">{{'form.required' | translate}}</div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="form-body">
+                                <div class="form-group row mx-auto ">
+                                  <label class="col-md-3 label-control" for="projectinput4">{{ 'addOptions.outOfStock' |
+                                    translate }}</label>
+                                  <div class="col-md-7">
+                                    <select class="custom-select " *ngIf="arabic"
+                                      [ngClass]="{ 'is-invalid': submitted && f1.out_of_stock_id.errors }"
+                                      formControlName="out_of_stock_id">
+                                      <option value="0" selected disabled></option>
+                                      <option *ngFor="let row of outOfStocks; index as i" value="{{row.id}}">
+                                        {{row.name_ar}}</option>
+
+                                    </select>
+                                    <select class="custom-select " *ngIf="!arabic"
+                                      [ngClass]="{ 'is-invalid': submitted && f1.out_of_stock_id.errors }"
+                                      formControlName="out_of_stock_id">
+                                      <option value="0" selected disabled></option>
+                                      <option *ngFor="let row of outOfStocks; index as i" value="{{row.id}}">
+                                        {{row.name_en}}</option>
+
+                                    </select>
+                                    <div *ngIf="submitted && f1.out_of_stock_id.errors" class="invalid-feedback">
+                                      <div *ngIf="f1.out_of_stock_id.errors.required">{{'form.required' | translate}}
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="col-md-2" *ngIf="showAddStock">
+                                    <button type="button" class="btn btn-primary "
+                                      (click)="ShowStockModal(addStockModal)">
+                                      {{'table.addBtn' | translate}}
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="form-body">
+                                <div class="form-group row mx-auto ">
+                                  <label class="col-md-3 label-control" for="projectinput4">{{ 'product.seller' |
+                                    translate }}</label>
+                                  <div class="col-md-9">
+                                    <select class="custom-select " formControlName="seller_id">
+                                      <option value="">{{ 'product.none' | translate }}</option>
+                                      <option *ngFor="let row of sellers; index as i" value="{{row.seller.id}}">
+                                        {{row.full_name}}</option>
+
+                                    </select>
+
+
+                                  </div>
+
+                                </div>
+                              </div>
+                              <div class="form-body">
+                                <div class="form-group row mx-auto ">
+                                  <label class="col-md-3 label-control" for="projectinput4">{{
+                                    'addOptions.deliveryOption' | translate }}</label>
+                                  <div class="col-md-7">
+                                    <ng-select [items]="deliveryOptions" bindLabel="name_ar" bindValue="id"
+                                      formControlName="selectedOption" [multiple]="true" placeholder=""
+                                      [ngClass]="{ 'is-invalid': submitted && f1.selectedOption.errors }"
+                                      [(ngModel)]="selectedOption" *ngIf="arabic">
+                                      <ng-template ng-header-tmp>
+                                        <button (click)="selectAllOptions()" class="btn btn-sm btn-secondary">
+                                          {{ 'product.selectAll' | translate }}
+                                        </button>&nbsp;
+                                        <button (click)="unselectAlOptions()" class="btn btn-sm btn-secondary">
+                                          {{ 'product.unSelectAll' | translate }}
+                                        </button>
+                                      </ng-template>
+                                    </ng-select>
+                                    <ng-select [items]="deliveryOptions" bindLabel="name_en" bindValue="id"
+                                      formControlName="selectedOption" [multiple]="true" placeholder=""
+                                      [ngClass]="{ 'is-invalid': submitted && f1.selectedOption.errors }"
+                                      [(ngModel)]="selectedOption" *ngIf="!arabic">
+                                      <ng-template ng-header-tmp>
+                                        <button (click)="selectAllOptions()" class="btn btn-sm btn-secondary">
+                                          {{ 'product.selectAll' | translate }}
+                                        </button>&nbsp;
+                                        <button (click)="unselectAlOptions()" class="btn btn-sm btn-secondary">
+                                          {{ 'product.unSelectAll' | translate }}
+                                        </button>
+                                      </ng-template>
+                                    </ng-select>
+                                    <div *ngIf="submitted && f1.selectedOption.errors" class="invalid-feedback">
+                                      <div *ngIf="f1.selectedOption.errors.required">{{'form.required' | translate}}
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="col-md-2" *ngIf="showAddDeliveryOption">
+                                    <button type="button" class="btn btn-primary "
+                                      (click)="ShowOptionModal(addOptionModal)">
+                                      {{'table.addBtn' | translate}}
+                                    </button>
+                                  </div>
+
+                                </div>
+                              </div>
+
+                              <div class="form-body">
+                                <div class="form-group row mx-auto ">
+                                  <label class="col-md-3 label-control" for="projectinput4">{{ 'addOptions.payment' |
+                                    translate }}</label>
+                                  <div class="col-md-9">
+                                    <ng-select [items]="payments" bindLabel="name_ar" bindValue="id"
+                                      formControlName="selectedPayment" [multiple]="true" placeholder=""
+                                      [ngClass]="{ 'is-invalid': submitted && f1.selectedPayment.errors }"
+                                      [(ngModel)]="selectedPayment" *ngIf="arabic">
+                                      <ng-template ng-header-tmp>
+                                        <button (click)="selectAllPayment()" class="btn btn-sm btn-secondary">
+                                          {{ 'product.selectAll' | translate }}
+                                        </button>&nbsp;
+                                        <button (click)="unselectAllPayment()" class="btn btn-sm btn-secondary">
+                                          {{ 'product.unSelectAll' | translate }}
+                                        </button>
+                                      </ng-template>
+                                    </ng-select>
+                                    <ng-select [items]="payments" bindLabel="name_en" bindValue="id"
+                                      formControlName="selectedPayment" [multiple]="true" placeholder=""
+                                      [ngClass]="{ 'is-invalid': submitted && f1.selectedPayment.errors }"
+                                      [(ngModel)]="selectedPayment" *ngIf="!arabic">
+                                      <ng-template ng-header-tmp>
+                                        <button (click)="selectAllPayment()" class="btn btn-sm btn-secondary">
+                                          {{ 'product.selectAll' | translate }}
+                                        </button>&nbsp;
+                                        <button (click)="unselectAllPayment()" class="btn btn-sm btn-secondary">
+                                          {{ 'product.unSelectAll' | translate }}
+                                        </button>
+                                      </ng-template>
+                                    </ng-select>
+                                    <div *ngIf="submitted && f1.selectedPayment.errors" class="invalid-feedback">
+                                      <div *ngIf="f1.selectedPayment.errors.required">{{'form.required' | translate}}
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="form-body">
+                                <div class="form-group row mx-auto">
+                                  <label class="col-md-3 label-control" for="category">
+                                    {{'product.availability_date' | translate}}</label>
+                                  <div class="col-md-9">
+                                    <input type="date" id="availability_date" class="form-control"
+                                      formControlName="availability_date"
+                                      [ngClass]="{ 'is-invalid': submitted && f1.availability_date.errors }">
+                                    <div *ngIf="submitted && f1.availability_date.errors" class="invalid-feedback">
+                                      <div *ngIf="f1.availability_date.errors.required">{{'form.required' | translate}}
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="form-body">
+                                <div class="form-group row mx-auto">
+                                  <label class="col-md-3 label-control" for="category">
+                                    {{'product.sort' | translate}}</label>
+                                  <div class="col-md-9">
+                                    <input type="text" id="sort" class="form-control" formControlName="sort"
+                                      [ngClass]="{ 'is-invalid': submitted && f1.sort.errors }">
+                                    <div *ngIf="submitted && f1.sort.errors" class="invalid-feedback">
+                                      <div *ngIf="f1.sort.errors.required">{{'form.required' | translate}}</div>
+                                    </div>
+
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="form-body">
+                                <div class="form-group row mx-auto">
+                                  <label class="col-md-3 label-control" for="category">
+                                    {{'product.delivery_estimation' | translate}}</label>
+                                  <div class="col-md-9">
+                                    <input type="text" id="delivery_estimation" class="form-control" 
+                                    formControlName="delivery_estimation">
+                                  
+
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="form-body">
+                                <div class="form-group row mx-auto">
+                                  <label class="col-md-3 label-control" for="category">
+                                    {{'product.required_points' | translate}}</label>
+                                  <div class="col-md-9">
+                                    <input type="text" id="required_points" class="form-control"
+                                      formControlName="required_points"
+                                      [ngClass]="{ 'is-invalid': submitted && f1.required_points.errors }">
+                                    <div *ngIf="submitted && f1.required_points.errors" class="invalid-feedback">
+                                      <div *ngIf="f1.required_points.errors.required">{{'form.required' | translate}}
+                                      </div>
+                                    </div>
+
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="form-body">
+                                <div class="form-group row mx-auto">
+                                  <label class="col-md-3 label-control" for="category">
+                                    {{'product.min_quantity' | translate}}</label>
+                                  <div class="col-md-9">
+                                    <input type="text" id="min_quantity" class="form-control"
+                                      formControlName="min_quantity"
+                                      [ngClass]="{ 'is-invalid': submitted && f1.min_quantity.errors }">
+                                    <div *ngIf="submitted && f1.min_quantity.errors" class="invalid-feedback">
+                                      <div *ngIf="f1.min_quantity.errors.required">{{'form.required' | translate}}</div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="form-body">
+                                <div class="form-group row mx-auto">
+                                  <label class="col-md-3 label-control" for="category">
+                                    {{'product.max_quantity' | translate}}</label>
+                                  <div class="col-md-9">
+                                    <input type="text" id="max_quantity" class="form-control"
+                                      formControlName="max_quantity">
+
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="form-body">
+                                <div class="form-group row mx-auto">
+                                  <label class="col-md-3 label-control" for="category">
+                                    {{'product.best_collection' | translate}}</label>
+                                  <div class="col-md-9">
+                                    <ui-switch [checked]="best_collection" formControlName="best_collection"
+                                      size="small">
+
+                                    </ui-switch>
+
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="form-body">
+                                <div class="form-group row mx-auto">
+                                  <label class="col-md-3 label-control" for="category">
+                                    {{'product.newly_added' | translate}}</label>
+                                  <div class="col-md-9">
+                                    <ui-switch [checked]="newly_added" formControlName="newly_added" size="small">
+
+                                    </ui-switch>
+
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="form-body">
+                                <div class="form-group row mx-auto">
+                                  <label class="col-md-3 label-control" for="category">
+                                    {{'product.flash_deal' | translate}}</label>
+                                  <div class="col-md-9">
+                                    <ui-switch [checked]="flash_deal" formControlName="flash_deal" size="small">
+
+                                    </ui-switch>
+
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="form-body">
+                                <div class="form-group row mx-auto">
+                                  <label class="col-md-3 label-control" for="category">
+                                    {{'product.selected' | translate}}</label>
+                                  <div class="col-md-9">
+                                    <ui-switch [checked]="selected" formControlName="selected" size="small">
+
+                                    </ui-switch>
+
+                                  </div>
+                                </div>
+                              </div>
+                              <h4 class="form-section"><i class="la la-map-marker"></i>{{ 'product.location' | translate
+                                }}</h4>
+                              <div class="form-body">
+                                <div class="form-group row mx-auto">
+                                  <label class="col-md-3 label-control" for="category">
+                                    {{'product.location' | translate}}</label>
+                                  <div class="col-md-9">
+                                    <input type="text" id="location" class="form-control" formControlName="location"
+                                      [ngClass]="{ 'is-invalid': submitted && f1.location.errors }">
+                                    <div *ngIf="submitted && f1.location.errors" class="invalid-feedback">
+                                      <div *ngIf="f1.location.errors.required">{{'form.required' | translate}}</div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="form-body">
+                                <div class="col-12" *blockUI="'basicMap'; message: 'Loading'">
+                                  <div class="form-group">
+                                    <label class="label-control">
+                                      {{'product.noteMap' | translate }}</label>
+                                    <div class="row">
+                                      <label class="col-3 label-control"> {{ 'product.enterAddress' | translate }}
+                                      </label>
+                                      <div class="col-9">
+                                        <input type="text" class="form-control"
+                                          (keydown.enter)="$event.preventDefault()"
+                                          placeholder="{{ 'product.nearestLocation' | translate }} " autocorrect="off"
+                                          autocapitalize="off" spellcheck="off" type="text" #search>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div>
+                                    <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" [zoomControl]="true"
+                                      [scrollwheel]="null" [mapTypeControl]='true' [fullscreenControl]="true"
+                                      style="    height: 400px;"
+                                      (mapClick)="addMarker($event.coords.lat, $event.coords.lng)">
+                                      <agm-marker [latitude]="lat" [longitude]="lng" [markerDraggable]="true"
+                                        (drag)="selectMarker($event)">
+                                      </agm-marker>
+                                    </agm-map>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="card box-border" style="margin : 20px">
+                          <div class="card-content ">
+                            <div class="card-header">{{'product.shipping' | translate}} </div>
+                            <div class="card-body">
+                              <div class="form-body">
+                                <div class="form-group row mx-auto">
+                                  <label class="col-md-3 label-control" for="category">
+                                    {{'product.shipping_timing' | translate}}</label>
+                                  <div class="col-md-9">
+                                    <input type="text" id="shipping_timing" class="form-control"
+                                      formControlName="shipping_timing"
+                                      [ngClass]="{ 'is-invalid': submitted && f1.shipping_timing.errors }">
+                                    <div *ngIf="submitted && f1.shipping_timing.errors" class="invalid-feedback">
+                                      <div *ngIf="f1.shipping_timing.errors.required">{{'form.required' | translate}}
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="form-body">
+                                <div class="form-group row mx-auto">
+                                  <label class="col-md-3 label-control" for="category">
+                                    {{'product.length_class' | translate}}</label>
+                                  <div class="col-md-9">
+
+                                    <select class="custom-select " id="length_class" formControlName="length_class"
+                                      [ngClass]="{ 'is-invalid': submitted && f1.length_class.errors }">
+                                      <option value="0" selected disabled></option>
+                                      <option value="Millimeter">{{ 'length_class.millimeter' | translate }}</option>
+                                      <option value="Inch">{{ 'length_class.inch' | translate }}</option>
+                                      <option value="Centimeter">{{ 'length_class.centimeter' | translate }}</option>
+                                    </select>
+                                    <div *ngIf="submitted && f1.length_class.errors" class="invalid-feedback">
+                                      <div *ngIf="f1.length_class.errors.required">{{'form.required' | translate}}</div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="form-body">
+                                <div class="form-group row mx-auto">
+                                  <label class="col-md-3 label-control" for="category">
+                                    {{'product.weight_class' | translate}}</label>
+                                  <div class="col-md-9">
+
+                                    <select class="custom-select " id="weight_class" formControlName="weight_class"
+                                      [ngClass]="{ 'is-invalid': submitted && f1.weight_class.errors }">
+                                      <option value="0" selected disabled></option>
+                                      <option value="Gram">{{ 'weight_class.gram' | translate }}</option>
+                                      <option value="Kilogram">{{ 'weight_class.kilogram' | translate }}</option>
+                                      <option value="Pound">{{ 'weight_class.pound' | translate }}</option>
+                                      <option value="Ounce">{{ 'weight_class.ounce' | translate }}</option>
+                                    </select>
+                                    <div *ngIf="submitted && f1.weight_class.errors" class="invalid-feedback">
+                                      <div *ngIf="f1.weight_class.errors.required">{{'form.required' | translate}}</div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="form-body">
+                                <div class="form-group row mx-auto">
+                                  <label class="col-md-3 label-control" for="category">
+                                    {{'product.weight' | translate}}</label>
+                                  <div class="col-md-9">
+                                    <input type="text" id="weight" class="form-control" formControlName="weight"
+                                      [ngClass]="{ 'is-invalid': submitted && f1.weight.errors }">
+                                    <div *ngIf="submitted && f1.weight.errors" class="invalid-feedback">
+                                      <div *ngIf="f1.weight.errors.required">{{'form.required' | translate}}</div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <h4 class="form-section"><i class="la la-cube"></i>{{ 'product.dimensions' | translate }}
+                              </h4>
+                              <div class="form-body">
+                                <div class="form-group row mx-auto">
+                                  <label class="col-md-3 label-control" for="category">
+                                    {{'product.length' | translate}}</label>
+                                  <div class="col-md-9">
+                                    <input type="text" id="length" class="form-control" formControlName="length"
+                                      [ngClass]="{ 'is-invalid': submitted && f1.length.errors }">
+                                    <div *ngIf="submitted && f1.length.errors" class="invalid-feedback">
+                                      <div *ngIf="f1.length.errors.required">{{'form.required' | translate}}</div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="form-body">
+                                <div class="form-group row mx-auto">
+                                  <label class="col-md-3 label-control" for="category">
+                                    {{'product.width' | translate}}</label>
+                                  <div class="col-md-9">
+                                    <input type="text" id="width" class="form-control" formControlName="width"
+                                      [ngClass]="{ 'is-invalid': submitted && f1.width.errors }">
+                                    <div *ngIf="submitted && f1.width.errors" class="invalid-feedback">
+                                      <div *ngIf="f1.width.errors.required">{{'form.required' | translate}}</div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="form-body">
+                                <div class="form-group row mx-auto">
+                                  <label class="col-md-3 label-control" for="category">
+                                    {{'product.height' | translate}}</label>
+                                  <div class="col-md-9">
+                                    <input type="text" id="height" class="form-control" formControlName="height"
+                                      [ngClass]="{ 'is-invalid': submitted && f1.height.errors }">
+                                    <div *ngIf="submitted && f1.height.errors" class="invalid-feedback">
+                                      <div *ngIf="f1.height.errors.required">{{'form.required' | translate}}</div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                    <form [formGroup]="inventoryForm" style="display: none;" id="inventory" [ngStyle]="{'direction': arabic ?  'rtl': 'ltr' ,
+                                    'text-align': arabic ?  'right': 'left' }">
+                      <div class="card box-border">
+                        <div class="card-content ">
+                          <div class="card-header">{{'product.inventory' | translate}} </div>
+                          <div class="card-body">
+                            <div class="form-body">
+                              <div class="form-group row mx-auto">
+                                <label class="col-md-3 label-control" for="category">
+                                  {{'product.quantity' | translate}}</label>
+                                <div class="col-md-9">
+                                  <input type="text" id="quantity" class="form-control" formControlName="quantity"
+                                    [ngClass]="{ 'is-invalid': submitted2 && f2.quantity.errors }">
+                                  <div *ngIf="submitted2 && f2.quantity.errors" class="invalid-feedback">
+                                    <div *ngIf="f2.quantity.errors.required">{{'form.required' | translate}}</div>
+                                  </div>
+
+                                </div>
+                              </div>
+                            </div>
+                            <div class="form-body">
+                              <div class="form-group row mx-auto">
+                                <label class="col-md-3 label-control" for="category">
+                                  {{'product.subtract_stock' | translate}}</label>
+                                <div class="col-md-9">
+                                  <ui-switch [checked]="false" formControlName="subtract_stock" size="small">
+
+                                  </ui-switch>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                    <form [formGroup]="mediaForm" style="display: none;" id="media" [ngStyle]="{'direction': arabic ?  'rtl': 'ltr' ,
+                                    'text-align': arabic ?  'right': 'left' }">
+                      <div class="card box-border">
+                        <div class="card-content ">
+                          <div class="card-header">{{'product.media' | translate}} </div>
+                          <div class="card-body">
+                            <div class="form-body">
+                              <div class="form-group row mx-auto">
+                                <label class="col-md-3 label-control" for="category">
+                                  {{'product.video' | translate}}</label>
+                                <div class="col-md-9">
+                                  <input type="text" id="video" class="form-control" formControlName="video">
+
+                                </div>
+                              </div>
+                            </div>
+                            <div class="form-body">
+                              <div class="form-group row mx-auto">
+                                <label class="col-md-3 label-control">
+                                  {{'product.base_image' | translate }}</label>
+                                <div class="col-md-9">
+                                  <input type="file" id="base_image" name="base_image" class="inputfile"
+                                    (change)="upload_base_image($event.target.files)" />
+                                  <label class="btn btn-primary" style="cursor: pointer;" for="base_image"><svg style="    margin: 0px 8px;
+                                                    " xmlns="http://www.w3.org/2000/svg" width="20" height="17"
+                                      viewBox="0 0 20 17">
+                                      <path
+                                        d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z" />
+                                    </svg>
+                                    <span style="color: white;">{{ 'table.chooseImage' | translate }}</span></label>
+
+                                  <img id="base_image_review" style="display: none;" width="300px" height="300px"
+                                    src="">
+
+                                </div>
+                              </div>
+                            </div>
+                            <div class="form-body">
+                              <div class="form-group row mx-auto">
+                                <label class="col-md-3 label-control">
+                                  {{'product.extra_image' | translate }}</label>
+                                <div class="col-md-9">
+                                  <input type="file" id="file" name="file" class="inputfile" multiple
+                                    (change)="upload($event)" />
+                                  <label class="btn btn-primary" style="cursor: pointer;" for="file"><svg style="    margin: 0px 8px;
+                                                    " xmlns="http://www.w3.org/2000/svg" width="20" height="17"
+                                      viewBox="0 0 20 17">
+                                      <path
+                                        d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z" />
+                                    </svg>
+                                    <span style="color: white;">{{ 'table.chooseImage' | translate }}</span></label>
+                                  <div *ngIf="imagesArray.length != 0 ">
+                                    <div *ngFor="let img of imagesArray" style="margin-bottom: 20px;">
+
+                                      <img class="photos" src="{{img}}">
+                                      <a class="danger delete mr-1 mrless"><i class="la la-trash"
+                                          (click)="deleteImage(img)">
+                                        </i></a>
+                                    </div>
+
+                                  </div>
+                                  <!-- <img id="imageReview" style="display: none;" width="300px" height="300px" src=""> -->
+
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                    <form [formGroup]="categoryForm" id="category" *ngIf="category" [ngStyle]="{'direction': arabic ?  'rtl': 'ltr' ,
+                                    'text-align': arabic ?  'right': 'left' }">
+                      <div class="card box-border">
+                        <div class="card-content ">
+                          <div class="card-header">{{'product.category' | translate}} </div>
+                          <div class="card-body">
+                            <div class="form-body">
+                              <div class="form-group row mx-auto">
+
+                                <div class="col-md-12">
+
+                                  <div class="mat-app-background basic-container">
+                                    <mat-tree [dataSource]="nestedDataSource" [treeControl]="nestedTreeControl"
+                                      class="example-tree">
+                                      <mat-tree-node *matTreeNodeDef="let node">
+                                        <li class="mat-tree-node">
+                                          <button class="btn" mat-icon-button disabled></button>
+                                          <span *ngIf="arabic">{{node.name_ar}}</span>
+                                          <span *ngIf="!arabic">{{node.name_en}}</span>
+                                          <input type="checkbox" id="checked{{node.id}}"
+                                            (change)="add_node($event.target.checked , node.id)">
+
+                                        </li>
+
+                                      </mat-tree-node>
+                                      <mat-nested-tree-node *matTreeNodeDef="let node; when: hasNestedChild">
+                                        <li>
+                                          <div class="mat-tree-node" *ngIf="arabic">
+                                            <button class="btn" [attr.aria-label]="'toggle ' + node.name_ar"
+                                              (click)="changeState(node)">
+                                              <mat-icon class="mat-icon-rtl-mirror">
+                                                {{node.expanded ? 'expand_more' : 'chevron_right'}}
+                                              </mat-icon>
+                                            </button>
+                                            {{node.name_ar}}
+                                            <input type="checkbox" id="checked{{node.id}}"
+                                              (change)="add_node($event.target.checked , node.id)">
+
+                                          </div>
+                                          <div class="mat-tree-node" *ngIf="!arabic">
+                                            <button class="btn" [attr.aria-label]="'toggle ' + node.name_en"
+                                              (click)="changeState(node)">
+                                              <mat-icon class="mat-icon-rtl-mirror">
+                                                {{node.expanded ? 'expand_more' : 'chevron_right'}}
+                                              </mat-icon>
+                                            </button>
+                                            {{node.name_en}}
+                                            <input type="checkbox" id="checked{{node.id}}"
+                                              (change)="add_node($event.target.checked , node.id)">
+                                          </div>
+
+                                          <ul [class.example-tree-invisible]="node.expanded">
+                                            <ng-container matTreeNodeOutlet></ng-container>
+                                          </ul>
+                                        </li>
+                                      </mat-nested-tree-node>
+                                    </mat-tree>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                    <form [formGroup]="offerForm" style="display: none;" id="offer" [ngStyle]="{'direction': arabic ?  'rtl': 'ltr' ,
+                                    'text-align': arabic ?  'right': 'left' }">
+                      <div class="card box-border">
+                        <div class="card-content ">
+                          <div class="card-header">{{'product.offers' | translate}} </div>
+                          <div class="card-body">
+                            <div class="form-body">
+                              <div class="form-group row mx-auto">
+                                <label class="col-md-3 label-control" for="category">
+                                  {{'product.price' | translate}}</label>
+                                <div class="col-md-9">
+                                  <div class="input-group " style="direction: ltr;">
+                                    <div class="input-group-prepend">
+                                      <span class="input-group-text">$</span>
+                                    </div>
+                                    <input type="text" id="price_offer" class="form-control" formControlName="price"
+                                      [ngClass]="{ 'is-invalid': submitted5 && f5.price.errors }">
+                                    <div *ngIf="submitted5 && f5.price.errors" class="invalid-feedback">
+                                      <div *ngIf="f5.price.errors.required">{{'form.required' | translate}}</div>
+                                    </div>
+                                  </div>
+
+                                </div>
+                              </div>
+                            </div>
+                            <div class="form-body">
+                              <div class="form-group row mx-auto">
+                                <label class="col-md-3 label-control" for="category">
+                                  {{'product.start_date' | translate}}</label>
+                                <div class="col-md-9">
+                                  <!-- <input type="date" id="start_date" class="form-control" formControlName="start_date"
+                                                        [ngClass]="{ 'is-invalid': submitted5 && f5.start_date.errors }">
+                                                        <div *ngIf="submitted5 && f5.start_date.errors" class="invalid-feedback">
+                                                            <div *ngIf="f5.start_date.errors.required">{{'form.required' | translate}}</div>
+                                                        </div> -->
+
+                                  <input [owlDateTime]="dt1" class="form-control" formControlName="start_date"
+                                    [ngClass]="{ 'is-invalid': submitted5 && f5.start_date.errors }">
+                                    <span class="pass-icon" *ngIf ="!arabic" [owlDateTimeTrigger]="dt1">
+                                      <i class="fas fa-calendar-alt"></i>
+                                    </span>
+                                    <span class="pass-icon-ar" *ngIf ="arabic" [owlDateTimeTrigger]="dt1">
+                                      <i class="fas fa-calendar-alt"></i>
+                                    </span>
+                               
+                                  <owl-date-time #dt1></owl-date-time>
+                                  <div *ngIf="submitted5 && f5.start_date.errors" class="invalid-feedback">
+                                    <div *ngIf="f5.start_date.errors.required">{{'form.required' | translate}}</div>
+                                  </div>
+
+
+                                </div>
+                              </div>
+                            </div>
+                            <div class="form-body">
+                              <div class="form-group row mx-auto">
+                                <label class="col-md-3 label-control" for="category">
+                                  {{'product.end_date' | translate}}</label>
+                                <div class="col-md-9">
+                                  <!-- <input type="date" id="end_date" class="form-control" formControlName="end_date"
+                                                        [ngClass]="{ 'is-invalid': submitted5 && f5.end_date.errors }">
+                                                        <div *ngIf="submitted5 && f5.end_date.errors" class="invalid-feedback">
+                                                            <div *ngIf="f5.end_date.errors.required">{{'form.required' | translate}}</div>
+                                                        </div> -->
+
+
+                                  <input [owlDateTime]="dt2" class="form-control" formControlName="end_date"
+                                    [ngClass]="{ 'is-invalid': submitted5 && f5.end_date.errors }">
+                                    <span class="pass-icon" *ngIf ="!arabic" [owlDateTimeTrigger]="dt2">
+                                      <i class="fas fa-calendar-alt"></i>
+                                    </span>
+                                    <span class="pass-icon-ar" *ngIf ="arabic" [owlDateTimeTrigger]="dt2">
+                                      <i class="fas fa-calendar-alt"></i>
+                                    </span>
+                                  <owl-date-time #dt2></owl-date-time>
+                                  <div *ngIf="submitted5 && f5.end_date.errors" class="invalid-feedback">
+                                    <div *ngIf="f5.end_date.errors.required">{{'form.required' | translate}}</div>
+                                  </div>
+
+
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                    <form [formGroup]="discountForm" style="display: none;" id="discount" [ngStyle]="{'direction': arabic ?  'rtl': 'ltr' ,
+                                    'text-align': arabic ?  'right': 'left' }">
+                      <div class="card box-border">
+                        <div class="card-content ">
+                          <div class="card-header">{{'product.discount' | translate}} </div>
+                          <div class="card-body">
+                            <div class="form-body">
+                              <div class="form-group row mx-auto">
+                                <label class="col-md-3 label-control" for="category">
+                                  {{'product.price' | translate}}</label>
+                                <div class="col-md-9">
+                                  <div class="input-group " style="direction: ltr;">
+                                    <div class="input-group-prepend">
+                                      <span class="input-group-text">$</span>
+                                    </div>
+                                    <input type="text" id="price_discount" class="form-control" formControlName="price"
+                                      [ngClass]="{ 'is-invalid': submitted6 && f6.price.errors }">
+                                    <div *ngIf="submitted6 && f6.price.errors" class="invalid-feedback">
+                                      <div *ngIf="f6.price.errors.required">{{'form.required' | translate}}</div>
+                                    </div>
+                                  </div>
+
+                                </div>
+                              </div>
+                            </div>
+                            <div class="form-body">
+                              <div class="form-group row mx-auto">
+                                <label class="col-md-3 label-control" for="category">
+                                  {{'product.quantity' | translate}}</label>
+                                <div class="col-md-9">
+                                  <input type="text" id="quantity_discount" class="form-control"
+                                    formControlName="quantity"
+                                    [ngClass]="{ 'is-invalid': submitted6 && f6.quantity.errors }">
+                                  <div *ngIf="submitted6 && f6.quantity.errors" class="invalid-feedback">
+                                    <div *ngIf="f6.quantity.errors.required">{{'form.required' | translate}}</div>
+                                  </div>
+
+                                </div>
+                              </div>
+                            </div>
+                            <div class="form-body">
+                              <div class="form-group row mx-auto">
+                                <label class="col-md-3 label-control" for="category">
+                                  {{'product.start_date' | translate}}</label>
+                                <div class="col-md-9">
+                                  <!-- <input type="date" id="start_date_discount" class="form-control" formControlName="start_date"
+                                                        [ngClass]="{ 'is-invalid': submitted6 && f6.start_date.errors }">
+                                                        <div *ngIf="submitted6 && f6.start_date.errors" class="invalid-feedback">
+                                                            <div *ngIf="f6.start_date.errors.required">{{'form.required' | translate}}</div>
+                                                        </div> -->
+                                  <input [owlDateTime]="dt3" class="form-control" formControlName="start_date"
+                                    [ngClass]="{ 'is-invalid': submitted6 && f6.start_date.errors }">
+                                    <span class="pass-icon" *ngIf ="!arabic" [owlDateTimeTrigger]="dt3">
+                                      <i class="fas fa-calendar-alt"></i>
+                                    </span>
+                                    <span class="pass-icon-ar" *ngIf ="arabic" [owlDateTimeTrigger]="dt3">
+                                      <i class="fas fa-calendar-alt"></i>
+                                    </span>
+                                  <owl-date-time #dt3></owl-date-time>
+                                  <div *ngIf="submitted6 && f6.start_date.errors" class="invalid-feedback">
+                                    <div *ngIf="f6.start_date.errors.required">{{'form.required' | translate}}</div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="form-body">
+                              <div class="form-group row mx-auto">
+                                <label class="col-md-3 label-control" for="category">
+                                  {{'product.end_date' | translate}}</label>
+                                <div class="col-md-9">
+                                  <!-- <input type="date" id="end_date_discount" class="form-control" formControlName="end_date"
+                                                        [ngClass]="{ 'is-invalid': submitted6 && f6.end_date.errors }">
+                                                        <div *ngIf="submitted6 && f6.end_date.errors" class="invalid-feedback">
+                                                            <div *ngIf="f6.end_date.errors.required">{{'form.required' | translate}}</div>
+                                                        </div> -->
+                                  <input [owlDateTime]="dt4" class="form-control" formControlName="end_date"
+                                    [ngClass]="{ 'is-invalid': submitted6 && f6.end_date.errors }">
+                                    <span class="pass-icon" *ngIf ="!arabic" [owlDateTimeTrigger]="dt4">
+                                      <i class="fas fa-calendar-alt"></i>
+                                    </span>
+                                    <span class="pass-icon-ar" *ngIf ="arabic" [owlDateTimeTrigger]="dt4">
+                                      <i class="fas fa-calendar-alt"></i>
+                                    </span>
+                                  <owl-date-time #dt4></owl-date-time>
+                                  <div *ngIf="submitted6 && f6.end_date.errors" class="invalid-feedback">
+                                    <div *ngIf="f6.end_date.errors.required">{{'form.required' | translate}}</div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                    <form [formGroup]="colorForm" style="display: none;" id="color" [ngStyle]="{'direction': arabic ?  'rtl': 'ltr' ,
+                                    'text-align': arabic ?  'right': 'left' }">
+                      <div class="card box-border">
+                        <div class="card-content ">
+                          <div class="card-header">{{ 'product.color' | translate }} </div>
+                          <div class="row">
+                            <div class="col-12" *ngFor="let string of array_color; let i = index">
+                              <div class="card box-border" style="margin : 20px">
+                                <div class="card-content ">
+                                  <div class="card-body">
+                                    <div class="form-body">
+                                      <div class="form-group row mx-auto">
+                                        <label class="col-md-3 label-control" for="category">
+                                          {{'product.name' | translate}} ({{'table.en' | translate}})</label>
+                                        <div class="col-md-9">
+                                          <input type="text" id="name_color_en{{i}}" class="form-control">
+
+
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="form-body">
+                                      <div class="form-group row mx-auto">
+                                        <label class="col-md-3 label-control" for="category">
+                                          {{'product.name' | translate}} ({{'table.ar' | translate}})</label>
+                                        <div class="col-md-9">
+                                          <input type="text" id="name_color_ar{{i}}" class="form-control">
+
+
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="form-body">
+                                      <div class="form-group row mx-auto">
+                                        <label class="col-md-3 label-control" for="category">
+                                          {{'product.colors' | translate}}</label>
+                                        <div class="col-md-9">
+                                          <div class="row">
+                                            <div class="col-6">
+
+                                              <input style="float: left;    
+                                                                  height: 30px;" class="col-12" id="hex{{i}}"
+                                                [value]="color1" [(colorPicker)]="color1"
+                                                (colorPickerChange)="onChangeColor($event , i)" />
+                                            </div>
+
+
+                                          </div>
+
+
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="form-body">
+                                      <div class="form-group row mx-auto">
+                                        <label class="col-md-3 label-control">
+                                          {{'category.image' | translate }}</label>
+                                        <div class="col-md-9">
+                                          <input type="file" id="file{{i}}" name="file{{i}}" class="inputfile"
+                                            (change)="upload_color($event.target.files , i)" />
+                                          <label class="btn btn-primary" style="cursor: pointer;" for="file{{i}}"><svg
+                                              style="    margin: 0px 8px;
+                                                              " xmlns="http://www.w3.org/2000/svg" width="20"
+                                              height="17" viewBox="0 0 20 17">
+                                              <path
+                                                d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z" />
+                                            </svg>
+                                            <span style="color: white;">{{ 'table.chooseImage' | translate
+                                              }}</span></label>
+
+                                          <img id="colorReview{{i}}" style="display: none;" width="200px" height="200px"
+                                            src="">
+
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="form-body">
+                                      <div class="form-group row mx-auto" style="margin-bottom: 0px;">
+                                        <button type="button" class="btn btn-secondary" style="margin: 0px auto;"
+                                          id="plus_color{{i}}" (click)="add_color('new' , i )">
+                                          {{ 'product.more' | translate }}</button>
+                                        <button type="button" class="btn btn-secondary" style="margin: 0px auto;"
+                                          id="minus_color{{i}}" (click)="remove_color( i )" hidden>
+                                          {{ 'product.delete' | translate }}</button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                          </div>
+
+                        </div>
+                      </div>
+                      <div class="card box-border">
+                        <div class="card-content ">
+                          <div class="card-header">{{ 'product.size' | translate }} </div>
+                          <div class="row">
+                            <div class="col-6" *ngFor="let string of array_size; let i = index">
+                              <div class="card box-border" style="margin : 20px">
+                                <div class="card-content ">
+                                  <div class="card-body">
+                                    <div class="form-body">
+                                      <div class="form-group row mx-auto">
+                                        <label class="col-md-3 label-control" for="category">
+                                          {{'product.name' | translate}}</label>
+                                        <div class="col-md-9">
+                                          <input type="text" id="name_size{{i}}" class="form-control">
+
+
+                                        </div>
+                                      </div>
+                                    </div>
+
+
+                                    <div class="form-body">
+                                      <div class="form-group row mx-auto">
+                                        <label class="col-md-3 label-control">
+                                          {{'category.image' | translate }}</label>
+                                        <div class="col-md-9">
+                                          <input type="file" id="file_size{{i}}" name="file_size{{i}}" class="inputfile"
+                                            (change)="upload_size($event.target.files , i)" />
+                                          <label class="btn btn-primary" style="cursor: pointer;"
+                                            for="file_size{{i}}"><svg style="    margin: 0px 8px;
+                                                              " xmlns="http://www.w3.org/2000/svg" width="20"
+                                              height="17" viewBox="0 0 20 17">
+                                              <path
+                                                d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z" />
+                                            </svg>
+                                            <span style="color: white;">{{ 'table.chooseImage' | translate
+                                              }}</span></label>
+
+                                          <img id="sizeReview{{i}}" style="display: none;" width="200px" height="200px"
+                                            src="">
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="form-body">
+                                      <div class="form-group row mx-auto" style="margin-bottom: 0px;">
+                                        <button type="button" class="btn btn-secondary" style="margin: 0px auto;"
+                                          id="plus_size{{i}}" (click)="add_size('new' , i )">
+                                          {{ 'product.more' | translate }}</button>
+                                        <button type="button" class="btn btn-secondary" style="margin: 0px auto;"
+                                          id="minus_size{{i}}" (click)="remove_size( i )" hidden>
+                                          {{ 'product.delete' | translate }}</button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                    </form>
+                    <form [formGroup]="attributesForm" style="display: none;" id="attributes" [ngStyle]="{'direction': arabic ?  'rtl': 'ltr' ,
+                                    'text-align': arabic ?  'right': 'left' }">
+                      <div class="card box-border">
+                        <div class="card-content ">
+                          <div class="card-header">{{'product.attributes' | translate}} </div>
+                          <div class="card-body">
+                            <div class="form-body">
+                              <div class="form-group row mx-auto">
+                                <div class="col-md-9">
+                                  <ng-select [items]="attributes_list" bindLabel="name_ar" bindValue="id"
+                                    formControlName="selectedAttributesIds" [multiple]="true" placeholder=""
+                                    (change)="attSelected($event)" [(ngModel)]="selectedAttributesIds" *ngIf="arabic">
+
+                                  </ng-select>
+                                  <ng-select [items]="attributes_list" bindLabel="name_en" bindValue="id"
+                                    formControlName="selectedAttributesIds" [multiple]="true" placeholder=""
+                                    (change)="attSelected($event)" [(ngModel)]="selectedAttributesIds" *ngIf="!arabic">
+
+                                  </ng-select>
+                                </div>
+
+
+                              </div>
+                            </div>
+
+                            <div class="card box-border" style="margin : 20px"
+                              *ngFor="let item of selectedAttributes; let i = index">
+                              <!-- <div class="col-md-3">
+                                                  <button type="button" class="btn btn-secondary" style="margin: 0px auto;" id="plus_att{{id}}"
+                                                   (click)= "add_attribute('new' , i)">
+                                                    {{ 'product.add_attribute' | translate }}</button>
+                                                </div> -->
+                              <div class="card-header">
+                                <a class="card-title info lead" (click)="basicCollapse1 = !basicCollapse1"
+                                  [attr.aria-expanded]="!basicCollapse1" aria-controls="basicCollapse1 " *ngIf="arabic">
+                                  {{item.name_ar}}
+                                </a>
+                                <a class="card-title info lead" (click)="basicCollapse1 = !basicCollapse1"
+                                  [attr.aria-expanded]="!basicCollapse1" aria-controls="basicCollapse1 "
+                                  *ngIf="!arabic">
+                                  {{item.name_en}}
+                                </a>
+                                <div class="actions" [ngStyle]="{'float': arabic ?  'left': 'right' }">
+                                  <!-- <a class="btn btn-outline-success" id= "plus_attr{{item.id}}" (click) = "save_attr(item)"><i class="la la-check"></i> {{'product.add' | translate}}</a> -->
+                                  <a class="btn btn-outline-danger" id="remove_attr{{item.id}}" hidden
+                                    (click)="delete_attr(item)"><i class="la la-trash"></i> {{'product.delete' |
+                                    translate}} </a>
+
+                                </div>
+
+                              </div>
+                              <div id="basicCollapse1" [ngbCollapse]="basicCollapse1">
+                                <div class="card-content">
+                                  <div class="card-body">
+                                    <div class="form-body">
+                                      <div class="form-group row mx-auto">
+                                        <label class="col-md-3 label-control" for="category">
+                                          {{'product.value' | translate}} ({{'table.en' | translate}})</label>
+                                        <div class="col-md-9">
+                                          <input type="text" id="value_en{{item.id}}" class="form-control"
+                                            (change)="change_value(item , i)">
+
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="form-body">
+                                      <div class="form-group row mx-auto">
+                                        <label class="col-md-3 label-control" for="category">
+                                          {{'product.value' | translate}} ({{'table.ar' | translate}})</label>
+                                        <div class="col-md-9">
+                                          <input type="text" id="value_ar{{item.id}}" class="form-control"
+                                            (change)="change_value(item , i)">
+
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <!-- <div  [formGroup]="attrForm">
+                                                        <div formArrayName="attr_items"
+                                                          *ngFor="let item of attrForm.get('attr_items').controls; let i = index;">
+                                                          <div [formGroupName]="i">
+                                                            <input formControlName="value_en" placeholder="Item name">
+                                                            <div *ngIf="pointAt(i).invalid && (pointAt(i).dirty || pointAt(i).touched)">
+                                                              {{'form.required' | translate}}
+                                                            </div>
+                                                            <input formControlName="value_ar" placeholder="Item description">
+                                                            <div *ngIf="pointAt(i).invalid && (pointAt(i).dirty || pointAt(i).touched)">
+                                                              {{'form.required' | translate}}
+                                                            </div>
+                                                          </div>
+                                                        
+                                                          Chosen name: {{ attrForm.controls.attr_items.controls[i].controls.value_en.value }}
+                                                          Chosen name: {{ attrForm.controls.attr_items.controls[i].controls.value_ar.value }}
+
+                                                        </div>
+                                                        </div> -->
+
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                    <form [formGroup]="associationForm" style="display: none;" id="association" [ngStyle]="{'direction': arabic ?  'rtl': 'ltr' ,
+                                    'text-align': arabic ?  'right': 'left' }">
+                      <div class="card box-border">
+                        <div class="card-content ">
+                          <div class="card-header">{{'product.associations' | translate}} </div>
+                          <div class="card-body">
+                            <div class="form-body">
+                              <div class="form-group row mx-auto">
+                                <div class="col-md-9">
+                                  <ng-select [items]="associations" bindLabel="name_ar" bindValue="id"
+                                    formControlName="selectedAssociationIds" [multiple]="true" placeholder=""
+                                    (change)="asso_Selected($event)" [(ngModel)]="selectedAssociationIds"
+                                    *ngIf="arabic">
+
+                                  </ng-select>
+                                  <ng-select [items]="associations" bindLabel="name_en" bindValue="id"
+                                    formControlName="selectedAssociationIds" [multiple]="true" placeholder=""
+                                    (change)="asso_Selected($event)" [(ngModel)]="selectedAssociationIds"
+                                    *ngIf="!arabic">
+
+                                  </ng-select>
+                                </div>
+
+
+                              </div>
+                            </div>
+                            <div class="card box-border" style="margin : 20px"
+                              *ngFor="let item of selectedAssociations; let i = index">
+                              <!-- <div class="col-md-3">
+                                                  <button type="button" class="btn btn-secondary" style="margin: 0px auto;" id="plus_att{{id}}"
+                                                   (click)= "add_attribute('new' , i)">
+                                                    {{ 'product.add_attribute' | translate }}</button>
+                                                </div> -->
+                              <div class="card-header">
+                                <a class="card-title info lead" (click)="basicCollapse1 = !basicCollapse1"
+                                  [attr.aria-expanded]="!basicCollapse1" aria-controls="basicCollapse1 " *ngIf="arabic">
+                                  {{item.name_ar}}
+                                </a>
+                                <a class="card-title info lead" (click)="basicCollapse1 = !basicCollapse1"
+                                  [attr.aria-expanded]="!basicCollapse1" aria-controls="basicCollapse1 "
+                                  *ngIf="!arabic">
+                                  {{item.name_en}}
+                                </a>
+                                <div class="actions" [ngStyle]="{'float': arabic ?  'left': 'right' }">
+                                  <!-- <a class="btn btn-outline-success" id= "plus_asso{{item.id}}" (click) = "save_asso(item)"><i class="la la-check"></i> {{'product.add' | translate}}</a> -->
+                                  <a class="btn btn-outline-danger" id="remove_asso{{item.id}}"
+                                    (click)="remove_asso(item)" hidden><i class="la la-trash"></i> {{'product.delete' |
+                                    translate}} </a>
+
+                                </div>
+                              </div>
+                              <div id="basicCollapse1" [ngbCollapse]="basicCollapse1">
+                                <div class="card-content">
+                                  <div class="card-body">
+                                    <div class="form-body">
+                                      <div class="form-group row mx-auto">
+                                        <label class="col-md-3 label-control" for="category">
+                                          {{'product.selectProducts' | translate}} </label>
+                                        <div class="col-md-9">
+                                          <ng-select [items]="products" bindLabel="name_ar" bindValue="id"
+                                            [multiple]="true" placeholder=""
+                                            (change)="select_products($event , item , i )" *ngIf="arabic">
+
+                                          </ng-select>
+                                          <ng-select [items]="products" bindLabel="name_en" bindValue="id"
+                                            [multiple]="true" placeholder=""
+                                            (change)="select_products($event , item , i )" *ngIf="!arabic">
+
+                                          </ng-select>
+                                        </div>
+                                      </div>
+                                    </div>
+
+
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+                <div class="form-actions">
+                  <button type="button" class="btn btn-warning mr-1 ml-1" (click)="cancel()">
+                    <i class="feather ft-x"></i> {{'form.cancelBtn' | translate}}
+                  </button>
+                  <button type="submit" class="btn btn-primary" (click)="submit()" [disabled]="loader_btn">
+                    <i *ngIf="loader_btn" class="la la-spinner spinner">
+
+                    </i><i *ngIf="!loader_btn" class="la la-check"></i> {{'form.saveBtn' | translate}}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<ng-template #addOptionModal let-c="close" let-d="dismiss" class="modal-dialog">
+
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLongTitle">{{'table.addBtn' | translate}} {{'addOptions.deliveryOption' |
+      translate}}</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close(addOptionModal)">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form class="form form-horizontal" [formGroup]="addOptionForm" [ngStyle]="{'direction': arabic ?  'rtl': 'ltr' ,
+        'text-align': arabic ?  'right': 'left' }">
+      <div class="form-body">
+        <div class="form-group row mx-auto">
+          <label class="col-md-3 label-control" for="category">
+            {{'category.name' | translate}} ({{'table.en' | translate}})</label>
+          <div class="col-md-9">
+            <input type="text" id="name_en" class="form-control" formControlName="name_en"
+              [ngClass]="{ 'is-invalid': submitted8 && f8.name_en.errors }">
+            <div *ngIf="submitted8 && f8.name_en.errors" class="invalid-feedback">
+              <div *ngIf="f8.name_en.errors.required">{{'form.required' | translate}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-body">
+        <div class="form-group row mx-auto">
+          <label class="col-md-3 label-control" for="category">
+            {{'category.name' | translate}} ({{'table.ar' | translate}})</label>
+          <div class="col-md-9">
+            <input type="text" id="name_ar" class="form-control" formControlName="name_ar"
+              [ngClass]="{ 'is-invalid': submitted8 && f8.name_ar.errors }">
+            <div *ngIf="submitted8 && f8.name_ar.errors" class="invalid-feedback">
+              <div *ngIf="f8.name_ar.errors.required">{{'form.required' | translate}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-body">
+        <div class="form-group row mx-auto">
+          <label class="col-md-3 label-control" for="category">
+            {{'deliveryOption.estimated_hours' | translate}}</label>
+          <div class="col-md-9">
+            <input type="text" id="estimated_hours" class="form-control" formControlName="estimated_hours"
+              [ngClass]="{ 'is-invalid': submitted8 && f8.estimated_hours.errors }">
+            <div *ngIf="submitted8 && f8.estimated_hours.errors" class="invalid-feedback">
+              <div *ngIf="f8.estimated_hours.errors.required">{{'form.required' | translate}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-body">
+        <div class="form-group row mx-auto">
+          <label class="col-md-3 label-control" for="category">
+            {{'deliveryOption.cost' | translate}}</label>
+          <div class="col-md-9">
+            <input type="text" id="cost" class="form-control" formControlName="cost"
+              [ngClass]="{ 'is-invalid': submitted8 && f8.cost.errors }">
+            <div *ngIf="submitted8 && f8.cost.errors" class="invalid-feedback">
+              <div *ngIf="f8.cost.errors.required">{{'form.required' | translate}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="close(addOptionModal)">
+      {{'extra.close' | translate}}</button>
+    <button type="submit" class="btn btn-primary" (click)="submitOption(addOptionModal)">
+      <i *ngIf="loader8" class="la la-spinner spinner">
+
+      </i>{{'form.saveBtn' | translate}}</button>
+  </div>
+
+</ng-template>
+
+<ng-template #addStockModal let-c="close" let-d="dismiss" class="modal-dialog">
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLongTitle">{{'table.addBtn' | translate}} {{'addOptions.outOfStock' |
+      translate}}</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close2(addStockModal)">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form class="form form-horizontal" [formGroup]="addStockForm" [ngStyle]="{'direction': arabic ?  'rtl': 'ltr' ,
+    'text-align': arabic ?  'right': 'left' }">
+      <div class="form-body">
+        <div class="form-group row mx-auto">
+          <label class="col-md-3 label-control" for="category">
+            {{'category.name' | translate}} ({{'table.en' | translate}})</label>
+          <div class="col-md-9">
+            <input type="text" id="name_en" class="form-control" formControlName="name_en"
+              [ngClass]="{ 'is-invalid': submitted9 && f9.name_en.errors }">
+            <div *ngIf="submitted9 && f9.name_en.errors" class="invalid-feedback">
+              <div *ngIf="f9.name_en.errors.required">{{'form.required' | translate}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-body">
+        <div class="form-group row mx-auto">
+          <label class="col-md-3 label-control" for="category">
+            {{'category.name' | translate}} ({{'table.ar' | translate}})</label>
+          <div class="col-md-9">
+            <input type="text" id="name_ar" class="form-control" formControlName="name_ar"
+              [ngClass]="{ 'is-invalid': submitted9 && f9.name_ar.errors }">
+            <div *ngIf="submitted9 && f9.name_ar.errors" class="invalid-feedback">
+              <div *ngIf="f9.name_ar.errors.required">{{'form.required' | translate}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="close2(addStockModal)">
+      {{'extra.close' | translate}}</button>
+    <button type="submit" class="btn btn-primary" (click)="submitStock(addStockModal)">
+      <i *ngIf="loader9" class="la la-spinner spinner">
+
+      </i>{{'form.saveBtn' | translate}}</button>
+  </div>
+</ng-template>

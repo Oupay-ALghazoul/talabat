@@ -1,0 +1,127 @@
+
+.inputfile {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+.color-variant {
+  li {
+    display: inline-block;
+    height: 20px;
+    width: 20px;
+    border-radius: 100%;
+    margin: 0px 5px;
+    transition: all 0.1s ease;
+    vertical-align: middle;
+  }
+}
+
+.plus {
+  height: 30px;
+  line-height: 10px;
+  width: 30px;
+  font-size: 1em;
+  font-weight: bold;
+  border-radius: 50%;
+  background-color: #4CAF50;
+  color: white;
+  text-align: center;
+  cursor: pointer;
+
+}
+.photos {
+  height: 300px;
+  width : 300px ;
+  display: block;
+  margin-bottom: 10px;
+}
+
+
+.part{
+border: 1px solid rgba(34,36,38,0.1);
+padding: 1.4em;
+}
+
+.btn-group-vertical{
+direction: ltr;
+.btn-action{
+  background-color: #fff;
+  border-color: #e8e8e8;
+  color : #000 ;
+  width: 200px;
+}
+// .btn-action:hover{
+//   background-color : #C0C0C0			;
+//   border-color: #C0C0C0	
+// }
+}
+.box-border{
+border : 1px solid rgba(34,36,38,0.1)
+}
+.card-header{
+border-bottom : 1px solid rgba(34,36,38,0.1)
+}
+.example-tree-invisible {
+display: none;
+}
+
+.example-tree ul,
+.example-tree li {
+margin-top: 0;
+margin-bottom: 0;
+list-style-type: none;
+}
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+
+input[type='checkbox']{
+margin: 10px;
+}
+.btn-secondary{
+background-color: #ff8b22!important;
+border-color: #ff8b22!important;
+}
+.actions{
+display: inline-block;
+a{
+  margin: 0px 5px;
+}
+}
+
+.myclass::after {
+  content: "*";
+  color: red;
+}
+
+
+.btn-cancel{
+    color: #fff;
+    background-color: #ffc107;
+    border-color: #ffc107;
+    width: 100px;
+}
+.pass-icon{
+  position: absolute;
+  top: 1px;
+  z-index: 2;
+  display: block;
+  width: 2.5rem;
+  height: 2.5rem;
+  line-height: 3.2rem;
+  text-align: center;
+  right : 20px
+}
+.pass-icon-ar{
+  position: absolute;
+  top: 1px;
+  z-index: 2;
+  display: block;
+  width: 2.5rem;
+  height: 2.5rem;
+  line-height: 3.2rem;
+  text-align: center;
+  left : 20px
+}

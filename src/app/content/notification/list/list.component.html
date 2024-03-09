@@ -1,0 +1,237 @@
+
+<div class="app-content content "> 
+ <div class="content-wrapper">
+  <div class="content-header row mb-1"  [ngStyle]="{'direction': arabic ?  'rtl': 'ltr' }">
+    <app-breadcrumb class="col-6"  style="text-align: right;"  [breadcrumb]="breadcrumbAr" *ngIf="arabic"></app-breadcrumb>
+    <app-breadcrumb class="col-6"  style="text-align: left;"  [breadcrumb]="breadcrumb" *ngIf="!arabic"></app-breadcrumb>
+    <div class="col-6"  [ngStyle]="{'text-align': arabic ?  'left': 'right' }">
+      <button type="button" class="btn btn-primary mr-1 ml-1" (click)="addCode(addDiscountModalContent)" >
+        <i class="la la-plus-circle" aria-hidden="true"  style="font-size:18px;cursor: pointer;"></i>   
+        {{ 'discountCode.sendNotification' | translate }}
+      </button>
+     
+      </div>
+  </div>
+
+    <div class="content-body" [ngStyle]="{'direction': arabic ?  'rtl': 'ltr' }">    
+      <section class="row">
+          <div class="col-12">
+              <div class="card">
+                <div class="card-content">
+                  <div class="card-body">
+                    <form [formGroup]="search" class="row" style="margin-bottom: 10px;"  [ngStyle]="{'text-align': arabic ?  'right': 'left' }">
+                      <div class="col-lg-5 col-12" style="margin-bottom: 10px;">
+                        
+                        <div class="row">
+                          <div class="col-6">
+                            <label class="label-control" for="projectinput4" >{{ 'resturantCategory.activateState' | translate }}</label>
+                            <select class="custom-select "  (change)="selectState($event.target.value)">                       
+                              <option value="0" >{{ 'resturantCategory.activateState' | translate }}</option>
+                              <option value="true">{{ 'filterOptions.activated' | translate }}</option>
+                              <option value="false">{{ 'filterOptions.notActivated' | translate }}</option>  
+                            </select>
+                          </div>
+                          <div class="col-6">
+                            <label class="label-control" for="projectinput4" >{{ 'filterOptions.chooseRole' | translate }}</label>
+                            <select class="custom-select "  (change)="selectRole($event.target.value)">                       
+                              <option value="0" >{{ 'filterOptions.chooseRole' | translate }}</option>
+                              <option value="super_admin">{{ 'filterOptions.super_admin' | translate }}</option>
+                              <option value="admin">{{ 'filterOptions.admin' | translate }}</option>
+                              <option value="member">{{ 'filterOptions.member' | translate }}</option>
+                              <option value="restaurant_manager">{{ 'filterOptions.restaurant_manager' | translate }}</option>
+                              <option value="delivery">{{ 'filterOptions.delivery' | translate }}</option>
+                            </select>
+                          </div>
+
+                        </div>
+                          
+                      </div>
+                      <div class="col-lg-5 col-12" style="margin-bottom: 10px;">
+                        <label class="label-control" for="projectinput4" >{{ 'seachOptions.userName' | translate }}</label>
+                        <input type="text" id="search" class="form-control" 
+                        placeholder="{{ 'seachOptions.userName' | translate }}"
+                          formControlName="name">
+                        <div class="form-control-position"  [ngStyle]="{'left': arabic ?  '10px': '88%' ,
+                        'right': arabic ?  '88%': '10px' }">
+                          <i class="feather ft-search"></i>
+                        </div>                       
+                      </div>
+                      <div class="col-lg-2 col-12" style="margin-bottom: 10px;">
+                        <button type="submit" class="btn btn-primary" [disabled] = "loaderBtn"
+                         style="margin-top: 25px;" (click) = "searchBtn()">
+                          <i  *ngIf="!loaderBtn"class="la la-check"></i>  
+                          <i  *ngIf="loaderBtn" class="la la-spinner spinner"></i>
+                          {{'table.search' | translate}}
+                        </button>
+                      </div>
+                    </form>
+                    <!-- <div class=" justify-content row" style="margin-bottom: 10px;"  [ngStyle]="{'text-align': arabic ?  'right': 'left' }">
+                      <div class="col-md-12">
+                        <button class="btn btn-secondary buttons-excel buttons-html5"
+                       >{{'table.exportToExcel' | translate}}</button>
+                        <button class="btn btn-secondary buttons-excel buttons-html5" >
+                          {{'table.exportToPdf' | translate}}
+                        </button>
+                      </div>
+                 
+                    </div> -->
+                      <div class="loader-wrapper" *ngIf="loader">
+                      <div class="loader-container">
+                      <div class="ball-spin-fade-loader loader-blue">
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      </div>
+                      </div>
+                      </div>
+                      <div class="table-responsive" *ngIf="!loader" >
+                        <ngx-datatable #table class="bootstrap row contacts-table" 
+                        [rows]="result" 
+                        [columnMode]="'force'" 
+                        [headerHeight]="50"
+                        [footerHeight]="50" 
+                        [rowHeight]="70"                        
+                        [selected]="selected" 
+                        [selectionType]="'checkbox'"
+                        (select)='onSelectContact($event)' 
+                        fxFlex="auto" 
+                      
+                        [count]="Count"
+                        
+                      
+                      *ngIf="!loader">
+                        
+                        <ngx-datatable-column [flexGrow]="1"  [maxWidth]="90">
+                          <!-- <ng-template ngx-datatable-header-template let-value="value" let-allRowsSelected="allRowsSelected"
+                            let-selectFn="selectFn">
+                            <span class="custom-control custom-checkbox">
+                              <input type="checkbox" class="custom-control-input" id="selectAll" [checked]="allRowsSelected"
+                                (change)="selectFn(!allRowsSelected)" />
+                              <label class="custom-control-label" for="selectAll"></label>
+                            </span>
+                          </ng-template> -->
+                          <ng-template ngx-datatable-header-template let-value="value.id" let-allRowsSelected="allRowsSelected"
+                          let-selectFn="selectFn">
+                          <span class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input select-col" id="selectAll" [checked]="allRowsSelected"
+                              (change)="selectFn(!allRowsSelected)" />
+                            <label class="custom-control-label" for="selectAll"></label>
+                          </span>
+                        </ng-template>
+                          <ng-template ngx-datatable-cell-template let-value="value" let-row="row" let-rowIndex="rowIndex"
+                            let-onCheckboxChangeFn="onCheckboxChangeFn" let-isSelected="isSelected">
+                            <div class="custom-control custom-checkbox _center">
+                              <input type="checkbox" class="custom-control-input" id="select{{rowIndex}}"
+                                [checked]="isSelected" (change)="onCheckboxChangeFn($event)" />
+                              <label class="custom-control-label" for="select{{rowIndex}}"></label>
+                            </div>
+                          </ng-template>
+                        </ngx-datatable-column>
+                        
+                        <ngx-datatable-column name="{{'usersTable.name' | translate}}" [flexGrow]="1"  [minWidth]="90">
+                            <ng-template  ngx-datatable-cell-template let-row="row">
+                              <span  *ngIf="row.activated" class="avatar avatar-sm avatar rounded-circle" style="    margin: 0px 10px;
+                              ">
+                                <img *ngIf="row.photo"  [src]="row.photo "  style="height: 30px; width: 30px;" >
+                                <img *ngIf="!row.photo" src="../../../assets/images/portrait/small/avatar-s-19.png"  style="height: 30px; width: 30px;"
+                                >
+                                <i style="background: green;"></i></span>
+                              <span  *ngIf="!row.activated" class="avatar avatar-sm avatar rounded-circle" style="    margin: 0px 10px;
+                              ">
+                                <img   *ngIf="row.photo"  [src]="row.photo" style="height: 30px; width: 30px;">
+                                <img *ngIf="!row.photo" src="../../../assets/images/portrait/small/avatar-s-19.png"  style="height: 30px; width: 30px;">
+                                <i style="background: gray;"></i></span>
+                                  {{row.full_name}}
+                            </ng-template>
+                          </ngx-datatable-column>
+                          <ngx-datatable-column name="{{'usersTable.email' | translate}}" [flexGrow]="1"  [minWidth]="90">
+                              <ng-template ngx-datatable-cell-template let-row="row">
+                                {{row.email}}
+                              </ng-template>
+                            </ngx-datatable-column>
+                        
+                        <ngx-datatable-column name="{{'usersTable.phone' | translate}}" [flexGrow]="1"  [minWidth]="90">
+                          <ng-template ngx-datatable-cell-template let-row="row">
+                            {{row.phone}}
+                          </ng-template>
+                        </ngx-datatable-column>
+                        
+                        
+                        
+                        <!-- <ngx-datatable-column name="{{ 'usersTable.sendCode' | translate }}" [flexGrow]="1" [maxWidth]="200">
+                          <ng-template ngx-datatable-cell-template let-row="row">
+                                <button type="button" class="btn btn-primary mr-1 ml-1" (click)="addCode(addDiscountModalContent,row)" >
+                                  <i class="la la-plus-circle" aria-hidden="true"  style="font-size:18px;cursor: pointer;"></i>
+                                </button>
+                          </ng-template> 
+                        </ngx-datatable-column> -->
+                        </ngx-datatable>
+                
+                      </div>
+                    </div>
+                </div>   
+            </div>
+          </div>
+      </section>
+    </div>   
+    </div>    
+</div>
+
+
+<ng-template #addDiscountModalContent let-c="close" let-d="dismiss" class="modal-dialog" >
+  <form (ngSubmit)="submit(addForm)" [formGroup]="addForm"  [ngStyle]="{'direction': arabic ?  'rtl': 'ltr' }"  >
+    <div class="modal-content">
+    <div class="modal-header" [ngStyle]="{'direction': arabic ?  'rtl': 'ltr' }">
+      <h5 class="modal-title" id="exampleModalLabel1">        {{ 'discountCode.sendNotification' | translate }}
+      </h5>
+   
+    </div>
+    <div class="modal-body" [ngStyle]="{'text-align': arabic ?  'right': 'left' }" >
+      <div class="form-body" >
+        <div class="form-group row mx-auto">                                            
+            <label class="col-md-3 label-control" for="category" [ngStyle]="{'text-align': arabic ?  'right': 'left' }"> 
+              {{'discountCode.title' | translate}}</label>
+            <div class="col-md-9">
+                <input type="text" id="title" class="form-control" formControlName="title"
+                [ngClass]="{ 'is-invalid': submitted && g.title.errors }" >
+             
+                <div *ngIf="submitted && g.title.errors" class="invalid-feedback">
+                    <div *ngIf="g.title.errors.required">{{'form.required' | translate}}</div>
+                </div>
+            </div>                            
+        </div>                                   
+      </div>
+      <div class="form-body" >
+        <div class="form-group row mx-auto">                                            
+            <label class="col-md-3 label-control" for="category" [ngStyle]="{'text-align': arabic ?  'right': 'left' }"> 
+              {{'discountCode.body' | translate}}</label>
+            <div class="col-md-9">
+                <textarea type="text" id="body" class="form-control" formControlName="body"
+                [ngClass]="{ 'is-invalid': submitted && g.body.errors }" ></textarea>
+             
+               <div *ngIf="submitted && g.body.errors" class="invalid-feedback">
+                   <div *ngIf="g.body.errors.required">{{'form.required' | translate}}</div>
+               </div>
+            </div>                            
+        </div>                                   
+      </div>
+                                  
+      </div>
+   
+    <div class="modal-footer">
+      <div class="form-group position-relative has-icon-left mb-0">
+        <button type="button" class="btn btn-secondary" (click) = "closeAddOption(addForm)">{{'extra.close' | translate}}</button>
+        <button type="submit"paper id="add-contact-item" class="btn btn-info add-contact-item"  [disabled]="addLoader"><i
+            class="la la--plane-o d-lg-none"></i> <span class="d-none d-lg-block">
+              <i *ngIf="addLoader" class="la la-spinner spinner"></i>{{'table.sendBtn' | translate}}</span>
+        </button>
+      </div>
+    </div>
+    </div>
+  </form>
+</ng-template>

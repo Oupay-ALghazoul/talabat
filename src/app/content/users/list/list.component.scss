@@ -1,0 +1,28 @@
+
+ :host ::ng-deep .datatable-body-cell-label,
+ :host ::ng-deep .datatable-header-cell {
+   padding: 0.6rem;
+   text-align: center;
+ }
+.btn-group{
+  direction: ltr;
+  .btn-action{
+    background-color: #e8e8e8;
+    border-color: #e8e8e8;
+    color : #000 ;
+    width: 130px;
+    padding: 0.75rem 0.30rem;
+    }
+  .btn-action:hover{
+    background-color : #C0C0C0			;
+    border-color: #C0C0C0	
+  }
+}
+.btn-secondary{
+  background-color: #ff6500!important;
+  border-color: #ff6500!important;
+  margin: 0px 3px;
+}
+.box-border{
+  border : 1px solid rgba(34,36,38,0.1)
+}

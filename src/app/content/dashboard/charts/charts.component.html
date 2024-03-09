@@ -1,0 +1,221 @@
+<!----- start barchart------->
+<div class="app-content content">
+  <div class="content-wrapper">
+    <div class="content-header row mb-1" [ngStyle]="{'direction': arabic ?  'rtl': 'ltr' }">
+      <app-breadcrumb class="col-12" [ngStyle]="{'text-align': arabic ?  'right': 'left' }" [breadcrumb]="breadcrumb"></app-breadcrumb>
+    </div>
+    <div class="content-body"  [ngStyle]="{'direction': arabic ?  'rtl': 'ltr' ,
+    'text-align': arabic ?  'right': 'left' }">
+      <!-- Bar Chart -->
+      
+      <section id="chartjs-bar-charts" >
+        <div class="card" >
+          <div class="card-content">
+              <div class="card-body ">
+                <div class="row">
+                  <div class="col-6">
+      
+                  </div>
+                  <div class="col-3">
+                    <div class="card-header" style="    padding: 0.5rem 1.5rem;">
+                      {{'chart.select_year' | translate}}
+                   </div> 
+                  </div>
+                  <div class="col-3">
+                    <select class="custom-select "  ([ngModel])="selectedYear" (change)="onChange($event.target.value)">
+                      <option *ngFor="let year of years" [value]="year">{{ year }}</option> 
+                    </select>
+                  </div>
+               
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="loader-wrapper" *ngIf="loader">
+            <div class="loader-container">
+                <div class="ball-spin-fade-loader loader-blue">
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                </div>
+              </div>
+            </div>
+          <div class="row" *ngIf="!loader">
+            <div class="col-xl-4 col-md-6 col-12">
+              <div class="card">
+                <div class="card-content">
+                  <div class="media align-items-stretch">
+                    <div class="p-2 text-center bg-info rounded-left">
+                      <i class="icon-basket font-large-2 text-white"></i>
+                    </div>
+                    <div class="p-2 media-body">
+                      <h5>{{'chart.salesNumber' | translate}}</h5>
+                      <h5 class="text-bold-400 mb-0">{{salesNumber}} {{'KWD'| translate}}</h5>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-4 col-md-6 col-12">
+              <div class="card">
+                <div class="card-content">
+                  <div class="media align-items-stretch">
+                    <div class="p-2 text-center bg-danger rounded-left">
+                      <i class="icon-user font-large-2 text-white"></i>
+                    </div>
+                    <div class="p-2 media-body">
+                      <h5> {{'chart.customersNumber' | translate}}</h5>
+                      <h5 class="text-bold-400 mb-0"> {{customersNumber}}</h5>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-4 col-md-6 col-12">
+              <div class="card">
+                <div class="card-content">
+                  <div class="media align-items-stretch">
+                    <div class="p-2 text-center bg-success rounded-left">
+                      <i class="icon-basket-loaded font-large-2 text-white"></i>
+                    </div>
+                    <div class="p-2 media-body">
+                      <h5>{{'chart.ordersNumber' | translate}} </h5>
+                      <h5 class="text-bold-400 mb-0">{{ordersNumber}}</h5>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- <div class="col-xl-3 col-md-6 col-12">
+              <div class="card">
+                <div class="card-content">
+                  <div class="media align-items-stretch">
+                    <div class="p-2 text-center bg-warning rounded-left">
+                      <i class="icon-wallet font-large-2 text-white"></i>
+                    </div>
+                    <div class="p-2 media-body">
+                      <h5>{{'average_order' | translate}}</h5>
+                      <h5 class="text-bold-400 mb-0">{{averageOrderValueNumber}} {{'KWD' | translate}}</h5>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div> -->
+          </div>
+
+          <div class="row" *ngIf="!loader && !empty">
+            <div class="col-12" *blockUI="'barCharts'; message: 'Loading'">
+              <m-card [options]="options" (reloadFunction)="reloadBarCharts($event)">
+                <ng-container mCardHeaderTitle>
+                  {{'chart.salesChart' | translate}}
+                </ng-container>
+                <ng-container mCardBody>
+                  <div class="z">
+                    <canvas class="barchart" height="400" baseChart [datasets]="barChartData" [labels]="barChartLabels"
+                      [options]="barChartOptions" [colors]="barChartColors" [legend]="barChartLegend"
+                      [chartType]="barChartType"></canvas>
+                  </div>
+                </ng-container>
+              </m-card>
+            </div>
+          </div>
+          <div class="row" *ngIf="!loader">
+            <div class="col-md-6 col-12">
+              <div class="card" >
+                <div class="card-header" style="    background-color: rgba(0,0,0,.03)">
+                   {{'chart.new_customers' | translate}}
+                </div>
+                <div class="card-body ">
+                  <div class="table-responsive">
+                    <table class="table table-bordered">
+                      <thead class="thead-gray">
+                        <tr>
+                          <th scope="col">{{'usersTable.name' | translate}}</th>
+                          <th scope="col"  *ngIf= "showEdit">{{'category.edit' | translate}}</th>
+                       
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let item of users; index as i">
+                          <td >
+                            <a class="total-2">{{item.full_name}} </a> 
+                            <a class="total-2">{{item.email}} </a> 
+                          </td>
+                          <td  *ngIf= "showEdit">
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                              <button type="button" class="btn btn-action"  (click)="edit(item.id)"> 
+                           
+                                {{'usersTable.edit' | translate}} <i class="la la-edit"></i></button>
+                            </div>
+                          
+                          </td>
+                        </tr>
+                  
+                        
+                     
+                      </tbody>
+                  </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+             <div class="col-md-6 col-12">
+              <div class="card" >
+                <div class="card-header" style="    background-color: rgba(0,0,0,.03)">
+                   {{'chart.new_orders' | translate}}
+                </div>
+                <div class="card-body ">
+                  <div class="table-responsive">
+                    <table class="table table-bordered">
+                      <thead class="thead-gray">
+                        <tr>
+                          <th scope="col">{{'usersTable.name' | translate}}</th>
+                          <th scope="col">{{'chart.order_items_count' | translate}}</th>
+                          <th scope="col">{{'order.total' | translate}}</th>
+                          <th scope="col"  *ngIf= "showEdit">{{'category.edit' | translate}}</th>
+                       
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let item of orders; index as i">
+                          <td >
+                            <a class="total-2">{{item.user.full_name}} </a> 
+                            <a class="total-2">{{item.user.email}} </a> 
+                          </td>
+                          <td>
+                            {{item.order_items_count}}
+                          </td>
+                          <td>
+                            {{item.total}} {{item.currency}}
+                          </td>
+                          <td >
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                              <button type="button" class="btn btn-action"  (click)="showDetails(item.id)"> 
+                              
+                                {{'usersTable.showDetails' | translate }} <i class="la la-eye"></i></button>
+                            </div>
+                          
+                          </td>
+                        </tr>
+                  
+                        
+                     
+                      </tbody>
+                  </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      </section>
+      <!-- End Bar charts-->
+    </div>
+  </div>
+</div>
+
+<!-- ////////////////////////////////////////////////////////////////////////////-->

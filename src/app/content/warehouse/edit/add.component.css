@@ -1,0 +1,271 @@
+
+.inputfile {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+li.iti__country:hover {
+	background-color: rgba(0, 0, 0, 0.05);
+}
+.iti__selected-flag.dropdown-toggle:after {
+	content: none;
+}
+.iti__flag-container.disabled {
+	cursor: default !important;
+}
+.iti.iti--allow-dropdown .flag-container.disabled:hover .iti__selected-flag {
+	background: none;
+}
+.country-dropdown {
+	border: 1px solid #ccc;
+	width: fit-content;
+	padding: 1px;
+	border-collapse: collapse;
+}
+.search-container {
+	position: relative;
+}
+.search-container input {
+	width: 100%;
+	border: none;
+	border-bottom: 1px solid #ccc;
+	padding-left: 10px;
+}
+.search-icon {
+	position: absolute;
+	z-index: 2;
+	width: 25px;
+	margin: 1px 10px;
+}
+.iti__country-list {
+	position: relative;
+	border: none;
+}
+
+.iti input#country-search-box {
+	padding-left: 6px;
+}
+
+.iti .selected-dial-code {
+	margin-left: 6px;
+}
+
+.iti.separate-dial-code .iti__selected-flag,
+.iti.separate-dial-code.iti--allow-dropdown.iti-sdc-2 .iti__selected-flag,
+.iti.separate-dial-code.iti--allow-dropdown.iti-sdc-3 .iti__selected-flag,
+.iti.separate-dial-code.iti--allow-dropdown.iti-sdc-4 .iti__selected-flag {
+	width: 93px;
+}
+
+.iti.separate-dial-code input,
+.iti.separate-dial-code.iti--allow-dropdown.iti-sdc-2 input,
+.iti.separate-dial-code.iti--allow-dropdown.iti-sdc-3 input,
+.iti.separate-dial-code.iti--allow-dropdown.iti-sdc-4 input {
+	padding-left: 98px;
+}
+
+.iti {
+	display: block !important;
+	margin-bottom: 20px;
+}
+
+.iti .dropdown-menu.country-dropdown {
+	border-top-left-radius: 0px;
+	border-top-right-radius: 0px;
+	border-color: #c7cace;
+	margin-top: -1px;
+}
+
+.iti .iti__country-list {
+	box-shadow: none;
+	font-size: 14px;
+	margin-left: 0;
+	width: 244px;
+	max-height: 170px;
+}
+
+.iti__flag-container.open + input {
+	border-bottom-left-radius: 0px;
+	border-bottom-right-radius: 0px;
+}
+
+.iti .search-container input {
+	font-size: 14px;
+	border-color: #c7cace;
+	border-radius: 0;
+	padding: 5px 10px;
+}
+
+.iti .search-container input:focus {
+	outline: none;
+}
+
+@media screen and (max-width: 479px) {
+	.iti .iti__country-list {
+		width: 88.3vw;
+	}
+}
+
+ngx-intl-tel-input input {
+	height: 44px;
+	margin-bottom: 20px;
+	padding: 10px;
+	border-style: solid;
+	border-width: 1px;
+	border-color: #c7cace;
+	border-radius: 4px;
+	font-size: 18px;
+}
+
+ngx-intl-tel-input.ng-invalid.ng-touched input {
+	border: 1px solid #c0392b;
+}
+
+ngx-intl-tel-input input:hover {
+	box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.24);
+}
+
+ngx-intl-tel-input input:focus {
+	outline: none !important;
+	border-color: #3498db;
+	box-shadow: 0 0 0 0 #000;
+}
+
+ngx-intl-tel-input input::-webkit-input-placeholder {
+	color: #bac2c7;
+}
+
+ngx-intl-tel-input input:-ms-input-placeholder {
+	color: #bac2c7;
+}
+
+ngx-intl-tel-input input::-ms-input-placeholder {
+	color: #bac2c7;
+}
+
+ngx-intl-tel-input input::placeholder {
+	color: #bac2c7;
+}
+
+ngx-intl-tel-input input[disabled] {
+	background-color: #e5eaf1;
+}
+/* You can add global styles to this file, and also import other style files */
+body {
+	font-family: Roboto, Helvetica, Arial, sans-serif;
+}
+
+.wrapper {
+	margin-bottom: 20px;
+}
+
+/*****************************************************
+	Custom styling example bellow.
+*****************************************************/
+
+.iti {
+	display: block !important;
+	margin-bottom: 20px;
+}
+
+.iti .dropdown-menu.country-dropdown {
+	border-top-left-radius: 0px;
+	border-top-right-radius: 0px;
+	border-color: #c7cace;
+	margin-top: -1px;
+}
+
+.iti .iti__country-list {
+	box-shadow: none;
+	font-size: 14px;
+	margin-left: 0;
+	width: 244px;
+	max-height: 170px;
+}
+
+.iti__flag-container.open + input {
+	border-bottom-left-radius: 0px;
+	border-bottom-right-radius: 0px;
+}
+
+.iti .search-container input {
+	font-size: 14px;
+	border-color: #c7cace;
+	border-radius: 0;
+	padding: 5px 10px;
+}
+
+.iti .search-container input:focus {
+	outline: none;
+}
+
+@media screen and (max-width: 479px) {
+	.iti .iti__country-list {
+		width: 88.3vw;
+	}
+}
+
+ngx-intl-tel-input input {
+	height: 44px;
+	margin-bottom: 20px;
+	padding: 10px;
+	border-style: solid;
+	border-width: 1px;
+	border-color: #c7cace;
+	border-radius: 4px;
+	font-size: 18px;
+}
+
+ngx-intl-tel-input.ng-invalid.ng-touched input {
+	border: 1px solid #c0392b;
+}
+
+ngx-intl-tel-input input:hover {
+	box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.24);
+}
+
+ngx-intl-tel-input input:focus {
+	outline: none !important;
+	border-color: #3498db;
+	box-shadow: 0 0 0 0 #000;
+}
+
+ngx-intl-tel-input input::-webkit-input-placeholder {
+	color: #bac2c7;
+}
+
+ngx-intl-tel-input input:-ms-input-placeholder {
+	color: #bac2c7;
+}
+
+ngx-intl-tel-input input::-ms-input-placeholder {
+	color: #bac2c7;
+}
+
+ngx-intl-tel-input input::placeholder {
+	color: #bac2c7;
+}
+
+ngx-intl-tel-input input[disabled] {
+	background-color: #e5eaf1;
+}
+
+.pass-icon{
+	position: absolute;
+	top: 6px;
+	z-index: 2;
+	display: block;
+	width: 2.5rem;
+	height: 2.5rem;
+	line-height: 3.2rem;
+	text-align: center;
+	left : 20px
+  }
+.part{
+	border: 1px solid rgba(34,36,38,0.1);
+	padding: 1.4em;
+}
+  

@@ -1,0 +1,69 @@
+/* You can add global styles to this file, and also import other style files */
+/*@import "~bootstrap/dist/css/bootstrap.css";
+
+body{
+    background-color: #f7f7f7 !important;
+}
+
+.margin-top-70{
+    margin-top: 70px;
+}*/
+@import '~quill/dist/quill.core.css';
+@import '~quill/dist/quill.bubble.css';
+@import '~quill/dist/quill.snow.css';
+@import "~@ng-select/ng-select/themes/default.theme.css";
+@import '~perfect-scrollbar/css/perfect-scrollbar.css';
+@import "~ng-pick-datetime/assets/style/picker.min.css";
+
+
+
+:host ::ng-deep .email-fixed-header {
+  min-height: calc(100% - 207px)!important;
+  margin-top: 0!important;
+  overflow-y: hidden !important;
+}
+html[lang=en]:host ::ng-deep .datatable-header-cell {
+  text-align: left;
+  font-size: 13px
+}
+html[lang=ar]:host ::ng-deep .datatable-header-cell {
+  text-align: right;
+  font-size: 13px
+}
+html[lang=en] :host ::ng-deep .ngx-datatable.bootstrap .datatable-body .datatable-body-row .datatable-body-cell {
+  padding: 0rem;
+  text-align: left;
+  overflow-y: visible !important;
+  overflow-x: visible !important;
+}
+html[lang=ar] :host ::ng-deep .ngx-datatable.bootstrap .datatable-body .datatable-body-row .datatable-body-cell {
+  padding: 0rem;
+  text-align: right;
+  overflow-y: visible !important;
+  overflow-x: visible !important;
+}
+html[lang=en]  :host ::ng-deep{
+  text-align: left;
+}
+html[lang=ar]  :host ::ng-deep{
+  text-align: right;
+}
+@font-face {
+  font-family: 'Cairo';
+  src: url('/assets/fonts/Cairo-Regular.eot');
+  src: url('/assets/fonts/Cairo-Regular.eot?#iefix') format('embedded-opentype');
+  src: url('/assets/fonts/Cairo-Regular.svg#Cairo-Regular') format('svg');
+  src: url('/assets/fonts/Cairo-Regular.ttf') format('truetype');
+  src: url('/assets/fonts/Cairo-Regular.woff') format('woff');
+  src: url('/assets/fonts/Cairo-Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+html[lang=en] * :not(i):not( mat-icon ) {
+  font-family: 'Poppins', sans-serif
+}
+
+html[lang=ar] * :not(i):not( mat-icon ){
+  font-family:  'Cairo', serif; 
+  letter-spacing: 0px!important;
+}

@@ -1,0 +1,37 @@
+<footer id="footer" class="footer footer-static footer-light navbar-border navbar-shadow" 
+*ngIf="showFooter" [ngStyle]="{'direction': arabic ?  'rtl': 'ltr' }"
+>
+  <p [ngStyle]="{'text-align': arabic ?  'right': 'left' }"  class="clearfix blue-grey lighten-2 text-sm-center mb-0 px-2"><span
+      class=" d-block d-md-inline-block"> {{'footer.Copyright' | translate}} &copy; {{year}} <a 
+        class="text-bold-800 grey darken-2"
+        style="    color: #ff8b22;"> {{'footer.talabat' | translate}} </a></span>
+        <!-- <span
+      class="float-md-right d-block d-md-inline-block d-none d-lg-block">Hand-crafted & Made with <i
+        class="feather ft-heart pink"></i>
+      <span id="scroll-top"></span></span> -->
+    </p>
+</footer>
+
+<footer  [ngStyle]="{'direction': arabic ?  'rtl': 'ltr' }" id="footer" class="footer fixed-bottom footer-light navbar-border navbar-shadow" *ngIf="fixedFooter">
+  <p [ngStyle]="{'text-align': arabic ?  'right': 'left' }"  class="clearfix blue-grey lighten-2 text-sm-center mb-0 px-2"><span
+      class="d-block d-md-inline-block"> {{'footer.Copyright' | translate}} &copy;  {{year}}  <a
+        class="text-bold-800 grey darken-2"
+      style="    color: #ff8b22;"> {{'footer.talabat' | translate}} </a></span>
+        <!-- <span
+      class="float-md-right d-block d-md-inline-block d-none d-lg-block">Hand-crafted & Made with <i
+        class="feather ft-heart pink"></i>
+      <span id="scroll-top"></span></span> -->
+    </p>
+</footer>
+
+<footer  [ngStyle]="{'direction': arabic ?  'rtl': 'ltr' }" id="footer" class="footer fixed-bottom footer-dark navbar-border navbar-shadow" *ngIf="darkFooter">
+  <p [ngStyle]="{'text-align': arabic ?  'right': 'left' }"  class="clearfix blue-grey lighten-2 text-sm-center mb-0 px-2"><span
+      class=" d-block d-md-inline-block"> {{'footer.Copyright' | translate}} &copy;  {{year}}  <a 
+        class="text-bold-800 grey darken-2" 
+        style="    color: #ff8b22;"> {{'footer.talabat' | translate}} </a></span>
+        <!-- <span
+      class="float-md-right d-block d-md-inline-block d-none d-lg-block">Hand-crafted & Made with <i
+        class="feather ft-heart pink"></i>
+      <span id="scroll-top"></span></span> -->
+    </p>
+</footer>

@@ -1,0 +1,25 @@
+<h6 class="product-title" *ngIf ="days>=0 && hours >=0 && minutes >=0 && seconds >=0 && !enableMiddleTitle" >{{ middleTitle[translate.currentLang+'']}}</h6>
+<div *ngIf ="days>=0 && hours >=0 && minutes >=0 && seconds >=0" class="timer">
+  <h6 class="product-title mb-1" *ngIf ="enableMiddleTitle" >{{ middleTitle[translate.currentLang+'']}}</h6>
+    <p id="demo">
+      <span *ngIf = "days>=0">
+        <span class="timer-num">{{ days.toLocaleString(this.translate.currentLang =='ar' ? 'ar-SY' : 'en') }}</span>
+        <span class="padding-l">:</span>
+        <span class="timer-cal">{{'days' | translate}}</span>
+      </span>
+      <span *ngIf = "hours>=0">
+        <span class="timer-num">{{ hours.toLocaleString(this.translate.currentLang =='ar' ? 'ar-SY' : 'en')}}</span>
+        <span class="padding-l">:</span>
+        <span class="timer-cal">{{'Hrs' | translate}}</span>
+      </span>
+      <span *ngIf = "minutes>=0">
+        <span class="timer-num">{{ minutes.toLocaleString(this.translate.currentLang =='ar' ? 'ar-SY' : 'en') }}</span>
+        <span class="padding-l">:</span>
+        <span class="timer-cal">{{'Min' | translate}}</span>
+      </span>
+      <span *ngIf = "seconds>=0">
+        <span class="timer-num">{{ seconds.toLocaleString(this.translate.currentLang =='ar' ? 'ar-SY' : 'en') }}</span>
+        <span class="timer-cal">{{'Sec' | translate}}</span>
+      </span>
+    </p>
+</div>

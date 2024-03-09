@@ -1,0 +1,228 @@
+<div class="app-content content ">
+  <div class="content-wrapper">
+    <div class="content-header row mb-1" [ngStyle]="{'direction': arabic ?  'rtl': 'ltr' }">
+      <app-breadcrumb class="col-6" style="text-align: right;" [breadcrumb]="breadcrumbAr" *ngIf="arabic">
+      </app-breadcrumb>
+      <app-breadcrumb class="col-6" style="text-align: left;" [breadcrumb]="breadcrumb" *ngIf="!arabic">
+      </app-breadcrumb>
+      <div class="col-6" [ngStyle]="{'text-align': arabic ?  'left': 'right' }">
+        <button type="submit" class="btn btn-primary" [routerLink]="'/delivery/add'" *ngIf="showAdd">
+          {{'table.addBtn' | translate}} {{ 'addOptions.delivery' | translate }}
+        </button>
+      </div>
+    </div>
+
+    <div class="content-body" [ngStyle]="{'direction': arabic ?  'rtl': 'ltr' ,
+    'text-align': arabic ?  'right': 'left' }">
+      <section class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-content">
+              <div class="card-body">
+                <div class="card box-border" style="margin: 0px 0px 20px 0px;">
+                  <div class="card-header">
+                    <i class="la la-filter"></i>
+                    <a class="card-title info lead" (click)="basicCollapse2 = !basicCollapse2"
+                      [attr.aria-expanded]="basicCollapse2" aria-controls="basicCollapse2">
+                      {{'form.filter' | translate}}</a>
+                  </div>
+                  <div id="basicCollapse2" [ngbCollapse]="!basicCollapse2">
+                    <div class="card-content">
+                      <div class="card-body">
+                        <form [formGroup]="search" style="margin-bottom: 10px;"
+                          [ngStyle]="{'text-align': arabic ?  'right': 'left' }">
+                          <div class="row" style="margin-bottom: 10px;">
+                            <div class="col-lg-6 col-12">
+                              <label class="label-control" for="projectinput4">{{ 'category.activateState' | translate
+                                }}</label>
+                              <select class="custom-select " formControlName="activated">
+                                <option value="0" selected disabled></option>
+                                <option value="">{{ 'filterOptions.all' | translate }}</option>
+                                <option value="1">{{ 'filterOptions.activated' | translate }}</option>
+                                <option value="0">{{ 'filterOptions.notActivated' | translate }}</option>
+                              </select>
+                            </div>
+
+                          </div>
+                          <div class="row" style="margin-bottom: 10px;">
+                            <div class="col-lg-6 col-12">
+                              <label class="label-control" for="projectinput4">{{ 'seachOptions.delivery' | translate
+                                }}</label>
+                              <input type="text" id="word" class="form-control"
+                                placeholder="{{ 'seachOptions.delivery' | translate }}" formControlName="word_filter">
+                              <div class="form-control-position" [ngStyle]="{'left': arabic ?  '10px': '91%' ,
+                                  'right': arabic ?  '91%': '10px' }">
+                                <i class="feather ft-search"></i>
+                              </div>
+                            </div>
+                            <div class="col-lg-6 col-12">
+                              <label class="label-control" for="projectinput4">{{ 'seachOptions.deliveryPhone' |
+                                translate }}</label>
+                              <input type="text" id="phone" class="form-control"
+                                placeholder="{{ 'seachOptions.deliveryPhone' | translate }}"
+                                formControlName="phone_filter">
+                              <div class="form-control-position" [ngStyle]="{'left': arabic ?  '10px': '91%' ,
+                                  'right': arabic ?  '91%': '10px' }">
+                                <i class="feather ft-search"></i>
+                              </div>
+                            </div>
+
+                          </div>
+                          <div class="row" style="margin-bottom: 10px;">
+                            <div class="col-6">
+                              <button type="submit" class="btn btn-primary" [disabled]="loaderBtn"
+                                (click)="searchBtn()">
+                                <i *ngIf="!loaderBtn" class="la la-check"></i>
+                                <i *ngIf="loaderBtn" class="la la-spinner spinner"></i>
+                                {{'table.search' | translate}}
+                              </button>
+                              <button type="submit" class="btn" style="background: #e0e1e2 none;    margin: 0px 12px;"
+                                (click)="reset()">
+                                <i class="la la-close"></i>
+
+                                {{'table.clear' | translate}}
+                              </button>
+                            </div>
+                          </div>
+
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+                <!-- <div class=" justify-content row" style="margin-bottom: 10px;"  [ngStyle]="{'text-align': arabic ?  'right': 'left' }">
+                        <div class="col-md-12">
+                          <button class="btn btn-secondary buttons-excel buttons-html5" (click)= "exportToExcel()"
+                          [disabled]="loaderExport">
+                         <i *ngIf="loaderExport" class="la la-spinner spinner"> </i>{{'table.exportToExcel' | translate}}</button>
+                     
+                        </div>
+                   
+                      </div> -->
+                <div class="loader-wrapper" *ngIf="loader">
+                  <div class="loader-container">
+                    <div class="ball-spin-fade-loader loader-blue">
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="table-responsive" *ngIf="!loader">
+                  <table class="table mb-0">
+                    <thead class="bg-success white" style="background-color: #383838 !important;">
+                      <tr [ngStyle]="{'text-align': arabic ?  'right': 'left' }">
+                        <th scope="col">{{'delivery.name' | translate}}</th>
+
+                        <th scope="col">{{'usersTable.email' | translate}}</th>
+                        <th scope="col">{{'usersTable.phone' | translate}}</th>
+
+                        <th scope="col">{{'usersTable.activate' | translate }}</th>
+                        <th scope="col" *ngIf="showEdit || showDelete">{{'table.actions' | translate }}</th>
+                        <!-- <th scope="col"   *ngIf = "showEdit || showDelete">{{'usersTable.editPass' | translate }}</th> -->
+                      </tr>
+                    </thead>
+                    <tbody [ngStyle]="{'text-align': arabic ?  'right': 'left' }">
+                      <label *ngIf="!isItems">{{'table.noData' | translate}}</label>
+                      <tr *ngFor="let row of result; index as i">
+                        <td>
+                          <span *ngIf="row.activated" class="avatar avatar-sm avatar rounded-circle"
+                            [ngStyle]="{'float': arabic ?  'right': 'left' }" style="    margin: 0px 10px;
+                          ">
+                            <img *ngIf="row.image" [src]="row.image.low_quality | mySafe" style="    height: 30px;
+                            ">
+                            <img *ngIf="!row.image" src="assets/images/portrait/small/avatar-s-19.png">
+                            <i style="background: green;"></i></span>
+                          <span *ngIf="!row.activated" class="avatar avatar-sm avatar rounded-circle"
+                            [ngStyle]="{'float': arabic ?  'right': 'left' }" style="    margin: 0px 10px;
+                            ">
+                            <img *ngIf="row.image" [src]="row.image.low_quality | mySafe" style="    height: 30px;
+                              ">
+                            <img *ngIf="!row.image" src="assets/images/portrait/small/avatar-s-19.png"><i
+                              style="background: gray;"></i></span>
+                          <span style="padding : 0px 5px"
+                            [ngStyle]="{'float': arabic ?  'right': 'left' }">{{row.full_name}}</span>
+                        </td>
+
+                        <td>
+                          {{row.email}}
+                        </td>
+                        <td>
+                          {{row.phone}}
+                        </td>
+
+                        <td *ngIf="row.activated == null">
+                          <span class="badge badge-warning" style="padding: 5px;"> {{ 'filterOptions.pending' |
+                            translate }}</span>
+                        </td>
+                        <td *ngIf="row.activated != null">
+
+                          <span class="badge badge-success" *ngIf="row.activated" style="padding: 5px;">
+                            {{ 'filterOptions.activated' | translate }}
+                          </span>
+                          <span class="badge badge-danger" *ngIf="!row.activated" style="padding: 5px;">
+                            {{ 'filterOptions.notActivated' | translate }}
+                          </span>
+                        </td>
+                        <td *ngIf="showEdit || showDelete">
+                          <a *ngIf="showEdit"><i class="la la-pencil" (click)="edit(row.id)"></i></a>
+                          <a *ngIf="showDelete" class="danger delete mr-1 mrless">
+                            <i class="la la-trash" aria-hidden="true"
+                              (click)="ConfirmDataModal(confirmDataModalContent,row.id)"></i>
+                          </a>
+                        </td>
+                        <!-- <td>
+                        <a><i class="la la-pencil" (click)="editPassword(row.id)"></i></a>
+                        
+                      </td> -->
+                      </tr>
+                    </tbody>
+                  </table>
+                  <nav aria-label="Page navigation" *ngIf="isItems">
+                    <ul class="pagination justify-content-center pagination-separate pagination-flat">
+                      <div class="first">
+                        <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [boundaryLinks]="true"
+                          (pageChange)="onPageChange($event)"></ngb-pagination>
+                      </div>
+                    </ul>
+                  </nav>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+
+<ng-template #confirmDataModalContent let-c="close" let-d="dismiss" class="modal-dialog">
+  <form (ngSubmit)="delete(addReplay)" #addReplay="ngForm">
+    <div class="modal-content">
+      <div class="modal-header" [ngStyle]="{'direction': arabic ?  'rtl': 'ltr' }">
+        <h5 class="modal-title" id="exampleModalLabel1">{{'form.confirmDelete' | translate}}</h5>
+
+      </div>
+      <div class="modal-body" [ngStyle]="{'text-align': arabic ?  'right': 'left' }">
+        {{'form.confirmText' | translate}}
+      </div>
+      <div class="modal-footer">
+        <div class="form-group position-relative has-icon-left mb-0">
+          <button type="button" class="btn btn-secondary" style="background-color: red!important;"
+            (click)="close(addReplay)">{{'form.confirmBtnNo' | translate}}</button>
+          <button type="submit" id="add-contact-item" class="btn" style="background-color: green!important;color: #fff;"
+            [disabled]="deleteLoader"><i class="la la-paper-plane-o d-lg-none"></i> <span class="d-none d-lg-block">
+              <i *ngIf="deleteLoader" class="la la-spinner spinner"></i>{{'form.confirmBtnYes' | translate}}</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</ng-template>

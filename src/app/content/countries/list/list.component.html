@@ -1,0 +1,161 @@
+
+<div class="app-content content ">
+  <div class="content-wrapper">
+    <div class="content-header row mb-1"  [ngStyle]="{'direction': arabic ?  'rtl': 'ltr' }">
+      <app-breadcrumb class="col-6"  style="text-align: right;" [breadcrumb]="breadcrumbAr" *ngIf="arabic"></app-breadcrumb>
+      <app-breadcrumb class="col-6"  style="text-align: left;"  [breadcrumb]="breadcrumb" *ngIf="!arabic"></app-breadcrumb>
+     
+    </div>
+    
+    <div class="content-body" [ngStyle]="{'direction': arabic ?  'rtl': 'ltr' }">    
+      <section class="row">
+          <div class="col-12">
+              <div class="card">
+                <div class="card-content">
+                  <div class="card-body">
+                      <form [formGroup]="search" class="row" style="margin-bottom: 10px;" [ngStyle]="{'text-align': arabic ?  'right': 'left' }">
+                        <div class="col-lg-5 col-12">
+                          <label class="label-control" for="projectinput4" >{{ 'category.activateState' | translate }}</label>
+                          <select class="custom-select " formControlName ="activated">                       
+                            <option value="0" selected disabled ></option>
+                            <option value="">{{ 'filterOptions.all' | translate }}</option>
+                            <option value="1">{{ 'filterOptions.activated' | translate }}</option>
+                            <option value="0">{{ 'filterOptions.notActivated' | translate }}</option>
+
+                          </select>
+                        </div>
+                        <div class="col-lg-5 col-12">
+                          <label class="label-control" for="projectinput4" >{{ 'seachOptions.country' | translate }}</label>
+                          <input type="text" id="search" class="form-control" 
+                          placeholder="{{'seachOptions.country' | translate}}"  formControlName="word">
+                          <div class="form-control-position" [ngStyle]="{'left': arabic ?  '10px': '88%' ,
+                          'right': arabic ?  '88%': '10px' }">
+                            <i class="feather ft-search"></i>
+                          </div>                       
+                        </div>
+                        <div class="col-lg-2 col-12">
+                          <button type="submit" class="btn btn-primary" [disabled] = "loaderBtn"
+                          style="margin-top: 25px;" (click) = "searchBtn()">
+                           <i  *ngIf="!loaderBtn"class="la la-check"></i>  
+                           <i  *ngIf="loaderBtn" class="la la-spinner spinner"></i>
+                           {{'table.search' | translate}}
+                         </button>
+                        </div>
+                      </form>
+                      <!-- <div class=" justify-content row" style="margin-bottom: 10px;" [ngStyle]="{'text-align': arabic ?  'right': 'left' }">
+                        <div class="col-md-12">
+                          <button class="btn btn-secondary buttons-excel buttons-html5" (click)= "exportToExcel()"
+                          [disabled]="loaderExport">
+                         <i *ngIf="loaderExport" class="la la-spinner spinner"> </i>{{'table.exportToExcel' | translate}}</button>
+               
+                        </div>
+                   
+                      </div> -->
+                      <div class="loader-wrapper" *ngIf="loader">
+                      <div class="loader-container">
+                      <div class="ball-spin-fade-loader loader-blue">
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      </div>
+                      </div>
+                      </div>
+                     
+                      <div class="table-responsive" *ngIf="!loader">
+                        <table class="table mb-0">
+                          <thead class="bg-success white" style="background-color: #383838 !important;">
+                            <tr [ngStyle]="{'text-align': arabic ?  'right': 'left' }">
+                              <th scope="col">{{'countryTable.full_name' | translate}}</th>
+                              <th scope="col">{{'countryTable.capital' | translate }}</th>
+                              <th scope="col">{{'countryTable.currency_name' | translate}}</th>
+                              <th scope="col">{{'countryTable.currency_code' | translate}}</th>
+                              <th scope="col">{{'countryTable.timezone' | translate}}</th>
+                              <th scope="col" *ngIf = "showEdit">{{'countryTable.changeState' | translate }}</th>
+                              <th scope="col" >{{'countryTable.showDetails' | translate }}</th>
+                            </tr>
+                          </thead>
+                          <tbody [ngStyle]="{'text-align': arabic ?  'right': 'left' }">
+                            <label *ngIf="!isItems">{{'table.noData' | translate}}</label>
+                            <tr *ngFor="let row of result; index as i">
+                              <td>
+                                {{row.full_name}}
+                              </td> 
+                              <td>
+                                {{row.capital}}
+                              </td>  
+                              <td>
+                                {{row.currency_name}}
+                              </td>
+                              <td>
+                                {{row.currency_code}}
+                              </td>  
+                              <td>
+                                {{row.timezone}}
+                              </td>
+                              <td *ngIf = "showEdit">
+                                <ui-switch [checked]="row.active"   id="change{{row.id}}"
+                                (change)="onChange( row.id , $event)"  size="small">
+
+                                </ui-switch>
+                                <i  id="loaderState{{row.id}}" class="la la-spinner spinner" hidden></i>
+                               
+                              </td>
+
+                              <td>
+                                <a class="primary edit mr-1 mrless">
+                                  <i class="la la-eye" (click)="showDetails(row.id)"></i></a>
+                                <!-- <a class="danger delete mr-1 mrless" *ngIf = "showDelete">
+                                  <i class="la la-trash" aria-hidden="true" (click)="ConfirmDataModal(confirmDataModalContent,row.id)"></i>
+                                </a>     -->
+                              </td>  
+                              
+                            </tr>
+                          </tbody>
+                        </table>
+                        <nav aria-label="Page navigation" *ngIf="isItems">
+                          <ul class="pagination justify-content-center pagination-separate pagination-flat">
+                            <div class="first">
+                              <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [maxSize]="10" 
+                                [boundaryLinks]="true" (pageChange)="onPageChange($event)"></ngb-pagination>
+                            </div> 
+                          </ul>
+                        </nav>
+                      </div>
+                    </div>
+                </div>   
+            </div>
+          </div>
+      </section>
+    </div>   
+    </div> 
+
+</div>
+
+
+<ng-template #confirmDataModalContent let-c="close" let-d="dismiss" class="modal-dialog" >
+  <form (ngSubmit)="delete(addReplay)" #addReplay="ngForm" >
+    <div class="modal-content">
+    <div class="modal-header" [ngStyle]="{'direction': arabic ?  'rtl': 'ltr' }">
+      <h5 class="modal-title" id="exampleModalLabel1">{{'form.confirmDelete' | translate}}</h5>
+   
+    </div>
+    <div class="modal-body" [ngStyle]="{'text-align': arabic ?  'right': 'left' }" >
+      {{'form.confirmText' | translate}}
+    </div>
+    <div class="modal-footer">
+      <div class="form-group position-relative has-icon-left mb-0">
+        <button type="button" class="btn btn-secondary" (click) = "close(addReplay)">{{'form.confirmBtnNo' | translate}}</button>
+        <button type="submit" id="add-contact-item" class="btn btn-info add-contact-item"  [disabled]="deleteLoader"><i
+            class="la la-paper-plane-o d-lg-none"></i> <span class="d-none d-lg-block">
+              <i *ngIf="deleteLoader" class="la la-spinner spinner"></i>{{'form.confirmBtnYes' | translate}}</span>
+            </button>
+      </div>
+    </div>
+    </div>
+  </form>
+</ng-template>

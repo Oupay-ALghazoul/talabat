@@ -1,0 +1,445 @@
+<div class="app-content content " [ngStyle]="{'direction': arabic ?  'rtl': 'ltr' ,
+'text-align': arabic ?  'right': 'left' }">
+  <div class="content-wrapper">
+    <div class="fluid-container" *ngIf="loader">
+      <div class="loader-wrapper">
+        <div class="loader-container">
+          <div class="ball-spin-fade-loader loader-blue">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="fluid-container" *ngIf="!loader">
+      <div class="row">
+        <div class="col-8">
+          <div class="container">
+            <div class="row">
+              <div class="col-1 header">
+                <i class=" la la-shopping-cart"></i>
+              </div>
+              <div class="col-11">
+                <h1>{{'order.title' | translate}} {{order.number}}</h1>
+                <div class="sub-title">
+                  <div class="item">
+                    {{formatedDate}}
+                  </div>
+                  <div class="item">
+                    <span class="badge badge-warning" *ngIf="order.state == 'new'">{{ 'orderState.new' | translate }}
+                    </span>
+                    <span class="badge badge-primary" *ngIf="order.state == 'approved'">{{ 'orderState.approved' |
+                      translate }} </span>
+                    <span class="badge badge-danger" *ngIf="order.state == 'cancelled'">{{ 'orderState.cancelled' |
+                      translate }} </span>
+                    <span class="badge badge-info" *ngIf="order.state == 'assigned_to_delivery'">{{
+                      'orderState.assigned_to_delivery' | translate }} </span>
+                    <span class="badge badge-info" *ngIf="order.state == 'ongoing'">{{ 'orderState.ongoing' | translate
+                      }} </span>
+                    <span class="badge badge-success" *ngIf="order.state == 'delivered'">{{ 'orderState.delivered' |
+                      translate }} </span>
+
+                  </div>
+                  <div class="item">
+                    <a *ngIf="order.delivery_method == 'pickup'">{{ 'deliveryOption.pickup' | translate }} </a>
+                    <a *ngIf="order.delivery_method == 'delivery'">{{ 'deliveryOption.delivery' | translate }} </a>
+                  </div>
+                  <div class="item">
+                    {{order.currency}}
+                  </div>
+                  <div class="item">
+                    {{order.user.city.country.full_name}}
+                  </div>
+                  <br />
+                  <div class="item" style="    margin-top: 10px;" *ngIf="seller">
+                    {{'order.purchased' | translate}} {{seller.corporation_name}}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="container">
+            <div class="row" [ngStyle]="{'float': !arabic ?  'right': 'left' }">
+              <div class="col-6" *ngIf="order.state == 'new' && order.payment_state == 'awaiting' && showEdit">
+                <button type="button" class="btn btn-cancel" (click)="cancelOrder()" [disabled]="cancel_loader">
+                  <i *ngIf="cancel_loader" class="la la-spinner spinner">
+
+                  </i><i *ngIf="!cancel_loader" class="la la-check"></i> {{'order.cancel' | translate}}</button>
+
+              </div>
+              <div class="col-6">
+                <button type="submit" class="btn btn-primary"
+                  style=" background-color: #007bff!important; border-color :#007bff!important" (click)="showBilling()">
+                  {{'table.showBilling' | translate}}
+                  <i class="la la-eye"></i>
+                </button>
+                <!-- <ngx-barcode style="display: none;" [bc-value]="this.order.id" [bc-format] = "'CODE128'" [bc-element-type] ="'img'" [bc-display-value]="false"></ngx-barcode>        -->
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="content-body">
+        <div class="row" *ngIf="order.state != 'delivered' && order.state != 'cancelled' && showEdit">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-content">
+                <div class="card-body ">
+                  <h4 class="card-title mb-5">{{'orderDetails.state_timeline' | translate}} </h4>
+
+                  <div class="hori-timeline" *ngIf="order.delivery_method == 'pickup'">
+                    <ul class="list-inline events">
+                      <li class="list-inline-item event-list">
+                        <div class="px-4">
+                          <div class="event-date bg-soft-primary text-primary">{{ 'orderState.new' | translate }}</div>
+                          <h5 class="font-size-16">{{ 'orderState.step1' | translate }}</h5>
+                          <p class="text-muted">{{ 'orderState.approve_note' | translate }}</p>
+                          <div>
+                            <a *ngIf="order.state == 'new'" class="btn btn-primary btn-sm" (click)="approve()"
+                              [disabled]="approve_loader">
+                              <i *ngIf="approve_loader" class="la la-spinner spinner"> </i>{{ 'orderState.approve' |
+                              translate }}</a>
+                          </div>
+                        </div>
+                      </li>
+                      <li class="list-inline-item event-list" *ngIf="order.state == 'approved'">
+                        <div class="px-4">
+                          <div class="event-date bg-soft-success text-success">{{ 'orderState.approved' | translate }}
+                          </div>
+                          <h5 class="font-size-16">{{ 'orderState.step2' | translate }}</h5>
+                          <p class="text-muted">{{ 'orderState.deliver_note' | translate }}</p>
+                          <div>
+                            <a class="btn btn-primary btn-sm" (click)="delivered()" [disabled]="delivered_loader">
+                              <i *ngIf="delivered_loader" class="la la-spinner spinner"> </i>{{ 'orderState.delivered' |
+                              translate }}</a>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="hori-timeline" *ngIf="order.delivery_method == 'delivery'">
+                    <ul class="list-inline events">
+                      <li class="list-inline-item event-list">
+                        <div class="px-4">
+                          <div class="event-date bg-soft-primary text-primary">{{ 'orderState.new' | translate }}</div>
+                          <h5 class="font-size-16">{{ 'orderState.step1' | translate }}</h5>
+                          <p class="text-muted">{{ 'orderState.approve_note' | translate }}</p>
+                          <div>
+                            <a *ngIf="order.state == 'new'" class="btn btn-primary btn-sm" (click)="approve()"
+                              [disabled]="approve_loader">
+                              <i *ngIf="approve_loader" class="la la-spinner spinner"> </i>{{ 'orderState.approve' |
+                              translate }}</a>
+                          </div>
+                        </div>
+                      </li>
+                      <li class="list-inline-item event-list"
+                        *ngIf="order.state == 'approved' || order.state == 'assigned_to_delivery' || order.state == 'ongoing'">
+                        <div class="px-4">
+                          <div class="event-date bg-soft-success text-success">{{ 'orderState.approved' | translate }}
+                          </div>
+                          <h5 class="font-size-16">{{ 'orderState.step2' | translate }}</h5>
+                          <p class="text-muted">{{ 'orderState.assign_note' | translate }} </p>
+                          <form [formGroup]="addForm"  (ngSubmit)="assign()">
+                            <select class="custom-select " style="margin-bottom :7px"
+                            formControlName="user_id"  [ngClass]="{ 'is-invalid': submitted && f.user_id.errors }">
+                              <!-- (change)="chooseDeliveryMan($event.target.value)"> -->
+                           
+                              <option *ngFor="let row of deliveries; index as i" value="{{row.id}}">
+                                {{row.full_name}}
+                              </option>
+                            </select>
+                            <div *ngIf="submitted && f.user_id.errors" class="invalid-feedback">
+                              <div *ngIf="f.user_id.errors.required">{{'form.required' | translate}}</div>
+                          </div>
+                            <p class="text-muted">{{ 'orderState.warehouse_note' | translate }} </p>
+                            <select class="custom-select " style="margin-bottom :7px"
+                            formControlName="warehouse_id" [ngClass]="{ 'is-invalid': submitted && f.warehouse_id.errors }">
+                              <!-- (change)="chooseWarehouse($event.target.value)"> -->
+                            
+                              <option *ngFor="let row of Warehouses; index as i" value="{{row.id}}">
+                                <a *ngIf="arabic">{{row.name_ar}}</a>
+                                <a *ngIf="!arabic">{{row.name_en}}</a>
+                              </option>
+                            </select>
+                            <div *ngIf="submitted && f.warehouse_id.errors" class="invalid-feedback">
+                                <div *ngIf="f.warehouse_id.errors.required">{{'form.required' | translate}}</div>
+                            </div>
+                            <div>
+                              <button *ngIf="order.state != 'ongoing'" class="btn btn-primary btn-sm" type="submit"
+                                [disabled]="loader_assign">
+                                <i *ngIf="loader_assign" class="la la-spinner spinner"> </i>
+                                {{ 'orderState.assign' | translate }}</button>
+                            </div>
+                          </form>
+
+                        </div>
+                      </li>
+                      <li class="list-inline-item event-list"
+                        *ngIf="order.state == 'assigned_to_delivery' || order.state == 'ongoing'">
+                        <div class="px-4">
+                          <div class="event-date bg-soft-danger text-danger">{{'orderState.assigned_to_delivery' |
+                            translate }}</div>
+                          <h5 class="font-size-16">{{ 'orderState.step3' | translate }}</h5>
+                          <p class="text-muted">{{ 'orderState.ongoing_note' | translate }}</p>
+                          <div>
+                            <a *ngIf="order.state != 'ongoing'" class="btn btn-primary btn-sm"
+                              [disabled]="loader_ongoing" (click)="on_going()">
+                              <i *ngIf="loader_ongoing" class="la la-spinner spinner"> </i>
+                              {{ 'orderState.ongoing' | translate }}</a>
+                          </div>
+                        </div>
+                      </li>
+                      <li class="list-inline-item event-list" *ngIf="order.state == 'ongoing'">
+                        <div class="px-4">
+                          <div class="event-date bg-soft-warning text-warning">{{'orderState.ongoing' | translate }}
+                          </div>
+                          <h5 class="font-size-16">{{ 'orderState.step4' | translate }}</h5>
+                          <p class="text-muted">{{ 'orderState.deliver_note2' | translate }}</p>
+                          <div>
+                            <a class="btn btn-primary btn-sm" (click)="delivered()" [disabled]="delivered_loader">
+                              <i *ngIf="delivered_loader" class="la la-spinner spinner"> </i>{{ 'orderState.delivered' |
+                              translate }}</a>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-9 col-12">
+            <div class="card">
+              <div class="card-content">
+                <div class="card-body ">
+                  <div class="table-responsive">
+                    <table class="table table-bordered">
+                      <thead class="thead-gray">
+                        <tr>
+                          <th scope="col">{{'order.item' | translate}}</th>
+                          <th scope="col">{{'order.unit_price' | translate}}</th>
+                          <th scope="col">{{'order.unit_discount' | translate}}</th>
+                          <th scope="col">{{'order.special_offer_total' | translate}}</th>
+                          <th scope="col">{{'order.quantity' | translate}}</th>
+                          <th scope="col">{{'order.subtotal' | translate}}</th>
+                          <th scope="col">{{'order.tax' | translate}}</th>
+                          <th scope="col">{{'order.total' | translate}}</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let item of order_items; index as i">
+                          <th scope="row">
+                            <img *ngIf="item.unit_image" [src]="item.unit_image.low_quality" style="    height: 30px;">
+                            <span style="padding : 0px 5px" *ngIf="arabic">{{item.unit_name_ar}}</span>
+                            <span style="padding : 0px 5px" *ngIf="!arabic">{{item.unit_name_en}}</span>
+                            <span *ngIf="item.unit_size" style="display: block;">{{item.unit_size.name}}</span>
+                            <span *ngIf="item.unit_color" class="badge color-span"
+                              [style.background-color]="item.unit_color.hex"></span>
+                          </th>
+                          <td>{{item.unit_price}}</td>
+                          <td>
+                            <a *ngIf="item.discount_total != 0.000"> {{item.discount_total}}</a>
+                            <a *ngIf="item.discount_total == 0.000">--</a>
+
+                          </td>
+                          <td>
+                            <a *ngIf="item.special_offer_total != 0.000">{{item.special_offer_total}}</a>
+                            <a *ngIf="item.special_offer_total == 0.000">--</a>
+                          </td>
+                          <td>{{item.quantity}}</td>
+                          <td>{{item.subtotal}}</td>
+                          <td>
+                            <a>{{item.tax}}</a>
+                            <a *ngIf="item.tax ==  0.000 ">{{'order.include' | translate}}</a>
+                          </td>
+                          <td>{{item.total}}</td>
+                        </tr>
+
+                        <tr>
+                          <td colspan="6"></td>
+                          <td><a class="total">{{'order.tax_total' | translate}} : </a> {{order.tax}} </td>
+                          <td><a class="total">{{'order.items_total' | translate}} : </a> {{order.subtotal}} </td>
+                        </tr>
+                        <tr>
+                          <td colspan="5"></td>
+                          <td colspan="3"><a class="total-2">{{'order.shipping_total' | translate}} : </a>
+                            {{order.shipping_total}} </td>
+                        </tr>
+                        <tr>
+                          <td colspan="5"><span *ngIf="order.coupon_total  ==  0.000">{{'order.no_promotion' |
+                              translate}}</span></td>
+                          <td colspan="3"><a class="total-2">{{'order.promotion_total' | translate}} : </a>
+                            {{order.coupon_total}} </td>
+                        </tr>
+                        <tr>
+                          <td colspan="5"></td>
+                          <td colspan="3"><a class="total-2">{{'order.delivery_total' | translate}} : </a>
+                            {{order.delivery_total}} </td>
+                        </tr>
+
+                        <tr>
+                          <td colspan="5"></td>
+                          <td colspan="3"><a class="total-2">{{'order.order_total' | translate}} : </a>
+                            {{order.total}}
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+            <div class="card" *ngIf="order.delivery_method == 'delivery'">
+              <div class="card-header" style="    background-color: rgba(0,0,0,.03)">
+                {{'order.delivery_address' | translate}}
+              </div>
+              <div class="card-body ">
+                <h6 class="card-title">{{'billing_address.name' | translate}} : {{address.first_name}}
+                  {{address.last_name}}</h6>
+                <h6 class="card-title">{{'billing_address.phone' | translate}} : {{address.phone}} </h6>
+                <h6 class="card-title">{{'billing_address.region' | translate}} : {{address.region}} </h6>
+                <h6 class="card-title">{{'billing_address.district' | translate}} : {{address.district}} </h6>
+                <h6 class="card-title">{{'billing_address.street' | translate}} : {{address.street_address}}
+                </h6>
+                <h6 class="card-title">{{'billing_address.boulevard' | translate}} : {{address.boulevard}}
+                </h6>
+
+                <h6 class="card-title">{{'billing_address.house' | translate}} : {{address.house}} </h6>
+                <h6 class="card-title">{{'billing_address.floor' | translate}} : {{address.floor}} </h6>
+                <h6 class="card-title">{{'billing_address.apartment' | translate}} : {{address.apartment}}
+                </h6>
+
+                <!-- <h6 class="card-title">{{billing_address.city}}</h6>
+                      <h6 class="card-title"><i class="fas fa-map-pin"> </i><a class="side-info">{{billing_address.postal_code}}</a></h6>
+                      <h6 class="card-title"><i class="la  la-phone"></i><a  class="side-info">{{billing_address.phone}}</a></h6> -->
+              </div>
+            </div>
+            <div class="card" *ngIf="order.billing_address">
+              <div class="card-header" style="    background-color: rgba(0,0,0,.03)">
+                {{'order.billing_address' | translate}}
+              </div>
+              <div class="card-body ">
+                <h6 class="card-title">{{'billing_address.name' | translate}} : {{billing_address.first_name}}
+                  {{billing_address.last_name}}</h6>
+                <h6 class="card-title">{{'billing_address.phone' | translate}} : {{billing_address.phone}} </h6>
+                <h6 class="card-title">{{'billing_address.region' | translate}} : {{billing_address.region}} </h6>
+                <h6 class="card-title">{{'billing_address.district' | translate}} : {{billing_address.district}} </h6>
+                <h6 class="card-title">{{'billing_address.street' | translate}} : {{billing_address.street_address}}
+                </h6>
+                <h6 class="card-title">{{'billing_address.boulevard' | translate}} : {{billing_address.boulevard}}
+                </h6>
+
+                <h6 class="card-title">{{'billing_address.house' | translate}} : {{billing_address.house}} </h6>
+                <h6 class="card-title">{{'billing_address.floor' | translate}} : {{billing_address.floor}} </h6>
+                <h6 class="card-title">{{'billing_address.apartment' | translate}} : {{billing_address.apartment}}
+                </h6>
+
+                <!-- <h6 class="card-title">{{billing_address.city}}</h6>
+                      <h6 class="card-title"><i class="fas fa-map-pin"> </i><a class="side-info">{{billing_address.postal_code}}</a></h6>
+                      <h6 class="card-title"><i class="la  la-phone"></i><a  class="side-info">{{billing_address.phone}}</a></h6> -->
+              </div>
+            </div>
+            <div class="card" *ngIf="order.delivery_method != 'pickup' &&  order.state != 'cancelled'">
+              <div
+                *ngIf="order.state == 'assigned_to_delivery'  || order.state == 'delivered' || order.state == 'ongoing'">
+                <div class="card-header" style="    background-color: rgba(0,0,0,.03)">
+                  {{'order.assgined_details' | translate}}
+                </div>
+                <!-- <div class="card-body " *ngIf="order.state == 'new'">
+                  <h6 class="card-title"> {{'order.choose_delivery' | translate}}</h6>
+                  <div class="row">
+                    <div class="col-9">
+                      <select class="custom-select " (change)="chooseDeliveryMan($event.target.value)">
+                        <option disabled selected></option>
+                        <option *ngFor="let row of deliveries; index as i" value="{{row.id}}">{{row.full_name}}</option>
+                      </select>
+                    </div>
+                    <div class="col-3">
+                      <button type="submit" class="btn btn-primary" [disabled]="loader_assign" *ngIf="showEdit"
+                        (click)="chooseDelivery()">
+                        <i *ngIf="!loader_assign" class="la la-check"></i>
+                        <i *ngIf="loader_assign" class="la la-spinner spinner"></i>
+                        {{'form.saveBtn' | translate}}
+                      </button>
+                    </div>
+                  </div>
+                </div> -->
+                <div class="card-body ">
+                  <h6 class="card-title">{{'order.delivery_assign_date' | translate}} : {{order.delivery_assign_date}}
+                  </h6>
+                  <h6 class="card-title">{{'order.delivery_name' | translate}} : {{order.delivery.full_name}} </h6>
+                  <h6 class="card-title">{{'order.delivery_phone' | translate}} : {{order.delivery.phone}} </h6>
+                  <h6 class="card-title" *ngIf="order.warehouse">{{'order.warehouse_name' | translate}} :
+                    <a *ngIf="arabic">{{order.warehouse.name_ar}}</a>
+                    <a *ngIf="!arabic">{{order.warehouse.name_en}}</a>
+                  </h6>
+                  <h6 class="card-title" *ngIf="order.warehouse">{{'order.warehouse_phone' | translate}} :
+                    {{order.warehouse.phone_number}} </h6>
+                  <h6 class="card-title" *ngIf="order.warehouse">{{'order.warehouse_address' | translate}} :
+                    {{order.warehouse.address}} </h6>
+
+                </div>
+              </div>
+
+
+            </div>
+          </div>
+          <div class="col-lg-3 col-12">
+            <div class="card">
+              <div class="card-header bg-transparent " style="border-bottom: 1px solid #EEEEEE;">
+                <h3>{{user.full_name}}</h3>
+                <a>{{'order.customer_since' | translate}} {{register_date}}</a>
+              </div>
+              <div class="card-body ">
+                <h6 class="card-title"><i class="la la-envelope"></i><a class="side-info">{{user.email}}</a></h6>
+                <h6 class="card-title"><i class="la  la-phone"></i><a class="side-info">{{user.phone}}</a></h6>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header" style="    background-color: rgba(0,0,0,.03)">
+                {{'orderDetails.payment_state' | translate}} :
+                <a *ngIf="order.payment_state == 'awaiting'">{{ 'orderState.awaiting' | translate }} </a>
+                <a *ngIf="order.payment_state == 'paid'">{{ 'orderState.paid' | translate }} </a>
+                <a *ngIf="order.payment_state == 'refunded'">{{ 'orderState.refunded' | translate }} </a>
+                <a *ngIf="order.payment_state == 'cancelled'">{{ 'orderState.cancel' | translate }} </a>
+
+              </div>
+              <div class="card-body ">
+                <h5 class="card-title">{{'order.payments' | translate}}</h5>
+                <p class="card-text">{{'orderDetails.type' | translate}} : {{payment.type}}</p>
+                <p class="card-text">
+                  <a *ngIf="arabic">{{'orderDetails.payment_state' | translate}} : {{payment.name_ar}}</a>
+                  <a *ngIf="!arabic">{{'orderDetails.payment_state' | translate}} : {{payment.name_en}}</a>
+                </p>
+                <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+                <button type="button" class="btn btn-cancel" (click)="payOrder()" [disabled]="pay_loader"
+                  *ngIf="order.payment_state == 'awaiting' && showEdit && order.state != 'cancelled'">
+                  <i *ngIf="pay_loader" class="la la-spinner spinner">
+
+                  </i><i *ngIf="!pay_loader" class="la la-check"></i> {{'order.pay' | translate}}</button>
+                <button type="button" class="btn btn-cancel" (click)="RefundOrder()" [disabled]="refund_loader"
+                  *ngIf="order.payment_state == 'paid' && showEdit && order.state != 'cancelled'">
+                  <i *ngIf="refund_loader" class="la la-spinner spinner">
+
+                  </i><i *ngIf="!refund_loader" class="la la-check"></i> {{'order.refund' | translate}}</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,155 @@
+<div class="app-content content ">
+  <div class="content-wrapper">
+    <div class="content-header row mb-1" [ngStyle]="{'direction': arabic ?  'rtl': 'ltr' }">
+      <app-breadcrumb class="col-6" style="text-align: right;" [breadcrumb]="breadcrumbAr" *ngIf="arabic">
+      </app-breadcrumb>
+      <app-breadcrumb class="col-6" style="text-align: left;" [breadcrumb]="breadcrumb" *ngIf="!arabic">
+      </app-breadcrumb>
+      <div class="col-6" [ngStyle]="{'text-align': arabic ?  'left': 'right' }" *ngIf="showEdit">
+        <button class="btn col-3">
+          <span>{{ 'countryTable.changeState' | translate }} : </span>
+
+        </button>
+        <button class="btn col-3">
+          <ui-switch [checked]="active" id="change" (change)="onChange($event)" size="small">
+
+          </ui-switch>
+          <i id="loaderState" class="la la-spinner spinner" hidden></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="content-body" [ngStyle]="{'direction': arabic ?  'rtl': 'ltr' }">
+      <section class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-content">
+              <div class="card-body">
+
+                <div class="loader-wrapper" *ngIf="loader">
+                  <div class="loader-container">
+                    <div class="ball-spin-fade-loader loader-blue">
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                    </div>
+                  </div>
+                </div>
+                <form class="form striped-rows striped-rows form-bordered"
+                  [ngStyle]="{'text-align': arabic ?  'right': 'left' }" *ngIf="!loader">
+                  <div class="content-body">
+                    <h4 class="form-section"><i class="la la-flag"></i>{{ 'countryTable.countryInfo' | translate }}</h4>
+                    <div class="form-group row mx-auto">
+                      <label class="col-md-3 label-control" for="projectinput5">{{'countryTable.full_name' |
+                        translate}}</label>
+                      <div class="col-md-9">
+                        <label class="label-control" for="projectinput1"
+                          style="margin-top: -16px;">{{country.full_name}}</label>
+                      </div>
+                    </div>
+                    <div class="form-group row mx-auto">
+                      <label class="col-md-3 label-control" for="projectinput5">{{'countryTable.capital' |
+                        translate}}</label>
+                      <div class="col-md-9">
+                        <label class="label-control" for="projectinput1"
+                          style="margin-top: -16px;">{{country.capital}}</label>
+                      </div>
+                    </div>
+                    <div class="form-group row mx-auto">
+                      <label class="col-md-3 label-control" for="projectinput5">{{'countryTable.callingcode' |
+                        translate}}</label>
+                      <div class="col-md-9">
+                        <label class="label-control" for="projectinput1"
+                          style="margin-top: -16px;">{{country.callingcode}}</label>
+                      </div>
+                    </div>
+                    <div class="form-group row mx-auto">
+                      <label class="col-md-3 label-control" for="projectinput5">{{'countryTable.code' |
+                        translate}}</label>
+                      <div class="col-md-9">
+                        <label class="label-control" for="projectinput1"
+                          style="margin-top: -16px;">{{country.code}}</label>
+                      </div>
+                    </div>
+                    <div class="form-group row mx-auto">
+                      <label class="col-md-3 label-control" for="projectinput5">{{'countryTable.code_alpha3' |
+                        translate}}</label>
+                      <div class="col-md-9">
+                        <label class="label-control" for="projectinput1"
+                          style="margin-top: -16px;">{{country.code_alpha3}}</label>
+                      </div>
+                    </div>
+                    <div class="form-group row mx-auto">
+                      <label class="col-md-3 label-control" for="projectinput5">{{'countryTable.currency_name' |
+                        translate}}</label>
+                      <div class="col-md-9">
+                        <label class="label-control" for="projectinput1"
+                          style="margin-top: -16px;">{{country.currency_name}}</label>
+                      </div>
+                    </div>
+                    <div class="form-group row mx-auto">
+                      <label class="col-md-3 label-control" for="projectinput5">{{'countryTable.currency_code' |
+                        translate}}</label>
+                      <div class="col-md-9">
+                        <label class="label-control" for="projectinput1"
+                          style="margin-top: -16px;">{{country.currency_code}}</label>
+                      </div>
+                    </div>
+                    <div class="form-group row mx-auto">
+                      <label class="col-md-3 label-control" for="projectinput5">{{'countryTable.timezone' |
+                        translate}}</label>
+                      <div class="col-md-9">
+                        <label class="label-control" for="projectinput1"
+                          style="margin-top: -16px;">{{country.timezone}}</label>
+                      </div>
+                    </div>
+                    <h4 class="form-section"><i class="la la-building"></i>{{ 'countryTable.cityList' | translate }}
+                    </h4>
+                    <div class="table-responsive">
+                      <table class="table mb-0">
+                        <thead class="bg-success white" style="background-color: #383838 !important;">
+                          <tr [ngStyle]="{'text-align': arabic ?  'right': 'left' }">
+                            <th scope="col">{{'cityTable.number' | translate}}</th>
+                            <th scope="col">{{'cityTable.name' | translate}}</th>
+                            <th scope="col">{{'cityTable.local_name' | translate }}</th>
+                          </tr>
+                        </thead>
+                        <tbody [ngStyle]="{'text-align': arabic ?  'right': 'left' }">
+                          <label *ngIf="!isItems">{{'table.noData' | translate}}</label>
+                          <tr *ngFor="let row of cities; index as i">
+                            <td>
+                              {{i+1}}
+                            </td>
+                            <td>
+                              {{row.name}}
+                            </td>
+
+
+                            <td>
+                              {{row.local_name}}
+
+                            </td>
+
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+
+                  </div>
+                </form>
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+  </div>
+</div>

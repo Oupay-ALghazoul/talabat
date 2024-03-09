@@ -1,0 +1,39 @@
+
+
+:host ::ng-deep .barchart .chartjs-render-monitor {
+    -webkit-animation: chartjs-render-animation 0.001s;
+    animation: chartjs-render-animation 0.001s;
+
+}
+:host ::ng-deep .radarChart {
+  height: 470px !important;
+}
+
+:host ::ng-deep .block-ui-wrapper {
+  background: rgba(255, 249, 249, 0.5) !important;
+}
+@media(max-width:767px) {
+  :host ::ng-deep .chart
+   {
+    height:400px !important;
+  }
+}
+.total-2{
+  /* color: #000; */
+  display : block ;
+  /* font-weight: bold; */
+  margin : 7px ;
+}
+.btn-group{
+  direction: ltr;
+  .btn-action{
+    background-color: #e8e8e8;
+    border-color: #e8e8e8;
+    color : #000 ;
+    width: 160px;
+  }
+  .btn-action:hover{
+    background-color : #C0C0C0			;
+    border-color: #C0C0C0	
+  }
+}

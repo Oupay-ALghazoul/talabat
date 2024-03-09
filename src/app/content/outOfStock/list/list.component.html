@@ -1,0 +1,99 @@
+
+<div class="app-content content ">
+  <div class="content-wrapper">
+    <div class="content-header row mb-1"  [ngStyle]="{'direction': arabic ?  'rtl': 'ltr' }">
+      <app-breadcrumb class="col-6" style="text-align: right;" [breadcrumb]="breadcrumbAr" *ngIf="arabic"></app-breadcrumb>
+      <app-breadcrumb class="col-6" style="text-align: left;" [breadcrumb]="breadcrumb" *ngIf="!arabic"></app-breadcrumb>
+      <div class="col-6"  [ngStyle]="{'text-align': arabic ?  'left': 'right' }">
+        <button type="submit" class="btn btn-primary" [routerLink]="'/outOfStock/add'"  *ngIf = "showAdd">
+          {{'table.addBtn' | translate}} {{'addOptions.outOfStock' | translate}}
+        </button>     
+      </div>
+    </div>
+    <div class="content-body" [ngStyle]="{'direction': arabic ?  'rtl': 'ltr' }">    
+      <section class="row">
+          <div class="col-12">
+              <div class="card">
+                <div class="card-content">
+                  <div class="card-body">
+                      
+                      <div class="loader-wrapper" *ngIf="loader">
+                      <div class="loader-container">
+                      <div class="ball-spin-fade-loader loader-blue">
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      </div>
+                      </div>
+                      </div>
+                     
+                    <div class="table-responsive" *ngIf="!loader">
+                      <table class="table mb-0">
+                        <thead class="bg-success white" style="background-color: #383838 !important;">
+                          <tr [ngStyle]="{'text-align': arabic ?  'right': 'left' }">
+                            <th scope="col">{{'category.name' | translate}} ({{'table.en' | translate}})</th>
+                            <th scope="col">{{'category.name' | translate }} ({{'table.ar' | translate}})</th>
+                            <th scope="col" *ngIf= "showEdit || showDelete">{{'table.actions' | translate }}</th>
+                          </tr>
+                        </thead>
+                        <tbody [ngStyle]="{'text-align': arabic ?  'right': 'left' }">
+                          <label *ngIf="!isItems">{{'table.noData' | translate}}</label>
+                          <tr *ngFor="let row of result; index as i">
+                            <td>
+                              {{row.name_en}}
+                            </td> 
+                            <td>
+                              {{row.name_ar}}
+                            </td>   
+                                              
+                            <td  *ngIf= "showEdit || showDelete">
+                              <a class="primary edit mr-1 mrless"  *ngIf= "showEdit">
+                                <i class="la la-pencil" (click)="edit(row.id)"></i></a>
+                              <a class="danger delete mr-1 mrless" *ngIf= "showDelete" >
+                                <i class="la la-trash" aria-hidden="true" (click)="ConfirmDataModal(confirmDataModalContent,row.id)"></i>
+                              </a> 
+                          
+                            </td>
+
+                            
+                          </tr>
+                        </tbody>
+                      </table>
+                     
+                    </div>
+                    </div>
+                </div>   
+            </div>
+          </div>
+      </section>
+    </div>  
+    </div>    
+</div>
+
+<ng-template #confirmDataModalContent let-c="close" let-d="dismiss" class="modal-dialog" >
+  <form (ngSubmit)="delete(addReplay)" #addReplay="ngForm" >
+    <div class="modal-content">
+    <div class="modal-header" [ngStyle]="{'direction': arabic ?  'rtl': 'ltr' }">
+      <h5 class="modal-title" id="exampleModalLabel1">{{'form.confirmDelete' | translate}}</h5>
+   
+    </div>
+    <div class="modal-body" [ngStyle]="{'text-align': arabic ?  'right': 'left' }" >
+      {{'form.confirmText' | translate}}
+    </div>
+    <div class="modal-footer">
+      <div class="form-group position-relative has-icon-left mb-0">
+        <button type="button" class="btn btn-secondary" style="background-color: red!important;"  (click) = "close(addReplay)">{{'form.confirmBtnNo' | translate}}</button>
+        <button type="submit" id="add-contact-item"  class="btn" style="background-color: green!important;color: #fff;"  [disabled]="deleteLoader"><i
+            class="la la-paper-plane-o d-lg-none"></i> <span class="d-none d-lg-block">
+              <i *ngIf="deleteLoader" class="la la-spinner spinner"></i>{{'form.confirmBtnYes' | translate}}</span>
+            </button>
+      </div>
+    </div>
+    </div>
+  </form>
+</ng-template>

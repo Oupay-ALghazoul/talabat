@@ -1,0 +1,13 @@
+
+
+[
+    {
+        "context": [
+            "/api/",
+            "/admin/"
+        ],
+        "target":"https://talabatexpress.com",
+        "secure": true ,
+        "changeOrigin":true
+    }
+]

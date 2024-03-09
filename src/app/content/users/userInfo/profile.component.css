@@ -1,0 +1,7 @@
+form.striped-rows .form-group:nth-child(even) {
+    background-color: #ececec !important; 
+}
+
+.label-control{
+    text-align: center!important;
+}

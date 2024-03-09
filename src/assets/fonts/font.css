@@ -1,0 +1,12 @@
+@font-face {
+  font-family: 'Cairo-Regular';
+  src: url('Cairo-Regular.eot');
+  src: url('Cairo-Regular.eot?#iefix') format('embedded-opentype'),
+       url('Cairo-Regular.svg#Cairo-Regular') format('svg'),
+       url('Cairo-Regular.ttf') format('truetype'),
+       url('Cairo-Regular.woff') format('woff'),
+       url('Cairo-Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+

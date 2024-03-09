@@ -1,0 +1,28 @@
+
+ :host ::ng-deep .datatable-body-cell-label,
+ :host ::ng-deep .datatable-header-cell {
+   padding: 0.6rem;
+   text-align: center;
+ }
+ .btn-secondary{
+  background-color: #ff6500!important;
+  border-color: #ff6500!important;
+  margin: 0px 3px;
+}
+.pass-icon{
+  position: absolute;
+  top: 1px;
+  z-index: 2;
+  display: block;
+  width: 2.5rem;
+  height: 2.5rem;
+  line-height: 3.2rem;
+  text-align: center;
+  left : 20px
+}
+
+::ng-deep .cdk-overlay-container {
+  /* Do you changes here */
+  position: fixed; 
+  z-index: 5000;
+}

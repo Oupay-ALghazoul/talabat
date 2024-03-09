@@ -1,0 +1,112 @@
+<div class="app-content content ">
+  <div class="content-wrapper">
+    <div class="content-header row mb-1"  [ngStyle]="{'direction': arabic ?  'rtl': 'ltr' }">
+      <app-breadcrumb class="col-6" style="text-align: right;" [breadcrumb]="breadcrumbAr" *ngIf="arabic"></app-breadcrumb>
+      <app-breadcrumb class="col-6" style="text-align: left;" [breadcrumb]="breadcrumb" *ngIf="!arabic"></app-breadcrumb>
+    </div>
+
+       
+          <div class="content-body" [ngStyle]="{'direction': arabic ?  'rtl': 'ltr' }">
+              <section class="row">
+                  <div class="col-12">
+                      <div class="card">
+                         
+
+                        <div class="card-content">
+                            <div class="card-body">
+                                <form class="form form-horizontal" [formGroup]="addForm"  [ngStyle]="{'direction': arabic ?  'rtl': 'ltr' }"
+                                (ngSubmit)="submit()" >
+                                  <div class="form-body" >
+                                    <div class="form-group row mx-auto">                                            
+                                        <label class="col-md-3 label-control" for="category" [ngStyle]="{'text-align': arabic ?  'right': 'left' }"> 
+                                          {{'extra.title' | translate}} ({{'table.en' | translate}})</label>
+                                        <div class="col-md-9">
+                                            <input type="text" id="title" class="form-control" formControlName="title"
+                                            [ngClass]="{ 'is-invalid': submitted && f.title.errors }">
+                                            <div *ngIf="submitted && f.title.errors" class="invalid-feedback">
+                                                <div *ngIf="f.title.errors.required">{{'form.required' | translate}}</div>
+                                            </div>
+                                        </div>                            
+                                    </div>                                   
+                                  </div>
+                                    <div class="form-body" >
+                                    <div class="form-group row mx-auto">                                            
+                                        <label class="col-md-3 label-control" for="category" [ngStyle]="{'text-align': arabic ?  'right': 'left' }"> 
+                                          {{'extra.title' | translate}}  ({{'table.ar' | translate}})</label>
+                                        <div class="col-md-9">
+                                            <input type="text" id="title_ar" class="form-control" formControlName="title_ar"
+                                            [ngClass]="{ 'is-invalid': submitted && f.title_ar.errors }">
+                                            <div *ngIf="submitted && f.title_ar.errors" class="invalid-feedback">
+                                                <div *ngIf="f.title_ar.errors.required">{{'form.required' | translate}}</div>
+                                            </div>
+                                        </div>                            
+                                    </div>                                   
+                                  </div>
+                                  <!-- <div class="form-body" >
+                                    <div class="form-group row mx-auto ">
+                                      <label class="col-md-3 label-control" for="projectinput4"
+                                      [ngStyle]="{'text-align': arabic ?  'right': 'left' }">{{ 'meals.required' | translate }}</label>
+                                      <div class="col-md-9" [ngStyle]="{'text-align': arabic ?  'right': 'left' }">
+                                        <ui-switch [checked]="true" formControlName="required" size="small"> </ui-switch>
+                          
+                                      </div>
+                                    </div>
+                                  </div> -->
+                                  <div class="form-body" >
+                                    <div class="form-group row mx-auto">                                            
+                                        <label class="col-md-3 label-control" for="category" [ngStyle]="{'text-align': arabic ?  'right': 'left' }"> 
+                                          {{'extra.description' | translate}} ({{'table.en' | translate}})</label>
+                                        <div class="col-md-9">
+                                            <textarea id="description" class="form-control" formControlName="description"
+                                            [ngClass]="{ 'is-invalid': submitted && f.description.errors }"></textarea>
+                                            <div *ngIf="submitted && f.description.errors" class="invalid-feedback">
+                                                <div *ngIf="f.description.errors.required">{{'form.required' | translate}}</div>
+                                            </div>
+                                        </div>                            
+                                    </div>                                   
+                                  </div>
+                                  <div class="form-body" >
+                                    <div class="form-group row mx-auto">                                            
+                                        <label class="col-md-3 label-control" for="category" [ngStyle]="{'text-align': arabic ?  'right': 'left' }"> 
+                                          {{'extra.description' | translate}} ({{'table.ar' | translate}})</label>
+                                        <div class="col-md-9">
+                                            <textarea id="description_ar" class="form-control" formControlName="description_ar"
+                                            [ngClass]="{ 'is-invalid': submitted && f.description_ar.errors }"></textarea>
+                                            <div *ngIf="submitted && f.description_ar.errors" class="invalid-feedback">
+                                                <div *ngIf="f.description_ar.errors.required">{{'form.required' | translate}}</div>
+                                            </div>
+                                        </div>                            
+                                    </div>                                   
+                                  </div>
+                                  <div class="form-body" >
+                                    <div class="form-group row mx-auto">                                            
+                                        <label class="col-md-3 label-control" for="category" [ngStyle]="{'text-align': arabic ?  'right': 'left' }"> 
+                                          {{'extra.max' | translate}}</label>
+                                        <div class="col-md-9">
+                                            <input type="number" id="max" class="form-control" formControlName="max"
+                                            [ngClass]="{ 'is-invalid': submitted && f.max.errors }">
+                                            <div *ngIf="submitted && f.max.errors" class="invalid-feedback">
+                                                <div *ngIf="f.max.errors.required">{{'form.required' | translate}}</div>
+                                            </div>
+                                        </div>                            
+                                    </div>                                   
+                                  </div>
+                                  <div class="form-actions">
+                                    <button type="button" class="btn btn-warning mr-1 ml-1" (click)="cancel()">
+                                      <i class="feather ft-x"></i>   {{'form.cancelBtn' | translate}}
+                                    </button>
+                                    <button type="submit" class="btn btn-primary"  [disabled]="loader">
+                                    <i *ngIf="loader" class="la la-spinner spinner">
+
+                                    </i><i *ngIf="!loader" class="la la-check"></i>   {{'form.saveBtn' | translate}}
+                                    </button>
+                                  </div>
+                                </form>     
+                            </div>
+                        </div>  
+                      </div>
+                  </div>
+              </section>
+          </div>
+        </div>    
+</div>

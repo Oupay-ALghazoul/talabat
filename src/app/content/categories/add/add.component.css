@@ -1,0 +1,14 @@
+
+.inputfile {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+.part{
+	border: 1px solid rgba(34,36,38,0.1);
+	padding: 1.4em;
+}

@@ -1,0 +1,111 @@
+<div class="app-content content "  [ngStyle]="{'direction': arabic ?  'rtl': 'ltr' ,
+'text-align': arabic ?  'right': 'left' }">
+  <div class="content-wrapper">
+    <div class="content-header row mb-1"  >
+      <app-breadcrumb class="col-6"  style="text-align: right;"  [breadcrumb]="breadcrumbAr" *ngIf="langCode == 'ar'"></app-breadcrumb>
+      <app-breadcrumb class="col-6"  style="text-align: left;"  [breadcrumb]="breadcrumb" *ngIf="langCode == 'en'"></app-breadcrumb>
+      
+    </div>
+
+    <div class="content-body" >    
+      <section class="row">
+          <div class="col-12">
+              <div class="card">
+                <div class="card-content">
+                  <div class="card-body">
+                    <form [formGroup]="search" class="row" style="margin-bottom: 10px;">
+                    
+                      <div class="col-6">
+                        <label class="label-control" for="projectinput4" >{{ 'seachOptions.word' | translate }}</label>
+                        <input type="text" id="timesheetinput1" class="form-control" 
+                        placeholder="{{ 'seachOptions.word' | translate }}"
+                          formControlName="word_filter">
+                        <div class="form-control-position" [ngStyle]="{'left': arabic ?  '10px': '91%' ,
+                        'right': arabic ?  '91%': '10px' }">
+                          <i class="feather ft-search"></i>
+                        </div>                       
+                      </div>
+                      <div class="col-6">
+                        <button type="submit" class="btn btn-primary" [disabled] = "loaderBtn"
+                          style="margin-top: 25px;" (click) = "searchBtn()">
+                           <i  *ngIf="!loaderBtn"class="la la-check"></i>  
+                           <i  *ngIf="loaderBtn" class="la la-spinner spinner"></i>
+                           {{'table.search' | translate}}
+                         </button>
+                      </div>
+                    </form>
+                    <!-- <div class=" justify-content row" style="margin-bottom: 10px;" [ngStyle]="{'text-align': arabic ?  'right': 'left' }">
+                      <div class="col-md-12">
+                        <button class="btn btn-secondary buttons-excel buttons-html5" (click)= "exportToExcel()"
+                        [disabled]="loaderExport">
+                        <i *ngIf="loaderExport" class="la la-spinner spinner"> </i>
+                        {{'table.exportToExcel' | translate}}</button>
+                    
+                      </div>
+                 
+                    </div> -->
+                      <div class="loader-wrapper" *ngIf="loader">
+                      <div class="loader-container">
+                      <div class="ball-spin-fade-loader loader-blue">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                      </div>
+                      </div>
+                      </div>
+                 
+                     
+                    <div class="table-responsive" *ngIf="!loader">
+                      <table class="table mb-0">
+                        <thead class="bg-success white" style="background-color: #474747 !important;">
+                          <tr >
+                            <th scope="col">{{'contact.date' | translate}}</th>
+                            <th scope="col">{{'contact.name' | translate}}</th>
+                            <th scope="col">{{'contact.email' | translate }}</th>
+                            <th scope="col">{{'contact.phone_number' | translate }}</th>
+                            <th scope="col">{{'contact.message' | translate }}</th>
+                          </tr>
+                        </thead>
+                        <tbody >
+                          <label *ngIf="!isItems">{{'table.noData' | translate}}</label>
+                          <tr *ngFor="let row of result; index as i">
+                            <td>
+                              {{row.date}}
+                            </td> 
+                            <td>
+                              {{row.name}}
+                            </td>     
+                            <td> 
+                              {{row.email}}
+                            </td>
+                            <td>
+                              {{row.phone_number}}
+                            </td>  
+                            <td>
+                             {{row.message}}
+                            </td>      
+                            </tr>
+                        </tbody>
+                      </table>
+                      <nav aria-label="Page navigation" *ngIf="isItems">
+                        <ul class="pagination justify-content-center pagination-separate pagination-flat">
+                          <div class="first">
+                            <ngb-pagination [collectionSize]="collectionSize" [(page)]="page"  [boundaryLinks]="true" (pageChange)="onPageChange($event)"></ngb-pagination>
+                          </div> 
+                        </ul>
+                      </nav>
+                    </div>
+                    </div>
+                </div>   
+            </div>
+          </div>
+      </section>
+    </div>   
+        
+    </div>    
+</div>

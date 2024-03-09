@@ -1,0 +1,287 @@
+<div class="app-content content">
+  <div class="content-wrapper">
+    <div class="content-header row mb-1">
+      <app-breadcrumb class="col-12" style="text-align: right;" [breadcrumb]="breadcrumbAr" *ngIf="arabic">
+      </app-breadcrumb>
+      <app-breadcrumb class="col-12" style="text-align: left;" [breadcrumb]="breadcrumb" *ngIf="!arabic">
+      </app-breadcrumb>
+    </div>
+    <div class="content-body" [ngStyle]="{'direction': arabic ?  'rtl': 'ltr' }">
+      <section class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-content">
+              <div class="card-body">
+                <div class="loader-wrapper" *ngIf="loader">
+                  <div class="loader-container">
+                    <div class="ball-spin-fade-loader loader-blue">
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                    </div>
+                  </div>
+                </div>
+                <div [ngStyle]="{'direction': arabic ?  'rtl': 'ltr' }" *ngIf="!loader">
+                  <form class="form  striped-rows form-bordered"
+                    [ngStyle]="{'text-align': arabic ?  'right': 'left' }" [formGroup]="Info" (ngSubmit)="onSubmit()">
+                    <div class="form-body">
+                      <h4 class="form-section"><i class="la la-phone"></i>{{ 'about.contact' | translate }}</h4>
+                      <div class="form-group row mx-auto">
+                        <label class="col-md-3 label-control" for="username">{{ 'about.text' | translate }}
+                          ({{'table.ar' | translate}})</label>
+                        <div class="col-md-9">
+                          <textarea id="text_ar" class="form-control" formControlName="text_ar" rows="5"
+                            [ngClass]="{ 'is-invalid': submitted && f.text_ar.errors }">
+                            </textarea>
+                          <div *ngIf="submitted && f.text_ar.errors" class="invalid-feedback">
+                            <div *ngIf="f.text_ar.errors.required">{{'form.required' | translate}}</div>
+                            <div *ngIf="f.text_ar.errors.maxlength && arabic">عدد المحارف المدخلة يجب الا يزيد عن 200
+                              محرف</div>
+                            <div *ngIf="f.text_ar.errors.maxlength && !arabic">The entered characters must not be more
+                              than 200 characters</div>
+                            <div *ngIf="f.text_ar.errors?.pattern">{{'form.arabic' | translate}}</div>
+
+                          </div>
+
+
+                        </div>
+
+                      </div>
+                      <div class="form-group row mx-auto">
+                        <label class="col-md-3 label-control" for="username">{{ 'about.text' | translate }}
+                          ({{'table.en' | translate}})</label>
+                        <div class="col-md-9">
+                          <textarea id="text_en" class="form-control" formControlName="text_en" rows="5"
+                            [ngClass]="{ 'is-invalid': submitted && f.text_en.errors }">
+                            </textarea>
+                          <div *ngIf="submitted && f.text_en.errors" class="invalid-feedback">
+                            <div *ngIf="f.text_en.errors.required">{{'form.required' | translate}}</div>
+                            <div *ngIf="f.text_en.errors.maxlength && arabic">عدد المحارف المدخلة يجب الا يزيد عن 200
+                              محرف</div>
+                            <div *ngIf="f.text_en.errors.maxlength && !arabic">The entered characters must not be more
+                              than 200 characters</div>
+                            <div *ngIf="f.text_en.errors?.pattern">{{'form.english' | translate}}</div>
+                          </div>
+
+                        </div>
+
+                      </div>
+                      <div class="form-group row mx-auto">
+                        <label class="col-md-3 label-control" for="name">{{ 'about.address' | translate }}</label>
+                        <div class="col-md-9">
+                          <input type="text" id="address" class="form-control" formControlName="address"
+                            [ngClass]="{ 'is-invalid': submitted && f.address.errors }">
+                          <div *ngIf="submitted && f.address.errors" class="invalid-feedback">
+                            <div *ngIf="f.address.errors.required">{{'form.required' | translate}}</div>
+                          </div>
+                        </div>
+
+                      </div>
+                      <div class="form-group row mx-auto">
+                        <label class="col-md-3 label-control" for="name">{{ 'about.phone' | translate }}</label>
+                        <div class="col-md-9">
+                          <input type="text" id="phone" class="form-control" formControlName="phone"
+                            [ngClass]="{ 'is-invalid': submitted && f.phone.errors }">
+                          <div *ngIf="submitted && f.phone.errors" class="invalid-feedback">
+                            <div *ngIf="f.phone.errors.required">{{'form.required' | translate}}</div>
+                          </div>
+                        </div>
+
+                      </div>
+                      <div class="form-group row mx-auto">
+                        <label class="col-md-3 label-control" for="name">{{ 'about.website_link' | translate }}</label>
+                        <div class="col-md-9">
+                          <input type="text" id="website_link" class="form-control" formControlName="website_link"
+                            [ngClass]="{ 'is-invalid': submitted && f.website_link.errors }">
+                          <div *ngIf="submitted && f.website_link.errors" class="invalid-feedback">
+                            <div *ngIf="f.website_link.errors.required">{{'form.required' | translate}}</div>
+                            <div *ngIf="f.website_link.errors?.pattern && arabic"> الرابط المدخل غير صالح</div>
+                            <div *ngIf="f.website_link.errors?.pattern && !arabic">The entered link is invalid</div>
+                          </div>
+
+                        </div>
+
+                      </div>
+                      <div class="form-group row mx-auto">
+                        <label class="col-md-3 label-control" for="name">{{ 'about.email' | translate }}</label>
+                        <div class="col-md-9">
+                          <input type="text" id="email" class="form-control" formControlName="email" value="{{email}}"
+                            [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
+                          <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                            <div *ngIf="f.email.errors.required">{{'form.required' | translate}}</div>
+                            <div *ngIf="f.email.errors?.email && arabic">البريد الالكتروني غير صالح</div>
+                            <div *ngIf="f.email.errors?.email && !arabic">Email Not Valid</div>
+                          </div>
+
+                        </div>
+
+                      </div>
+                     
+                      <div class="form-group row mx-auto" [ngStyle]="{'text-align': arabic ?  'right': 'left' }">
+                        <label class="col-md-3 label-control" [ngStyle]="{'text-align': arabic ?  'right': 'left' }">
+                          {{'category.image' | translate }}</label>
+                        <div class="col-md-9">
+                          <input type="file" id="file" name="file" class="inputfile"
+                            (change)="upload($event.target.files)" />
+                          <label class="btn btn-primary" style="cursor: pointer;" for="file"><svg style="    margin: 0px 8px;
+                                " xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17">
+                              <path
+                                d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z" />
+                            </svg>
+                            <span style="color: white;">{{ 'table.chooseImage' | translate }}</span></label>
+                          <img id="imageReview" src="{{photo.high_quality}}"
+                            style="width: 300px;height: 300px;display: block;margin-top: 10px;">
+
+                        </div>
+
+                      </div>
+
+                      <h4 class="form-section"><i class="la la-phone"></i>{{ 'about.extra_pages' | translate }}</h4>
+                      <div class="form-group row mx-auto">
+                        <label class="col-md-3 label-control" for="name">{{ 'about.privacy_policy' | translate }}
+                          ({{'table.en' | translate}})</label>
+                        <div class="col-md-9">
+                          <quill-editor id="privacy_policy_en" formControlName="privacy_policy_en"
+                            [styles]="{height: '200px'}"></quill-editor>
+
+                        </div>
+
+                      </div>
+                      <div class="form-group row mx-auto">
+                        <label class="col-md-3 label-control" for="name">{{ 'about.privacy_policy' | translate }}
+                          ({{'table.ar' | translate}})</label>
+                        <div class="col-md-9">
+                          <quill-editor id="privacy_policy_ar" formControlName="privacy_policy_ar"
+                            [styles]="{height: '200px'}"></quill-editor>
+
+                        </div>
+
+                      </div>
+                      <div class="form-group row mx-auto">
+                        <label class="col-md-3 label-control" for="name">{{ 'about.terms_and_conditions' | translate }}
+                          ({{'table.en' | translate}})</label>
+                        <div class="col-md-9">
+                          <quill-editor id="terms_and_conditions_en" formControlName="terms_and_conditions_en"
+                            [styles]="{height: '200px'}"></quill-editor>
+
+                        </div>
+
+                      </div>
+                      <div class="form-group row mx-auto">
+                        <label class="col-md-3 label-control" for="name">{{ 'about.terms_and_conditions' | translate }}
+                          ({{'table.ar' | translate}})</label>
+                        <div class="col-md-9">
+                          <quill-editor id="terms_and_conditions_ar" formControlName="terms_and_conditions_ar"
+                            [styles]="{height: '200px'}"></quill-editor>
+
+                        </div>
+
+                      </div>
+                      <h4 class="form-section"><i class="feather ft-mail"></i>{{ 'about.socielMedia' | translate }}</h4>
+                      <div class="form-group row mx-auto ">
+                        <label class="col-md-3 label-control" for="projectinput4">{{ 'about.socielMedia' | translate
+                          }}</label>
+                        <div class="col-md-9">
+
+                          <div class="form-inline">
+                            <i class="la la-facebook-official soical"></i>
+                            <input type="text" nbInput fullWidth id="facebook" formControlName="facebook"
+                              [ngClass]="{ 'is-invalid': submitted && f.facebook.errors }">
+                            <div *ngIf="submitted && f.facebook.errors" class="invalid-feedback">
+                              <div *ngIf="f.facebook.errors.required">{{'form.required' | translate}}</div>
+                              <div *ngIf="f.facebook.errors?.pattern && arabic"> الرابط المدخل غير صالح</div>
+                              <div *ngIf="f.facebook.errors?.pattern && !arabic">The entered link is invalid</div>
+                            </div>
+                          </div>
+                          <div class="form-inline">
+                            <i class="la la-twitter-square soical"></i>
+                            <input type="text" nbInput fullWidth id="twitter" formControlName="twitter"
+                              [ngClass]="{ 'is-invalid': submitted && f.twitter.errors }">
+                            <div *ngIf="submitted && f.twitter.errors" class="invalid-feedback">
+                              <div *ngIf="f.twitter.errors.required">{{'form.required' | translate}}</div>
+                              <div *ngIf="f.twitter.errors?.pattern && arabic"> الرابط المدخل غير صالح</div>
+                              <div *ngIf="f.twitter.errors?.pattern && !arabic">The entered link is invalid</div>
+                            </div>
+                          </div>
+
+                          <!-- <div class="form-inline">
+                                    <a class="soical"><i class="fab fa-whatsapp"></i></a>
+                                    <input type="text" nbInput fullWidth id="whatsapp" value="{{whatsapp}}">
+                                  </div> -->
+                          <div class="form-inline">
+                            <i class="la la-instagram soical"></i>
+                            <input type="text" nbInput fullWidth id="instagram" formControlName="instagram"
+                              [ngClass]="{ 'is-invalid': submitted && f.instagram.errors }">
+                            <div *ngIf="submitted && f.instagram.errors" class="invalid-feedback">
+                              <div *ngIf="f.instagram.errors.required">{{'form.required' | translate}}</div>
+                              <div *ngIf="f.instagram.errors?.pattern && arabic"> الرابط المدخل غير صالح</div>
+                              <div *ngIf="f.instagram.errors?.pattern && !arabic">The entered link is invalid</div>
+                            </div>
+                          </div>
+                          <!-- <div class="form-inline">
+                                  <a class="fab fa-youtube soical"></a>
+                                  <input type="text" nbInput fullWidth id="youtube" value="{{youtube}}">
+                                </div> -->
+                          <div class="form-inline">
+                            <i class="la la-apple soical"></i>
+
+                            <input type="text" nbInput fullWidth id="apple" formControlName="apple"
+                              [ngClass]="{ 'is-invalid': submitted && f.apple.errors }">
+                            <div *ngIf="submitted && f.apple.errors" class="invalid-feedback">
+                              <div *ngIf="f.apple.errors.required">{{'form.required' | translate}}</div>
+                              <div *ngIf="f.apple.errors?.pattern && arabic"> الرابط المدخل غير صالح</div>
+                              <div *ngIf="f.apple.errors?.pattern && !arabic">The entered link is invalid</div>
+                            </div>
+
+                          </div>
+                          <div class="form-inline">
+                            <i class="la la-google-plus soical"></i>
+                            <input type="text" nbInput fullWidth id="google" formControlName="google"
+                              [ngClass]="{ 'is-invalid': submitted && f.google.errors }">
+                            <div *ngIf="submitted && f.google.errors" class="invalid-feedback">
+                              <div *ngIf="f.google.errors.required">{{'form.required' | translate}}</div>
+                              <div *ngIf="f.google.errors?.pattern && arabic"> الرابط المدخل غير صالح</div>
+                              <div *ngIf="f.google.errors?.pattern && !arabic">The entered link is invalid</div>
+                            </div>
+                          </div>
+
+
+                        </div>
+                      </div>
+
+
+                      <div class="form-actions" *ngIf="showEdit">
+
+                        <button type="submit" class="btn btn-primary" [disabled]="!loaderBtn">
+                          <i *ngIf="!loaderBtn" class="la la-spinner spinner">
+
+                          </i><i *ngIf="loaderBtn" class="la la-check"></i> {{'form.saveBtn' | translate}}
+                        </button>
+                        <button type="button" class="btn btn-warning mr-1 ml-1" (click)="cancel()">
+                          <i class="feather ft-x"></i> {{'form.cancelBtn' | translate}}
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+
+
+
+              </div>
+
+            </div>
+          </div>
+
+
+
+
+        </div>
+      </section>
+    </div>
+  </div>
+</div>

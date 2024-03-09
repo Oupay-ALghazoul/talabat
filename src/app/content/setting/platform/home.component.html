@@ -1,0 +1,62 @@
+<div class="app-content content "   [ngStyle]="{'direction': arabic ?  'rtl': 'ltr' ,
+'text-align': arabic ?  'right': 'left' }" >
+  <div class="content-wrapper">
+    <div class="content-header row mb-1" >
+      <app-breadcrumb class="col-6" style="text-align: right;" [breadcrumb]="breadcrumbAr" *ngIf="arabic"></app-breadcrumb>
+      <app-breadcrumb class="col-6" style="text-align: left;" [breadcrumb]="breadcrumb" *ngIf="!arabic"></app-breadcrumb>
+    </div> 
+    <div class="content-body" >
+      <section class="row">
+          <div class="col-12">
+              <div class="card">  
+                <div class="loader-wrapper" *ngIf="loader">
+                    <div class="loader-container">
+                    <div class="ball-spin-fade-loader loader-blue">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                    </div>
+                </div>                 
+                <div class="card-content" *ngIf="!loader">
+                      <div class="card-body" >
+                        <form class="form striped-rows form-bordered" 
+                        [formGroup]="editForm" (ngSubmit)="onSubmit()">
+                          <div class="form-body">
+                            <h4 class="form-section"><i class="la la-key"></i>{{ 'usersTable.verification' | translate }}</h4>
+                            <div class="form-group row mx-auto">
+                              <label class="col-md-4 label-control" for="username">{{ 'usersTable.changeVerification' | translate }}</label>
+                              <div class="col-md-8">
+                                <ui-switch [checked]="users_verification"   formControlName="users_verification" size="small">
+
+                                </ui-switch>
+                              </div>
+
+                            </div>
+                      
+                            <div class="form-actions text-left">
+                              <button type="button" class="btn btn-warning mr-1 ml-1" (click)="cancel()">
+                                <i class="feather ft-x"></i>   {{'form.cancelBtn' | translate}}
+                              </button>
+                              <button type="submit" class="btn btn-primary"  [disabled]="loaderBtn">
+                              <i *ngIf="loaderBtn" class="la la-spinner spinner">
+
+                              </i><i *ngIf="!loaderBtn" class="la la-check"></i>   {{'form.saveBtn' | translate}}
+                              </button>
+                            </div>
+                        
+                          </div>
+                        </form>
+                      </div>
+                </div>  
+            </div>
+        </div>
+        </section>
+    </div>
+  </div>    
+</div>

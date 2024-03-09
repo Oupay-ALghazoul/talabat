@@ -1,0 +1,10 @@
+﻿<!-- main app container -->
+<ngx-loading-bar [includeSpinner]='false' height='3px' color="#FF4961"></ngx-loading-bar>
+<app-alert></app-alert>
+<div >
+    <div *ngIf="systemParam?.shutdown_activated && otherPages" class="text-center mr-auto timer2">
+        <app-count-down [enableMiddleTitle]="true" [date]="systemParam?.shutdown_date"
+            [middleTitle]="{ar:systemParam?.shutdown_message_ar,en:systemParam?.shutdown_message_en}"></app-count-down>
+    </div>
+</div>
+<router-outlet *ngIf="showContent"></router-outlet>

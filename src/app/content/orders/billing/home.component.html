@@ -1,0 +1,212 @@
+
+<!------ Include the above in your HEAD tag ------------->
+<div class="app-content content " [ngStyle]="{'direction': arabic ?  'rtl': 'ltr' ,
+'text-align': arabic ?  'right': 'left' }"> 
+    <div class="content-wrapper" >
+        <div class="content-header row mb-1" >
+            <app-breadcrumb class="col-6"  style="text-align: right;"  [breadcrumb]="breadcrumbAr" *ngIf="arabic"></app-breadcrumb>
+            <app-breadcrumb class="col-6"  style="text-align: left;"  [breadcrumb]="breadcrumb" *ngIf="!arabic"></app-breadcrumb>
+            <div class="col-6" [ngStyle]="{'text-align': arabic ?  'left': 'right' }">
+                <button type="submit" class="btn btn-primary" *ngIf= "arabic"
+                style=" background-color: #007bff!important; border-color :#007bff!important" 
+                printTitle="Print Invoice" printSectionId="print-section"
+                [printStyle]="{table : {'direction': 'rtl'}, div : {'text-align': 'right'}}" [useExistingCss]="true" ngxPrint>
+                  {{'table.printBilling' | translate}}
+                    <i class="la la-print"></i>
+                </button> 
+                <button type="submit" class="btn btn-primary" *ngIf= "!arabic"
+                style=" background-color: #007bff!important; border-color :#007bff!important" 
+                printTitle="Print Invoice" printSectionId="print-section" [useExistingCss]="true" ngxPrint>
+                  {{'table.printBilling' | translate}}
+                    <i class="la la-print"></i>
+                </button> 
+            </div>
+        </div>
+        
+        <div class="content-body" id= "print-section"  [ngStyle]="{'direction': arabic ?  'rtl': 'ltr' ,
+        'text-align': arabic ?  'right': 'left' }">
+            <div class="card">
+                <div class="card-content">
+                    <div class="card-body" >
+                        <div class="fluid-container" *ngIf="loader">
+                            <div class="loader-wrapper" >
+                                <div class="loader-container">
+                                  <div class="ball-spin-fade-loader loader-blue">
+                                      <div></div>
+                                      <div></div>
+                                      <div></div>
+                                      <div></div>
+                                      <div></div>
+                                      <div></div>
+                                      <div></div>
+                                    <div></div>
+                                  </div>
+                                </div>
+                              </div>
+                          </div>
+                        <div class="container" *ngIf="!loader" >
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="row">
+                                        <div class="col-10">
+                                            <h2>{{'order.order' | translate}} {{order.number}}</h2>
+                                            <!-- <h3 class="pull-right">{{'order.order' | translate}} {{order.number}}</h3> -->
+                                        </div>
+                                        <div class="col-2">
+                                            <img src= "/assets/images/logo-dark.png" style="width: 50px;">
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <address>
+                                            <strong>{{'footer.talabat' | translate}} :</strong><br>
+                                            {{ 'about.address' | translate }} : {{info.address}}<br>
+                                            {{ 'about.phone' | translate }} : {{info.phone}}<br>
+                                            {{ 'about.email' | translate }} : {{info.email}}<br>
+                                            {{ 'about.website_link' | translate }} : {{info.website_link}}
+                                            </address>
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <address>
+                                            <strong>{{'orderDetails.order_details' | translate}}:</strong><br>
+                                            {{'order.date' | translate}} : {{formatedDate}}<br>
+                                            {{'order.number' | translate}} : {{order.number}}<br>
+                                            <a *ngIf = "!arabic"> {{'order.payment_way' | translate}} : {{order.payment.name_en}}</a>
+                                            <a *ngIf = "arabic"> {{'order.payment_way' | translate}} : {{order.payment.name_ar}}</a> <br>
+                                       
+                                            </address>
+                                        </div>
+                                        <!-- <div class="col-xs-6 text-right">
+                                            <address>
+                                            <strong>Shipped To:</strong><br>
+                                                Jane Smith<br>
+                                                1234 Main<br>
+                                                Apt. 4B<br>
+                                                Springfield, ST 54321
+                                            </address>
+                                        </div> -->
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <address>
+                                                <strong> {{'order.billing_address' | translate}} :</strong><br>
+                                                {{'billing_address.name' | translate}} : {{billing_address.first_name}} {{billing_address.last_name}}<br>
+                                                {{'billing_address.phone' | translate}} : {{billing_address.phone}}<br>
+                                                {{'billing_address.region' | translate}} : {{billing_address.region}} <br>
+                                                {{'billing_address.district' | translate}} : {{billing_address.district}}<br>
+                                                {{'billing_address.street' | translate}} : {{billing_address.street_address}}<br>
+                                                {{'billing_address.boulevard' | translate}} : {{billing_address.boulevard}}<br>
+                                                {{'billing_address.house' | translate}} : {{billing_address.house}}<br>
+                                                {{'billing_address.floor' | translate}} : {{billing_address.floor}}  <br>
+                                                {{'billing_address.apartment' | translate}} : {{billing_address.apartment}} <br>
+            
+                                            </address>
+                                        </div>
+                                        <!-- <div class="col-xs-6 text-right">
+                                            <address>
+                                                <strong>Order Date:</strong><br>
+                                                March 7, 2014<br><br>
+                                            </address>
+                                        </div> -->
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title"><strong>{{'order.summary' | translate}}</strong></h3>
+                                        </div>
+                                        <div class="panel-body">
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th >{{'order.item' | translate}}</th>
+                                                            <th >{{'order.unit_price' | translate}}</th>
+                                                            <th >{{'order.unit_discount' | translate}}</th>
+                                                            <th style="width : 120px">{{'order.special_offer_total' | translate}}</th>
+                                                            <th >{{'order.quantity' | translate}}</th>
+                                                            <th >{{'order.subtotal' | translate}}</th>
+                                                            <th >{{'order.tax' | translate}}</th>
+                                                            <th >{{'order.total' | translate}}</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr *ngFor="let item of order_items; index as i">
+                                                          <td >
+                                                            <img  *ngIf="item.unit_image"  [src]="item.unit_image.low_quality" style="    height: 30px;" >
+                                                            <span style="padding : 0px 5px"  *ngIf ="arabic">{{item.unit_name_ar}}</span>
+                                                            <span style="padding : 0px 5px"  *ngIf ="!arabic">{{item.unit_name_en}}</span> 
+                                                            <span *ngIf="item.unit_size" style="display: block;">{{item.unit_size.name}}</span>
+                                                            <span *ngIf="item.unit_color"  class="badge color-span" [style.background-color]="item.unit_color.hex"></span>
+                                                          </td>
+                                                          <td>{{item.unit_price}}</td>
+                                                          <td>
+                                                            <a *ngIf= "item.discount_total != 0.000"> {{item.discount_total}}</a>
+                                                            <a *ngIf= "item.discount_total == 0.000">--</a>
+                                                           
+                                                          </td>
+                                                          <td>
+                                                            <a *ngIf= "item.special_offer_total != 0.000">{{item.special_offer_total}}</a>
+                                                            <a *ngIf= "item.special_offer_total == 0.000">--</a>
+                                                          </td>
+                                                          <td>{{item.quantity}}</td>
+                                                          <td>{{item.subtotal}}</td>
+                                                          <td>
+                                                            <a>{{item.tax}}</a>
+                                                            <a *ngIf= "item.tax ==  0.000 ">{{'order.include' | translate}}</a>
+                                                          </td>
+                                                          <td>{{item.total}}</td>
+                                                        </tr>
+                                                        
+                                                        <tr> 
+                                                          <td colspan="6"></td>
+                                                          <td><a class="total">{{'order.tax_total' | translate}} : </a> {{order.tax}} </td>
+                                                          <td><a class="total">{{'order.items_total' | translate}} : </a> {{order.subtotal}} </td>
+                                                        </tr>
+                                                        <tr> 
+                                                          <td colspan="5"></td>
+                                                          <td  colspan="3"><a class="total-2">{{'order.shipping_total' | translate}} : </a> {{order.shipping_total}} </td>
+                                                        </tr>
+                                                        <tr> 
+                                                          <td colspan="5"><span *ngIf = "order.coupon_total  ==  0.000">{{'order.no_promotion' | translate}}</span></td>
+                                                          <td  colspan="3"><a class="total-2">{{'order.promotion_total' | translate}} : </a> {{order.coupon_total}} </td>
+                                                        </tr>
+                                                        <tr> 
+                                                          <td colspan="5"></td>
+                                                          <td  colspan="3"><a class="total-2">{{'order.delivery_total' | translate}} : </a> {{order.delivery_total}} </td>
+                                                        </tr>
+                                                        
+                                                        <tr> 
+                                                          <td colspan="5"></td>
+                                                          <td  colspan="3"><a class="total-2">{{'order.order_total' | translate}} : </a> {{order.total}} </td>
+                                                        </tr>
+                                                      </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" style="margin-bottom: 30px;">
+                                <div class="col-6 text-center">
+                                    {{'order.seller_sign' | translate}}
+                                </div>
+                                <div class="col-6 text-center">
+                                    {{'order.recipient_sign' | translate}}
+                                </div>
+                            </div>
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+         
+        </div>
+      
+        
+    </div>
+</div>

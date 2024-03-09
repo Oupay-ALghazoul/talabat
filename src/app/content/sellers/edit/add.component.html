@@ -1,0 +1,301 @@
+<div class="app-content content ">
+  <div class="content-wrapper">
+    <div class="content-header row mb-1"  [ngStyle]="{'direction': arabic ?  'rtl': 'ltr' }">
+      <app-breadcrumb class="col-6" style="text-align: right;" [breadcrumb]="breadcrumbAr" *ngIf="arabic"></app-breadcrumb>
+      <app-breadcrumb class="col-6" style="text-align: left;" [breadcrumb]="breadcrumb" *ngIf="!arabic"></app-breadcrumb>
+    </div>
+       
+    <div class="content-body" [ngStyle]="{'direction': arabic ?  'rtl': 'ltr' }">
+        <section class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="loader-wrapper" *ngIf="loader">
+                          <div class="loader-container">
+                            <div class="ball-spin-fade-loader loader-blue">
+                              <div></div>
+                              <div></div>
+                              <div></div>
+                              <div></div>
+                              <div></div>
+                              <div></div>
+                              <div></div>
+                              <div></div>
+                            </div>
+                          </div>
+                        </div>                    
+                    <div class="card-content" *ngIf="!loader">
+                        <div class="card-body"  [ngStyle]="{'direction': arabic ?  'rtl': 'ltr' }">
+                          
+                          <form class="form form-horizontal"  [formGroup]="editForm"   
+                            (ngSubmit)="submit()"   [ngStyle]="{'direction': arabic ?  'rtl': 'ltr' ,
+                            'text-align': arabic ?  'right': 'left' }" >
+                            <div class="row" style="margin-bottom: 20px;">
+                              <div class="col-12 ">
+                                <div class="form form-horizontal part">
+                                  <h4 class="form-section"><i class="la la-user"></i>{{ 'seller.user' | translate }}</h4>
+                                  <div class="form-body" >
+                                    <div class="form-group row mx-auto">                                            
+                                        <label class="col-md-3 label-control" for="category" [ngStyle]="{'text-align': arabic ?  'right': 'left' }"> 
+                                          {{'usersTable.fname' | translate}}</label>
+                                        <div class="col-md-9">
+                                            <input type="text" id="first_name" class="form-control" formControlName="first_name"
+                                            [ngClass]="{ 'is-invalid': submitted && f.first_name.errors }">
+                                            <div *ngIf="submitted && f.first_name.errors" class="invalid-feedback">
+                                                <div *ngIf="f.first_name.errors.required"> {{'form.required' | translate}} </div>
+                                            </div>
+                                        </div>                            
+                                    </div>                             
+                                  </div>
+                                  <div class="form-body" >
+                                    <div class="form-group row mx-auto">                                            
+                                        <label class="col-md-3 label-control" for="category" [ngStyle]="{'text-align': arabic ?  'right': 'left' }"> 
+                                          {{'usersTable.lname' | translate}}</label>
+                                        <div class="col-md-9">
+                                            <input type="text" id="last_name" class="form-control" formControlName="last_name"
+                                            [ngClass]="{ 'is-invalid': submitted && f.last_name.errors }">
+                                            <div *ngIf="submitted && f.last_name.errors" class="invalid-feedback">
+                                                <div *ngIf="f.last_name.errors.required"> {{'form.required' | translate}} </div>
+                                            </div>
+                                        </div>                            
+                                    </div>                             
+                                  </div>
+                                  <div class="form-body">
+                                    <div class="form-group row mx-auto">
+                                      <label class="col-md-3 label-control" for="text_ar" 
+                                      [ngStyle]="{'text-align': arabic ?  'right': 'left' }">
+                                      {{'usersTable.email' | translate}}</label>
+                                      <div class="col-md-9" >
+                                          <input type="text" id="email" class="form-control" formControlName="email"
+                                          [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
+                                          <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                                              <div *ngIf="f.email.errors.required">{{'form.required' | translate}} </div>
+                                          </div>
+                                          <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                                            <div *ngIf="f.email.errors">{{'form.emailValid' | translate}}</div>
+                                        </div>
+                                      </div>
+                                      
+                                    </div>
+                                  </div>
+                                  <div class="form-body">
+                                    <div class="form-group row mx-auto">
+                                      <label class="col-md-3 label-control" for="text_ar" 
+                                      [ngStyle]="{'text-align': arabic ?  'right': 'left' }">
+                                      {{'usersTable.phone' | translate}}</label>
+                                      <div class="col-md-9"  dir="ltr">
+                                        <ngx-intl-tel-input   [enableAutoCountrySelect]="true"
+                                        [enablePlaceholder]="true" [searchCountryFlag]="true" [onlyCountries]="preferredCountries"
+                                        [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]" [selectFirstCountry]="false"
+                                        [selectedCountryISO]="selectedCountryISO" [maxLength]="'15'"  [phoneValidation]="false"
+                                        [separateDialCode]="selectedCountryISONumber" [numberFormat]="PhoneNumberFormat.National" name="phone"
+                                        formControlName = "phone" [cssClass]="'form-control phone-it-padding'"
+                                        >
+                                      </ngx-intl-tel-input>
+                                      <div *ngIf="submitted && f.phone.errors" class="invalid-feedback">
+                                        <div *ngIf="f.phone.errors.required">{{'form.required' | translate}}</div>
+                                      </div>
+                                      <div *ngIf="submitted && f.phone.errors?.pattern" class="invalid-feedback">
+                                        <div *ngIf="f.phone.errors?.pattern && arabic"> رقم التلفون غير صالح</div>
+                                        <div *ngIf="f.phone.errors?.pattern && !arabic">Phone Not Valid</div>
+                                      </div>
+                                    </div>
+                                      
+                                    </div>
+                                  </div>
+                                  <div class="form-body">
+                                    <div class="form-group row mx-auto">
+                                      <label class="col-md-3 label-control" for="text_ar" 
+                                      [ngStyle]="{'text-align': arabic ?  'right': 'left' }">
+                                      {{'usersTable.country' | translate}}</label>
+                                      <div class="col-md-9" >
+                                      
+                                          <ng-select [items]="countries" [addTag]="true" bindLabel="full_name" bindValue="id"
+                                              formControlName="countryName" 
+                                              [ngClass]="{'is-invalid': submitted && f.countryName.errors }"
+                                              [(ngModel)]="countryName" (change) = "chooseCity(countryName)"
+                                            >
+                                            </ng-select>
+                                            <div *ngIf="submitted && f.countryName.errors" class="invalid-feedback d-block">
+                                              <div *ngIf="f.countryName.errors.required">{{'form.required' | translate}}</div>
+                                            </div>
+                                      </div>
+                                      
+                                    </div>
+                                  </div>
+                                     <div class="form-body">
+                                    <div class="form-group row mx-auto">
+                                      <label class="col-md-3 label-control" for="text_ar" 
+                                      [ngStyle]="{'text-align': arabic ?  'right': 'left' }">
+                                      {{'usersTable.city' | translate}}</label>
+                                      <div class="col-md-9" >
+                                      
+                                          <ng-select [items]="cities" [addTag]="true" bindLabel="name" bindValue="id"
+                                              formControlName="city_id" 
+                                              [ngClass]="{'is-invalid': submitted && f.city_id.errors }"
+                                              [(ngModel)]="selected_city"
+                                            >
+                                            </ng-select>
+                                            <div *ngIf="submitted && f.city_id.errors" class="invalid-feedback d-block">
+                                              <div *ngIf="f.city_id.errors.required">{{'form.required' | translate}}</div>
+                                            </div>
+                                      </div>
+                                      
+                                    </div>
+                                  </div>
+                                  <div class="form-body" >
+                                    <div class="form-group row mx-auto">                                            
+                                        <label class="col-md-3 label-control" for="category" [ngStyle]="{'text-align': arabic ?  'right': 'left' }"> 
+                                          {{'category.activateState' | translate}}</label>
+                                        <div class="col-md-9">
+                                          <select class="custom-select " formControlName="activated" >                       
+                                            <option value="1">{{ 'filterOptions.activated' | translate }}</option>
+                                            <option value="0">{{ 'filterOptions.notActivated' | translate }}</option>
+                
+                                          </select>
+                                        </div>                            
+                                    </div>                                   
+                                  </div>
+                                  <div class="form-body" >
+                                    <div class="form-group row mx-auto"  [ngStyle]="{'text-align': arabic ?  'right': 'left' }">
+                                      <label class="col-md-3 label-control" [ngStyle]="{'text-align': arabic ?  'right': 'left' }">
+                                        {{'usersTable.image' | translate }}</label>
+                                      <div class="col-md-9">
+                                        <input type="file" id="file"  name="file" class="inputfile"  (change)="upload($event.target.files)" />
+                                        <label class="btn btn-primary" style="cursor: pointer;" for="file"><svg style="    margin: 0px 8px;
+                                          " xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17">
+                                          <path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"/></svg> 
+                                          <span style="color: white;">{{ 'table.chooseImage' | translate }}</span></label>
+    
+                                          <img id="imageReview" style="display: block;" width="300px" height="300px" src="{{image}}">
+    
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                
+                              </div>
+                              
+                            </div>
+                            <div class="row">
+                              <div class="col-12 ">
+                                <div class="form form-horizontal part">
+                                  <h4 class="form-section"><i class="la la-info"></i>{{ 'seller.seller' | translate }}</h4>
+                                    <div class="form-body" >
+                                      <div class="form-group row mx-auto">                                            
+                                          <label class="col-md-3 label-control" for="category" [ngStyle]="{'text-align': arabic ?  'right': 'left' }"> 
+                                            {{'seller.supplier_since' | translate}}</label>
+                                          <div class="col-md-9">
+                                              <input type="date" id="supplier_since" class="form-control" formControlName="supplier_since"
+                                              [ngClass]="{ 'is-invalid': submitted && f.supplier_since.errors }">
+                                              <div *ngIf="submitted && f.supplier_since.errors" class="invalid-feedback">
+                                                  <div *ngIf="f.supplier_since.errors.required"> {{'form.required' | translate}} </div>
+                                              </div>
+                                          </div>                            
+                                      </div>                             
+                                    </div>
+                                    <div class="form-body" >
+                                      <div class="form-group row mx-auto">                                            
+                                          <label class="col-md-3 label-control" for="category" [ngStyle]="{'text-align': arabic ?  'right': 'left' }"> 
+                                            {{'seller.corporation_name' | translate}}</label>
+                                          <div class="col-md-9">
+                                              <input type="text" id="corporation_name" class="form-control" formControlName="corporation_name"
+                                              [ngClass]="{ 'is-invalid': submitted && f.corporation_name.errors }">
+                                              <div *ngIf="submitted && f.corporation_name.errors" class="invalid-feedback">
+                                                  <div *ngIf="f.corporation_name.errors.required"> {{'form.required' | translate}} </div>
+                                              </div>
+                                          </div>                            
+                                      </div>                             
+                                    </div>
+                                    <div class="form-body" >
+                                      <div class="form-group row mx-auto">                                            
+                                          <label class="col-md-3 label-control" for="category"  [ngStyle]="{'text-align': arabic ?  'right': 'left' }">
+                                            {{'seller.description' | translate}} ({{'table.en' | translate}})</label>
+                                          <div class="col-md-9">
+                                              <textarea id="description_en" class="form-control" formControlName="description_en"
+                                              ></textarea>
+                                            
+                                          </div>                            
+                                      </div>                                   
+                                    </div>
+                                    <div class="form-body" >
+                                      <div class="form-group row mx-auto">                                            
+                                          <label class="col-md-3 label-control" for="category"  [ngStyle]="{'text-align': arabic ?  'right': 'left' }"> 
+                                            {{'seller.description' | translate}} ({{'table.ar' | translate}})</label>
+                                          <div class="col-md-9">
+                                              <textarea id="description_ar" class="form-control" formControlName="description_ar"
+                                              ></textarea>
+                                             
+                                          </div>                            
+                                      </div>                                   
+                                    </div>
+                                    <div class="form-body" >
+                                      <div class="form-group row mx-auto">                                            
+                                          <label class="col-md-3 label-control" for="category" [ngStyle]="{'text-align': arabic ?  'right': 'left' }"> 
+                                            {{'seller.address' | translate}} ({{'table.en' | translate}})</label>
+                                          <div class="col-md-9">
+                                              <input type="text" id="address_en" class="form-control" formControlName="address_en"
+                                              >
+                                          </div>                            
+                                      </div>                             
+                                    </div>
+                                    <div class="form-body" >
+                                      <div class="form-group row mx-auto">                                            
+                                          <label class="col-md-3 label-control" for="category" [ngStyle]="{'text-align': arabic ?  'right': 'left' }"> 
+                                            {{'seller.address' | translate}} ({{'table.ar' | translate}})</label>
+                                          <div class="col-md-9">
+                                              <input type="text" id="address_ar" class="form-control" formControlName="address_ar"
+                                              >
+                                          </div>                            
+                                      </div>                             
+                                    </div>
+                                    <div class="form-body" >
+                                      <div class="col-12" *blockUI="'basicMap'; message: 'Loading'">
+                                        <div class="form-group">
+                                          <label class="label-control" [ngStyle]="{'text-align': arabic ?  'right': 'left' }">
+                                            {{'seller.noteMap' | translate }}</label>
+                                          <div class="row">
+                                            <label class="col-3 label-control" [ngStyle]="{'text-align': arabic ?  'right': 'left' }">   {{ 'product.enterAddress' | translate }} </label>
+                                            <div class="col-9">
+                                            <input type="text" class="form-control" (keydown.enter)="$event.preventDefault()"
+                                            placeholder="{{ 'product.nearestLocation' | translate }} " autocorrect="off" autocapitalize="off" spellcheck="off" type="text" #search>
+                                            </div>
+                                            </div>
+                                          </div>
+                                          <div>
+                                            <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" [zoomControl]="true"
+                                              [scrollwheel]="null" [mapTypeControl]='true' [fullscreenControl]="true"  style="    height: 400px;"
+                                              (mapClick)="addMarker($event.coords.lat, $event.coords.lng)">
+                                              <agm-marker [latitude]="lat" [longitude]="lng" [markerDraggable]="true"
+                                                (drag)="selectMarker($event)">
+                                              </agm-marker>
+                                            </agm-map>
+                                          </div>
+                                      </div>
+                                    </div>
+                                  </div>     
+                                
+                                </div>
+                                
+                              </div>
+                          
+                           
+                              <div class="form-actions">
+                               
+                                <button type="submit" class="btn btn-primary"  [disabled]="loaderBtn">
+                                <i *ngIf="loaderBtn" class="la la-spinner spinner">
+
+                                </i><i *ngIf="!loaderBtn" class="la la-check"></i>   {{'form.saveBtn' | translate}}
+                                </button>
+                                 <button type="button" class="btn btn-warning mr-1 ml-1" (click)="cancel()">
+                                  <i class="feather ft-x"></i>   {{'form.cancelBtn' | translate}}
+                                </button>
+                              </div>
+                            </form>       
+                        </div>
+                    </div>  
+                </div>
+            </div>
+        </section>
+    </div>
+  </div>    
+</div>
