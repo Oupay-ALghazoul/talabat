@@ -20,7 +20,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
 
 import { UiSwitchModule } from 'ngx-toggle-switch';
-import { OwlDateTimeModule, OwlNativeDateTimeModule, OWL_DATE_TIME_FORMATS } from 'ng-pick-datetime';
+// import { OwlDateTimeModule, OwlNativeDateTimeModule, OWL_DATE_TIME_FORMATS } from 'ng-pick-datetime-ex';
 
 @NgModule({
   declarations: [ HistoryComponent],
@@ -28,8 +28,8 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule, OWL_DATE_TIME_FORMATS } fro
     
   ],
   imports: [
-    OwlDateTimeModule, 
-    OwlNativeDateTimeModule,
+    // OwlDateTimeModule, s
+    // OwlNativeDateTimeModule,
     NgxDatatableModule,
     UiSwitchModule ,
     CommonModule,

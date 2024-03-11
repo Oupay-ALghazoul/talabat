@@ -1,0 +1,113 @@
+<div class="app-content content " [ngStyle]="{'direction': arabic ?  'rtl': 'ltr' ,
+'text-align': arabic ?  'right': 'left'  }">
+  <div class="content-wrapper">
+    <div class="content-header row mb-1">
+      <app-breadcrumb class="col-6" style="text-align: right;" [breadcrumb]="breadcrumbAr" *ngIf="arabic">
+      </app-breadcrumb>
+      <app-breadcrumb class="col-6" style="text-align: left;" [breadcrumb]="breadcrumb" *ngIf="!arabic">
+      </app-breadcrumb>
+    </div>
+
+    <div class="content-body">
+      <section class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-content">
+              <div class="card-body" >
+
+                <form class="form" [formGroup]="addForm" (ngSubmit)="submit()" >
+                  <div class="row" style="margin-bottom: 20px;">
+                    <div class="col-12">
+                      <div class="form part">
+                        <h4 class="form-section"><i class="la la-user"></i>{{ 'Slider Details' | translate }}
+                        </h4>
+                        
+                        <div class="form-body">
+                          <div class="form-group row mx-auto" >
+                            <label class="col-md-3 label-control">
+                              {{'usersTable.image' | translate }}</label>
+                            <div class="col-md-9">
+                              <input accept="image/*" type="file" id="file" name="file" class="inputfile"
+                                (change)="upload($event.target.files)" />
+                              <label class="btn btn-primary" style="cursor: pointer;" for="file"><svg style="    margin: 0px 8px;
+                                          " xmlns="http://www.w3.org/2000/svg" width="20" height="17"
+                                  viewBox="0 0 20 17">
+                                  <path
+                                    d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z" />
+                                </svg>
+                                <span style="color: white;">{{ 'table.chooseImage' | translate }}</span></label>
+
+                              <img id="imageReview" style="display: none;" width="300px" height="300px">
+
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-body">
+                          <div class="form-group row mx-auto">
+                            <label class="col-md-3 label-control" for="category">
+                              {{'Description' | translate}}</label>
+                            <div class="col-md-9">
+                              <input type="text" id="description" class="form-control" formControlName="description"
+                                [ngClass]="{ 'is-invalid': submitted && f.description.errors }">
+                              <div *ngIf="submitted && f.description.errors" class="invalid-feedback">
+                                <div *ngIf="f.description.errors.required"> {{'form.required' | translate}} </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-body">
+                          <div class="form-group row mx-auto">
+                            <label class="col-md-3 label-control" for="category">
+                              {{'Sort' | translate}}</label>
+                            <div class="col-md-9">
+                              <input type="number" id="sort" class="form-control" formControlName="sort"
+                                [ngClass]="{ 'is-invalid': submitted && f.sort.errors }">
+                              <div *ngIf="submitted && f.sort.errors" class="invalid-feedback">
+                                <div *ngIf="f.sort.errors.required"> {{'form.required' | translate}} </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+  
+                        <div class="form-body">
+                          <div class="form-group row mx-auto ">
+                            <label class="col-md-3 label-control" for="projectinput4">{{
+                              'Category' | translate }}</label>
+                            <div class="col-md-7">
+                              <ng-select [items]="categories" [bindLabel]="arabic ? 'name_ar' : 'name_en'" bindValue="id"
+                                formControlName="category_id" [multiple]="false" placeholder=""
+                                [ngClass]="{ 'is-invalid': submitted && f.category_id.errors }">
+                              </ng-select>
+                              <div *ngIf="submitted && f.category_id.errors" class="invalid-feedback">
+                                <div *ngIf="f.category_id.errors.required"> {{'form.required' | translate}} </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+
+                    </div>
+
+                  </div>
+
+                  <div class="form-actions">
+
+                    <button type="submit" class="btn btn-primary" [disabled]="loader">
+                      <i *ngIf="loader" class="la la-spinner spinner">
+
+                      </i><i *ngIf="!loader" class="la la-check"></i> {{'form.saveBtn' | translate}}
+                    </button>
+                    <button type="button" class="btn btn-warning mr-1 ml-1" (click)="cancel()">
+                      <i class="feather ft-x"></i> {{'form.cancelBtn' | translate}}
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>

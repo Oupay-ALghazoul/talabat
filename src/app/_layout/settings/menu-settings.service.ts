@@ -152,6 +152,16 @@ export class MenuSettingsService {
 
               },
               {
+                title: lang == "ar" ? 'السلايدر الاساسي' : 'Main Slider',
+                icon: 'la-image',
+                page: '/slider/list/main'
+              },
+              {
+                title: lang == "ar" ? 'السلايدر الثانوي' : 'Secondary Slider',
+                icon: 'la-image',
+                page: '/slider/list/secondary'
+              },
+              {
                 title: lang == "ar" ? 'ادارة الأسئلة الشائعة' : 'FAQ Management',
                 icon: 'la-question',
                 page: '/FAQs/list'

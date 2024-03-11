@@ -1,4 +1,5 @@
-﻿import { NgModule } from '@angular/core';
+﻿import { SliderModule } from './content/slider/slider.module';
+import { NgModule } from '@angular/core';
 import {
   BrowserModule,
   HAMMER_GESTURE_CONFIG,
@@ -162,6 +163,7 @@ import { CountDownComponent } from './_layout/count-down/count-down.component'
         CountriesModule ,
         FAQModule ,
         UsersModule ,
+        SliderModule,
         NotificationModule ,
         SettingModule ,
         DeliveryModule  ,

@@ -1086,13 +1086,15 @@
                                 <label class="col-md-3 label-control" for="category">
                                   {{'product.start_date' | translate}}</label>
                                 <div class="col-md-9">
+                                  <input type="datetime-local" id="offer-start_date" class="form-control" formControlName="start_date"
+                                    [ngClass]="{ 'is-invalid': submitted5 && f5.start_date.errors }">
                                   <!-- <input type="date" id="start_date" class="form-control" formControlName="start_date"
-                                                        [ngClass]="{ 'is-invalid': submitted5 && f5.start_date.errors }">
-                                                        <div *ngIf="submitted5 && f5.start_date.errors" class="invalid-feedback">
-                                                            <div *ngIf="f5.start_date.errors.required">{{'form.required' | translate}}</div>
-                                                        </div> -->
+                                                        [ngClass]="{ 'is-invalid': submitted5 && f5.start_date.errors }"> -->
+                                        <div *ngIf="submitted5 && f5.start_date.errors" class="invalid-feedback">
+                                            <div *ngIf="f5.start_date.errors.required">{{'form.required' | translate}}</div>
+                                        </div> 
 
-                                  <input [owlDateTime]="dt1" class="form-control" formControlName="start_date"
+                                  <!-- <input [owlDateTime]="dt1" class="form-control" formControlName="start_date"
                                     [ngClass]="{ 'is-invalid': submitted5 && f5.start_date.errors }">
                                     <span class="pass-icon" *ngIf ="!arabic" [owlDateTimeTrigger]="dt1">
                                       <i class="fas fa-calendar-alt"></i>
@@ -1104,7 +1106,7 @@
                                   <owl-date-time #dt1></owl-date-time>
                                   <div *ngIf="submitted5 && f5.start_date.errors" class="invalid-feedback">
                                     <div *ngIf="f5.start_date.errors.required">{{'form.required' | translate}}</div>
-                                  </div>
+                                  </div> -->
 
 
                                 </div>
@@ -1115,14 +1117,16 @@
                                 <label class="col-md-3 label-control" for="category">
                                   {{'product.end_date' | translate}}</label>
                                 <div class="col-md-9">
+                                  <input type="datetime-local" id="offer-end_date" class="form-control" formControlName="end_date"
+                                    [ngClass]="{ 'is-invalid': submitted5 && f5.end_date.errors }">
                                   <!-- <input type="date" id="end_date" class="form-control" formControlName="end_date"
-                                                        [ngClass]="{ 'is-invalid': submitted5 && f5.end_date.errors }">
+                                                        [ngClass]="{ 'is-invalid': submitted5 && f5.end_date.errors }">-->
                                                         <div *ngIf="submitted5 && f5.end_date.errors" class="invalid-feedback">
                                                             <div *ngIf="f5.end_date.errors.required">{{'form.required' | translate}}</div>
-                                                        </div> -->
+                                                        </div> 
 
 
-                                  <input [owlDateTime]="dt2" class="form-control" formControlName="end_date"
+                                  <!-- <input [owlDateTime]="dt2" class="form-control" formControlName="end_date"
                                     [ngClass]="{ 'is-invalid': submitted5 && f5.end_date.errors }">
                                     <span class="pass-icon" *ngIf ="!arabic" [owlDateTimeTrigger]="dt2">
                                       <i class="fas fa-calendar-alt"></i>
@@ -1133,7 +1137,7 @@
                                   <owl-date-time #dt2></owl-date-time>
                                   <div *ngIf="submitted5 && f5.end_date.errors" class="invalid-feedback">
                                     <div *ngIf="f5.end_date.errors.required">{{'form.required' | translate}}</div>
-                                  </div>
+                                  </div> -->
 
 
                                 </div>
@@ -1193,7 +1197,7 @@
                                                         <div *ngIf="submitted6 && f6.start_date.errors" class="invalid-feedback">
                                                             <div *ngIf="f6.start_date.errors.required">{{'form.required' | translate}}</div>
                                                         </div> -->
-                                  <input [owlDateTime]="dt3" class="form-control" formControlName="start_date"
+                                  <!-- <input [owlDateTime]="dt3" class="form-control" formControlName="start_date"
                                     [ngClass]="{ 'is-invalid': submitted6 && f6.start_date.errors }">
                                     <span class="pass-icon" *ngIf ="!arabic" [owlDateTimeTrigger]="dt3">
                                       <i class="fas fa-calendar-alt"></i>
@@ -1201,10 +1205,12 @@
                                     <span class="pass-icon-ar" *ngIf ="arabic" [owlDateTimeTrigger]="dt3">
                                       <i class="fas fa-calendar-alt"></i>
                                     </span>
-                                  <owl-date-time #dt3></owl-date-time>
+                                  <owl-date-time #dt3></owl-date-time> -->
+                                  <input type="datetime-local" id="dis-start_date" class="form-control" formControlName="start_date"
+                                    [ngClass]="{ 'is-invalid': submitted6 && f6.start_date.errors }">
                                   <div *ngIf="submitted6 && f6.start_date.errors" class="invalid-feedback">
                                     <div *ngIf="f6.start_date.errors.required">{{'form.required' | translate}}</div>
-                                  </div>
+                                  </div> 
                                 </div>
                               </div>
                             </div>
@@ -1218,7 +1224,7 @@
                                                         <div *ngIf="submitted6 && f6.end_date.errors" class="invalid-feedback">
                                                             <div *ngIf="f6.end_date.errors.required">{{'form.required' | translate}}</div>
                                                         </div> -->
-                                  <input [owlDateTime]="dt4" class="form-control" formControlName="end_date"
+                                  <!-- <input [owlDateTime]="dt4" class="form-control" formControlName="end_date"
                                     [ngClass]="{ 'is-invalid': submitted6 && f6.end_date.errors }">
                                     <span class="pass-icon" *ngIf ="!arabic" [owlDateTimeTrigger]="dt4">
                                       <i class="fas fa-calendar-alt"></i>
@@ -1226,7 +1232,9 @@
                                     <span class="pass-icon-ar" *ngIf ="arabic" [owlDateTimeTrigger]="dt4">
                                       <i class="fas fa-calendar-alt"></i>
                                     </span>
-                                  <owl-date-time #dt4></owl-date-time>
+                                  <owl-date-time #dt4></owl-date-time> -->
+                                  <input type="datetime-local" id="dis-end_date" class="form-control" formControlName="end_date"
+                                    [ngClass]="{ 'is-invalid': submitted6 && f6.end_date.errors }">
                                   <div *ngIf="submitted6 && f6.end_date.errors" class="invalid-feedback">
                                     <div *ngIf="f6.end_date.errors.required">{{'form.required' | translate}}</div>
                                   </div>

@@ -4,6 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 // import { User } from 'firebase';
 import { ToastrService } from 'ngx-toastr';
 import { User } from './models/User';
+import { Observable } from 'rxjs';
+import { Slide } from './models/Slide';
 
 @Injectable({
     providedIn: 'root'
@@ -11,8 +13,8 @@ import { User } from './models/User';
 
 export class Constant {
 
-baseUrl : string ="https://talabatexpress.com/api/"
-adminUrl : string ="https://talabatexpress.com/admin/"
+baseUrl : string ="https://api.talabatexpress.com/api/"
+adminUrl : string ="https://api.talabatexpress.com/admin/"
 
 // baseUrl : string ="https://beta123.talabatexpress.com/api/"
 // adminUrl : string ="https://beta123.talabatexpress.com/admin/"
@@ -219,6 +221,11 @@ public exportDeliveriesApi : string = this.adminUrl +"exportDeliveries"
 public exportUsersApi : string = this.adminUrl +"exportUsers"
 public exportNotificationsApi : string = this.adminUrl +"exportNotifications"
 public exportOrdersApi : string = this.adminUrl +"exportOrders"
+
+public mainSlidersApi : string = this.adminUrl +"mainSliders"
+public secSlidersApi : string = this.adminUrl +"secSliders"
+public sliderApi : string = this.adminUrl +"slider"
+
 
 constructor(public http: HttpClient ,  private router: Router ,
     private route: ActivatedRoute , private toastr: ToastrService) {
@@ -660,6 +667,41 @@ public updateUser(id , content )
     );
   });
 }
+
+getMainSlider(params = {}): Observable<Slide[]> {
+  return this.http.get<Slide[]>(this.mainSlidersApi, {
+    params: {...params, "locale" : this.lang}
+  })
+}
+
+getSecSlider(params = {}): Observable<Slide[]> {
+  return this.http.get<Slide[]>(this.secSlidersApi, {
+    params: {...params, "locale" : this.lang}
+  })
+}
+
+showSlide(id: number, params = {}): Observable<Slide> {
+  return this.http.get<Slide>(`${this.sliderApi}/${id}`, {
+    params: {...params, "locale" : this.lang}
+  })
+}
+
+addSlide(data: any, params = {}): Observable<any> {
+  return this.http.post<any>(this.sliderApi, data, {
+    params: {...params, "locale" : this.lang}
+  })
+}
+
+updateSlide(id: number, data: any, params = {}): Observable<any> {
+  return this.http.post<any>(`${this.sliderApi}/${id}`, data, {
+    params: {...params, "locale" : this.lang}
+  })
+}
+
+deleteSlide(id: number): Observable<any> {
+  return this.http.delete<any>(`${this.sliderApi}/${id}`)
+}
+
 // Get All Countries
 public getAllCountries(paginated , page , word , state)
 {

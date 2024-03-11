@@ -866,5 +866,7 @@
     "Sec" : "S",
     "Min" : "M",
     "Hrs" : "H",
-    "days" : "D"
+    "days" : "D",
+    "main": "Main",
+    "secondary": "Secondary"
 }

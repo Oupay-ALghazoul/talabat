@@ -38,6 +38,7 @@ const appRoutes: Routes = [
       { path: 'categories', loadChildren: '../app/content/categories/category.module#CategoryModule', canActivate: [AuthGuard] },       
        { path: 'countries', loadChildren: '../app/content/countries/countries.module#CountriesModule', canActivate: [AuthGuard] },
       { path: 'FAQs', loadChildren: '../app/content/FAQ/FAQ.module#FAQModule', canActivate: [AuthGuard] },
+       { path: 'slider', loadChildren: '../app/content/slider/slider.module#SliderModule', canActivate: [AuthGuard] },
        { path: 'users', loadChildren: '../app/content/users/users.module#UsersModule', canActivate: [AuthGuard] },
        { path: 'products', loadChildren: '../app/content/products/products.module#ProductsModule', canActivate: [AuthGuard] } ,
         

@@ -320,16 +320,17 @@ export class EditComponent implements OnInit, OnDestroy {
       this.categoryForm = this.formBuilder.group({
         categories: [''],
       })
+      
       this.offerForm = this.formBuilder.group({
         price: [this.product.special_offer != null ? Number(this.product.special_offer.price).toFixed(3) : ""],
-        start_date: [this.product.special_offer != null ? new Date(this.product.special_offer.start_date) : ""],
-        end_date: [this.product.special_offer != null ? new Date(this.product.special_offer.end_date) : ""],
+        start_date: [this.product.special_offer != null ? this.product.special_offer.start_date : ""],
+        end_date: [this.product.special_offer != null ? this.product.special_offer.end_date : ""],
       })
       this.discountForm = this.formBuilder.group({
         quantity: [this.product.discount != null ? this.product.discount.quantity : ""],
         price: [this.product.discount != null ? Number(this.product.discount.price).toFixed(3) : ""],
-        start_date: [this.product.discount != null ? new Date(this.product.discount.start_date) : ""],
-        end_date: [this.product.discount != null ? new Date(this.product.discount.end_date) : ""],
+        start_date: [this.product.discount != null ? this.product.discount.start_date : ""],
+        end_date: [this.product.discount != null ? this.product.discount.end_date : ""],
       })
       this.colorForm = this.formBuilder.group({
         name_en: ['', Validators.required],

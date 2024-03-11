@@ -33,7 +33,8 @@ import {MatTreeModule} from '@angular/material/tree';
 import {MatIconModule} from '@angular/material/icon';
 import { NgSelectModule } from '@ng-select/ng-select';
 
-import { OwlDateTimeModule, OwlNativeDateTimeModule, OWL_DATE_TIME_FORMATS } from 'ng-pick-datetime';
+// import { OwlDateTimeModule, OwlNativeDateTimeModule, OWL_DATE_TIME_FORMATS } from 'ng-pick-datetime';
+// import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime-ex';
 
 @NgModule({
   declarations: [ ListComponent  , EditComponent , AddComponent , ExtraListComponent ,
@@ -42,8 +43,8 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule, OWL_DATE_TIME_FORMATS } fro
     GoogleMapsAPIWrapper,
   ],
   imports: [
-     OwlDateTimeModule, 
-    OwlNativeDateTimeModule,
+    //  OwlDateTimeModule, 
+    // OwlNativeDateTimeModule,
     MatIconModule ,
     MatTreeModule ,
     AgmDirectionModule ,

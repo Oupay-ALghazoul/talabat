@@ -257,12 +257,14 @@
                 <div *ngIf="submitted && g.expiration.errors" class="invalid-feedback">
                     <div *ngIf="g.expiration.errors.required">{{'form.required' | translate}}</div>
                 </div> -->
-                <input [owlDateTime]="dt1"  class="form-control datepicker" formControlName="expiration"
+                <!-- <input [owlDateTime]="dt1"  class="form-control datepicker" formControlName="expiration"
                 [ngClass]="{ 'is-invalid': submitted && g.expiration.errors }">
                 <span class="pass-icon" [owlDateTimeTrigger]="dt1">
                     <i class="fas fa-calendar-alt"></i>
                 </span>
-                <owl-date-time #dt1></owl-date-time>
+                <owl-date-time #dt1></owl-date-time> -->
+                <input type="datetime-local" id="dis-expiration" class="form-control" formControlName="expiration"
+                  [ngClass]="{ 'is-invalid': submitted && g.expiration.errors }">
                 <div *ngIf="submitted && g.expiration.errors" class="invalid-feedback">
                   <div *ngIf="g.expiration.errors.required">{{'form.required' | translate}}</div>
                 </div> 
@@ -346,12 +348,14 @@
                 <div *ngIf="submitted && h.expiration.errors" class="invalid-feedback">
                     <div *ngIf="h.expiration.errors.required">{{'form.required' | translate}}</div>
                 </div> -->
-                <input [owlDateTime]="dt2"  class="form-control datepicker" formControlName="expiration" 
+                <!-- <input [owlDateTime]="dt2"  class="form-control datepicker" formControlName="expiration" 
                 [ngClass]="{ 'is-invalid': submitted && h.expiration.errors }">
                 <span class="pass-icon" [owlDateTimeTrigger]="dt2">
                     <i class="fas fa-calendar-alt"></i>
                 </span>
-                <owl-date-time #dt2 ></owl-date-time>
+                <owl-date-time #dt2 ></owl-date-time> -->
+                <input type="datetime-local" id="h-expiration" class="form-control" formControlName="expiration"
+                  [ngClass]="{ 'is-invalid': submitted && h.expiration.errors }">
                 <div *ngIf="submitted && h.expiration.errors" class="invalid-feedback">
                   <div *ngIf="h.expiration.errors.required">{{'form.required' | translate}}</div>
                 </div> 
